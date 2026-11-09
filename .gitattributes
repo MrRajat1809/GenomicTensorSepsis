@@ -1,0 +1,8 @@
+# Every text file of the repository is stored and checked out with LF line endings: the release export binds the code by checksum,
+# so a checkout with CRLF endings would change every hash and break the bash scripts.
+* text=auto eol=lf
+*.png binary
+*.pdf binary
+*.zip binary
+*.parquet binary
+*.gz binary

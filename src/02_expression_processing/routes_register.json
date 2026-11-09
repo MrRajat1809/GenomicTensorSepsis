@@ -1,0 +1,882 @@
+{
+  "routes": {
+    "E-MEXP-3621|A-AFFY-37": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "E-MTAB-15164|A-GEOD-10558": {
+      "tier": "author_normalized",
+      "data_source": "data_arrayexpress.txt",
+      "basis": "normalized matrix names 382 of 384 samples; the raw probe profile on deposit covers one plate of 151 arrays only",
+      "flag": "uncertain"
+    },
+    "E-MTAB-1548|A-MEXP-2183": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "Agilent Feature Extraction file for every sample"
+    },
+    "E-MTAB-15687|A-GEOD-22844": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "E-MTAB-17576|": {
+      "tier": "counts",
+      "data_source": "basic_rnaseq_data_counts.csv",
+      "basis": "author count matrix names all 38; the record names no platform"
+    },
+    "E-MTAB-4421|A-MEXP-2210": {
+      "tier": "author_normalized",
+      "data_source": "Davenport_sepsis_Jan2016_normalised_265.txt",
+      "basis": "only a normalized matrix is deposited; it names 265 of 270 samples"
+    },
+    "E-MTAB-4451|A-MEXP-2210": {
+      "tier": "author_normalized",
+      "data_source": "Davenport_sepsis_Feb2016_normalised_106.txt",
+      "basis": "only a normalized matrix of 106 columns is deposited; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "E-MTAB-4785|A-AFFY-141": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "E-MTAB-5273|A-MEXP-2210": {
+      "tier": "author_normalized",
+      "data_source": "Burnham_sepsis_discovery_normalised_231.txt",
+      "basis": "only a normalized matrix is deposited; it names 231 of 237 samples"
+    },
+    "E-MTAB-5274|A-MEXP-2210": {
+      "tier": "unnormalized_intensities",
+      "data_source": "Burnham_sepsis_validation_raw_108.txt",
+      "basis": "author raw probe intensities; all 108 samples named"
+    },
+    "E-MTAB-7581|A-MEXP-2210": {
+      "tier": "unnormalized_intensities",
+      "data_source": "VANISH_raw_data_176_new.txt",
+      "basis": "author raw probe intensities; all 176 samples named"
+    },
+    "GSE100159|GPL6884": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE100159_Sepsis_non-normalized.txt.gz",
+      "basis": "author non-normalized probe intensities with detection p-values; columns carry array identifiers, not sample accessions",
+      "flag": "uncertain"
+    },
+    "GSE10474|GPL571": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE106878|GPL10295": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE106878_non-normalized_data.txt.gz",
+      "basis": "author non-normalized probe intensities with detection p-values; columns carry array identifiers, not sample accessions",
+      "flag": "uncertain"
+    },
+    "GSE110487|GPL10999": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE110487|GPL16791": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE11755|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE119217|GPL16686": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE12624|GPL4204": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "ImaGene result file of a CodeLink array for every sample"
+    },
+    "GSE13015|GPL6106": {
+      "tier": "unnormalized_intensities",
+      "data_source": "per_sample_files",
+      "basis": "per-sample BeadStudio workbook with AVG_Signal and detection p-value"
+    },
+    "GSE13015|GPL6947": {
+      "tier": "unnormalized_intensities",
+      "data_source": "per_sample_files",
+      "basis": "per-sample BeadStudio workbook with AVG_Signal and detection p-value"
+    },
+    "GSE131411|GPL10999": {
+      "tier": "counts",
+      "data_source": "GSE131411_rawcounts_CS_SS.xlsx/countsmatrix;GSE131411_Controls.xlsx/Sheet1",
+      "basis": "read with the other platform of the study from the author count workbooks; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE131411|GPL16791": {
+      "tier": "counts",
+      "data_source": "GSE131411_rawcounts_CS_SS.xlsx/countsmatrix;GSE131411_Controls.xlsx/Sheet1",
+      "basis": "NCBI counts miss 10 samples of the study; two author count workbooks hold patients and controls; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE131761|GPL13497": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "Agilent Feature Extraction file for every sample"
+    },
+    "GSE134347|GPL17586": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE137340|GPL10558": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE137340_rawdata.illumina.txt.gz",
+      "basis": "author raw probe intensities without detection p-values; 53 of 57 columns name a sample",
+      "flag": "uncertain"
+    },
+    "GSE137341|GPL16686": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE138712|GPL16791": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE13904|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE142255|GPL17586": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE145227|GPL23178": {
+      "tier": "author_normalized",
+      "data_source": "series_matrix",
+      "basis": "RMA matrix of the authors at transcript-cluster level (Expression Console), the level of the platform record",
+      "raw_not_usable": "custom Affymetrix array (OElncRNAs520855F) without a Bioconductor design package; the deposited PGF and CLF files group probes into exon and junction probe sets only, and no deposited file groups those into the transcript clusters"
+    },
+    "GSE154918|GPL20301": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE163151|GPL24676": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample gene count file; no NCBI counts"
+    },
+    "GSE163196|GPL20795": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample gene count file; no NCBI counts"
+    },
+    "GSE171741|GPL24676": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample RSEM expected counts for 123 samples; the other 16 hold single-cell files only",
+      "flag": "uncertain"
+    },
+    "GSE182522|GPL24676": {
+      "tier": "counts",
+      "data_source": "GSE182522_All_read_count_matrix.txt.gz",
+      "basis": "NCBI counts miss 7 samples; the author count matrix names all 72"
+    },
+    "GSE185263|GPL16791": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE189400|GPL24676": {
+      "tier": "counts",
+      "data_source": "GSE189400_earli_paxgene_counts_50k.csv.gz",
+      "basis": "author count matrix of 378 columns labelled by cohort identifiers, more than the 221 samples of the series; no NCBI counts",
+      "flag": "uncertain"
+    },
+    "GSE196117|GPL20301": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE199816|GPL28038": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE205672|GPL24676": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample RSEM file with expected_count and FPKM columns; expected counts are not whole numbers",
+      "flag": "uncertain"
+    },
+    "GSE208587|GPL24676": {
+      "tier": "counts",
+      "data_source": "GSE208587_raw_counts.tsv.gz",
+      "basis": "author raw count matrix names all 61; no NCBI counts"
+    },
+    "GSE211210|GPL24676": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE216902|GPL24676": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE217700|GPL16791": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE222393|GPL16791": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "NCBI counts miss one sample; per-sample count file for all 58"
+    },
+    "GSE228541|GPL24676": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample file labelled COUNT whose values are not whole numbers; no NCBI counts",
+      "flag": "uncertain"
+    },
+    "GSE228541|GPL28038": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample file labelled COUNT whose values are not whole numbers; no NCBI counts",
+      "flag": "uncertain"
+    },
+    "GSE232404|GPL16791": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE232753|GPL24676": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE236713|GPL17077": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "Agilent Feature Extraction file for every sample"
+    },
+    "GSE236892|GPL24676": {
+      "tier": "counts",
+      "data_source": "GSE236892_cnt_data.csv.gz",
+      "basis": "author count matrix names all 189; no NCBI counts"
+    },
+    "GSE241238|GPL24676": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE243217|GPL30209": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "NCBI counts cover 22 of 72; per-sample file labelled raw_count whose values are not whole numbers",
+      "flag": "uncertain"
+    },
+    "GSE25504|GPL13667": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE25504|GPL15158": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "per-sample CodeLink export with spot and background medians",
+      "flag": "uncertain"
+    },
+    "GSE25504|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE25504|GPL6947": {
+      "tier": "author_normalized",
+      "data_source": "series_matrix",
+      "basis": "no non-normalized file identified for this platform; GSE25504_fixed.txt.gz is unexplained and names 20 samples",
+      "flag": "uncertain"
+    },
+    "GSE26378|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE26440|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE267399|GPL11154": {
+      "tier": "author_normalized",
+      "data_source": "GSE267399_gene_FPKM.txt.gz",
+      "basis": "FPKM only; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE270838|GPL24676": {
+      "tier": "author_normalized",
+      "data_source": "GSE270838_normalized_count.csv.gz",
+      "basis": "normalized counts only; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE272769|GPL17692": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE273700|GPL24676": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample gene count file; no NCBI counts"
+    },
+    "GSE279448|GPL24676": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample HTSeq count file; no NCBI counts"
+    },
+    "GSE282464|GPL24676": {
+      "tier": "counts",
+      "data_source": "per_sample_files",
+      "basis": "per-sample gene count file; no NCBI counts"
+    },
+    "GSE286082|GPL33140": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE286082_alldata.csv.gz",
+      "basis": "Agilent processed signal of 6 lncRNA arrays in one author table, no scanner files; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE28750|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE294059|GPL24676": {
+      "tier": "counts",
+      "data_source": "GSE294059_RNAseq-human-count.csv.gz",
+      "basis": "author count matrix of 10 columns; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE294985|GPL29480": {
+      "tier": "author_normalized",
+      "data_source": "GSE294985_Processed_data_FPKM.xlsx/Sheet 1",
+      "basis": "FPKM only; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE29536|GPL6102": {
+      "tier": "unnormalized_intensities",
+      "data_source": "per_sample_files",
+      "basis": "per-sample table with AVG_Signal and detection p-value"
+    },
+    "GSE296830|GPL18573": {
+      "tier": "counts",
+      "data_source": "GSE296830_messengerrna.txt.gz",
+      "basis": "featureCounts-style table of the 16 messenger RNA libraries; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE296830|GPL21697": {
+      "tier": "not_processed",
+      "data_source": "none",
+      "basis": "16 microRNA libraries (miRNA-Seq, size fractionation); not messenger RNA expression"
+    },
+    "GSE310929|GPL18573": {
+      "tier": "author_normalized",
+      "data_source": "GSE310929_AllSampleExpressionSubmitted.tsv.gz",
+      "basis": "normalized expression matrix of 3,713 columns that also holds reanalysed samples of other studies; names all 193",
+      "flag": "uncertain"
+    },
+    "GSE32707|GPL10558": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE32707_non_normalized.txt.gz",
+      "basis": "AVG_Signal and detection p-value for 144 arrays; columns carry array identifiers, not sample accessions",
+      "flag": "uncertain"
+    },
+    "GSE33118|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE33119|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE335824|GPL30173": {
+      "tier": "counts",
+      "data_source": "GSE335824_GEO_processed_gene_counts.tsv.gz",
+      "basis": "author gene count matrix; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE341493|GPL16791": {
+      "tier": "counts",
+      "data_source": "GSE341493_lncRNA_mRNA.count.txt.gz",
+      "basis": "author gene count matrix; columns use the authors' sample codes, which the sample records do not carry",
+      "flag": "uncertain"
+    },
+    "GSE341837|GPL34284": {
+      "tier": "counts",
+      "data_source": "GSE341837_gene_count.xls.gz",
+      "basis": "author gene count matrix names all 13; no NCBI counts"
+    },
+    "GSE341840|GPL34284": {
+      "tier": "counts",
+      "data_source": "GSE341840_gene_count.xls.gz",
+      "basis": "author gene count matrix names 5 of 8 samples; no NCBI counts",
+      "flag": "uncertain"
+    },
+    "GSE4607|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE48080|GPL4133": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "Agilent Feature Extraction file for every sample"
+    },
+    "GSE54514|GPL6947": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE54514_non-normalized.txt.gz",
+      "basis": "probe intensities and detection p-value for 163 arrays; columns carry array identifiers, not sample accessions",
+      "flag": "uncertain"
+    },
+    "GSE57065|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE60424|GPL15456": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE63042|GPL9115": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI counts cover 117 of 129 samples; the author file holds RPM only",
+      "flag": "uncertain"
+    },
+    "GSE63311|GPL10999": {
+      "tier": "counts",
+      "data_source": "GSE63311_MappedCounts.csv.gz",
+      "basis": "NCBI counts miss 15 samples; the author mapped-count matrix names all 83"
+    },
+    "GSE65682|GPL13667": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE66099|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE66890|GPL6244": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE69063|GPL19983": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE69528|GPL10558": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE69528_non_normalized.txt.gz",
+      "basis": "AVG_Signal and detection p-value; all 138 samples named"
+    },
+    "GSE69686|GPL20292": {
+      "tier": "author_normalized",
+      "data_source": "series_matrix",
+      "basis": "RMA matrix of the authors at transcript-cluster level, the level of the platform record",
+      "raw_not_usable": "custom Affymetrix array (hGlue_3_0_v1), recorded as proprietary, without a Bioconductor design package; the deposited PGF and CLF files group probes into exon and junction probe sets only, and no deposited file groups those into the transcript clusters"
+    },
+    "GSE70311|GPL10558": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE70311_non_normalized.txt.gz",
+      "basis": "probe intensities and detection p-value for 90 arrays; columns are labelled SAMPLE 1 to SAMPLE 90",
+      "flag": "uncertain"
+    },
+    "GSE70461|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE72326|GPL10558": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE72326_non-normalized.txt.gz",
+      "basis": "probe intensities for 238 arrays without detection p-values; columns carry array identifiers, not sample accessions",
+      "flag": "uncertain"
+    },
+    "GSE72829|GPL10558": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE72809/GSE72809_non_normalized.txt.gz;GSE72809/GSE72809_non-normalized_controls.txt.gz;GSE80412/GSE80412_non-normalized.txt.gz",
+      "basis": "non-normalized probe intensities with detection p-values deposited with SubSeries GSE72809 (240 patient arrays and 52 control arrays in two tables) and GSE80412 (48 arrays); three separate exports of one platform",
+      "flag": "uncertain"
+    },
+    "GSE72829|GPL6883": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE80496/GSE80496_non-normalized.txt.gz",
+      "basis": "AVG_Signal and detection p-value deposited with SubSeries GSE80496; all 45 samples named"
+    },
+    "GSE72829|GPL6947": {
+      "tier": "unnormalized_intensities",
+      "data_source": "GSE72810/GSE72810_non_normalized.txt.gz;GSE72810/GSE72810_non-normalized_controls.txt.gz",
+      "basis": "non-normalized probe intensities with detection p-values deposited with SubSeries GSE72810 (130 patient arrays and 16 control arrays in two tables); two separate exports of one platform",
+      "flag": "uncertain"
+    },
+    "GSE74224|GPL5175": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE8121|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE84439|GPL16791": {
+      "tier": "counts",
+      "data_source": "ncbi_counts",
+      "basis": "NCBI-generated counts cover every sample"
+    },
+    "GSE95233|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE9692|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    },
+    "GSE9960|GPL570": {
+      "tier": "raw_array_files",
+      "data_source": "per_sample_files",
+      "basis": "CEL file for every sample"
+    }
+  },
+  "label_rewrites": {
+    "GSE131411|GSE131411_Controls.xlsx/Sheet1": {
+      "replace": [
+        [
+          "^(G\\d+T\\d)B$",
+          "\\1"
+        ]
+      ],
+      "basis": "four control columns end in a B that the library names of the sample records (G13T1, G13T2, G21T1, G21T2) do not carry; patient and time point agree"
+    },
+    "GSE270838|GSE270838_normalized_count.csv.gz": {
+      "replace": [
+        [
+          "^N_",
+          ""
+        ]
+      ],
+      "basis": "every sample column carries the prefix N_ before the code that the sample description gives"
+    },
+    "GSE294985|GSE294985_Processed_data_FPKM.xlsx/Sheet 1": {
+      "replace": [
+        [
+          "^(\\d+)-Seq$",
+          "Sep\\1"
+        ]
+      ],
+      "basis": "the 30 columns 1-Seq to 30-Seq are taken as the 30 sepsis libraries Sep1 to Sep30 by their number; the records give no other key, and all 30 samples carry the same group"
+    },
+    "GSE341840|GSE341840_gene_count.xls.gz": {
+      "replace": [
+        [
+          "^Ctrl_1$",
+          "SP6"
+        ],
+        [
+          "^Ctrl_2$",
+          "SP7"
+        ],
+        [
+          "^Ctrl_3$",
+          "SP8"
+        ]
+      ],
+      "basis": "the three columns Ctrl_1 to Ctrl_3 are taken, in order, as SP6 to SP8, recorded as sepsis without thyroid dysfunction, patients 1 to 3; the sister series GSE341837 labels that group ctrl; all three samples carry the same group"
+    }
+  },
+  "labels_by_values": {
+    "GSE72326|GSE72326_non-normalized.txt.gz": {
+      "basis": "the columns carry array identifiers that no sample record holds; the series matrix holds the same arrays under their sample accessions"
+    }
+  },
+  "reassigned_files": {
+    "GSE26440|GPL570": {
+      "files": {
+        "GSM648642_05_0006A_HG_U133_Plus_2.CEL.gz": "GSM648643",
+        "GSM648643_05_0008A1_HG_U133_Plus_2.CEL.gz": "GSM648644",
+        "GSM648644_05_0010_A1_HG_U133_Plus_2.CEL.gz": "GSM648645",
+        "GSM648645_05_0011_A1_HG_U133_Plus_2.CEL.gz": "GSM648646",
+        "GSM648646_05-0003A_HG_U_133.2.CEL.gz": "GSM648642"
+      },
+      "basis": "GEO links each of these five CEL files to the record before or after the one its own name points to: the file GSM648642_05_0006A carries patient 05-0006, whose record is GSM648643 (title 05-0006), and so on round the five septic-shock records 05-0003, 05-0006, 05-0008, 05-0010 and 05-0011. Independent evidence agrees with the patient code in the file name: the series matrix of the study holds each array under the record of that patient, not under the linked record, by the rank correlation of the value check of the master quality control (protocol.quality_control); and the same physical arrays, recognised by scan time and median intensity, are labelled with that patient in GSE8121, GSE13904 and GSE66099. Each file is therefore read as the sample of the record that carries its patient code."
+    }
+  },
+  "incomplete_files": {
+    "GSE131761|GPL13497": {
+      "samples": [
+        "GSM3816555",
+        "GSM3816580",
+        "GSM3816589",
+        "GSM3816639",
+        "GSM3816642",
+        "GSM3816643",
+        "GSM3816646",
+        "GSM3816647"
+      ],
+      "basis": "the deposited Feature Extraction file of each of these eight arrays ends before its last feature: between 27% and 98% of the 44,495 features are present. The archive members have the sizes GEO lists, so the files were deposited incomplete. These arrays are left out of the matrix and kept with a reason, as is any sample that its data source does not hold; the study platform is still read from its Feature Extraction files, the lowest data level of its deposit, and not from the matrix of the study's authors, which holds all 129 arrays."
+    }
+  },
+  "count_tables": {
+    "GSE131411|GPL16791": {
+      "identifier_replace": [
+        [
+          "^(ENSG\\d+)\\.\\d+(_PAR_Y)$",
+          "\\1\\2"
+        ]
+      ],
+      "basis": "the controls sheet writes the 45 pseudo-autosomal Y copies with a version number (ENSG00000002586.18_PAR_Y) and the patients sheet without one (ENSG00000002586_PAR_Y); the version is removed so that both sheets hold the same identifiers"
+    },
+    "GSE163151|GPL24676": {
+      "identifier_replace": [
+        [
+          "-",
+          "_"
+        ]
+      ],
+      "basis": "one file of 404 (GSM4973218) writes gene symbols with a hyphen where the other 403 write an underscore (A1BG-AS1, A1BG_AS1); the hyphen is rewritten so that all files hold the same identifiers"
+    },
+    "GSE163196|GPL20795": {
+      "identifier_replace": [
+        [
+          "\\(ENSG\\d+\\)$",
+          ""
+        ]
+      ],
+      "repeated_identifiers": "sum",
+      "genes": "shared",
+      "basis": "13 files (GSM4974422 to GSM4974434) name genes by symbol and 12 files (GSM8118572 to GSM8118583) by symbol followed by an Ensembl identifier in brackets, from another annotation; the bracket is removed, the rows that then carry one symbol are summed (10 symbols on two rows each) and the genes that every file holds are kept"
+    },
+    "GSE182522|GPL24676": {
+      "identifier_column": "Geneid",
+      "basis": "the table lists its 72 count columns first and the gene identifier in its last column, labelled Geneid"
+    },
+    "GSE189400|GPL24676": {
+      "repeated_columns": "sum",
+      "basis": "20 of the 221 samples have two count columns under one patient label, side by side; in 9 of the 20 pairs the second column holds more than three times the reads of the first, and the two columns of a pair correlate at 0.92 to 0.99 (log2 counts) against a median of 0.91 between different samples. They are read as two sequencing runs of one sample and summed"
+    },
+    "GSE205672|GPL24676": {
+      "genes": "absent_is_zero",
+      "basis": "each of the 460 files lists only the genes for which its sample has an expected count above zero (537 to 17,103 genes), so a gene that a file does not list is counted as zero; the stage accepts this only while no file lists a zero"
+    },
+    "GSE296830|GPL18573": {
+      "decimal": ",",
+      "basis": "the table is written with a decimal comma: 9,647 of its 375,840 count cells are fractions such as 4,5 or 113,67, and no cell uses a comma to group thousands"
+    }
+  },
+  "normalization_groups": {
+    "GSE11755|GPL570": {
+      "field": "source_name",
+      "patterns": [
+        [
+          "/Blood",
+          "blood"
+        ],
+        [
+          "/Lymphocyte",
+          "lymphocytes"
+        ],
+        [
+          "/Monocyte",
+          "monocytes"
+        ]
+      ],
+      "basis": "the source name of each array names its fraction: 11 arrays of blood, 16 of lymphocytes and 14 of monocytes"
+    },
+    "GSE163151|GPL24676": {
+      "field": "source_name",
+      "patterns": [
+        [
+          "^NP swab$",
+          "nasopharyngeal_swab"
+        ],
+        [
+          "^Whole Blood$",
+          "whole_blood"
+        ]
+      ],
+      "basis": "the source name names 351 nasopharyngeal swabs and 53 whole-blood samples in one series"
+    },
+    "GSE171741|GPL24676": {
+      "field": "source_name",
+      "patterns": [
+        [
+          "^Whole blood$",
+          "whole_blood"
+        ],
+        [
+          "^Peripheral blood mononuclear cells",
+          "pbmc"
+        ]
+      ],
+      "basis": "the source name names whole blood and peripheral blood mononuclear cells"
+    },
+    "GSE205672|GPL24676": {
+      "attribute": "cell type",
+      "patterns": [
+        [
+          "^PBMC$",
+          "pbmc"
+        ],
+        [
+          "^Monocytes$",
+          "monocytes"
+        ]
+      ],
+      "basis": "the cell type names 409 PBMC and 51 monocyte samples"
+    },
+    "GSE60424|GPL15456": {
+      "attribute": "celltype",
+      "patterns": [
+        [
+          "^Whole Blood$",
+          "whole_blood"
+        ],
+        [
+          "^Neutrophils$",
+          "neutrophils"
+        ],
+        [
+          "^Monocytes$",
+          "monocytes"
+        ],
+        [
+          "^B-cells$",
+          "b_cells"
+        ],
+        [
+          "^CD4$",
+          "cd4_t_cells"
+        ],
+        [
+          "^CD8$",
+          "cd8_t_cells"
+        ],
+        [
+          "^NK$",
+          "nk_cells"
+        ]
+      ],
+      "basis": "the cell type names whole blood and six sorted cell types of the same donors"
+    }
+  },
+  "author_matrices": {
+    "E-MTAB-15164|A-GEOD-10558": {
+      "values": "normalized probe intensities",
+      "scale": "log2_like",
+      "basis": "the deposit gives this table as its processed data and the sample records state no method; the values lie between 5.7 and 14.7"
+    },
+    "E-MTAB-4421|A-MEXP-2210": {
+      "values": "normalized probe intensities",
+      "scale": "log2_like",
+      "basis": "the table is named normalised and the sample records state no method; the values lie between 1.4 and 15.6"
+    },
+    "E-MTAB-4451|A-MEXP-2210": {
+      "values": "normalized probe intensities",
+      "scale": "log2_like",
+      "basis": "the table is named normalised and the sample records state no method; the values lie between 2.0 and 15.5"
+    },
+    "E-MTAB-5273|A-MEXP-2210": {
+      "values": "normalized probe intensities",
+      "scale": "log2_like",
+      "basis": "the table is named normalised and the sample records state no method; the values lie between -13.0 and 16.2, with few below zero"
+    },
+    "GSE145227|GPL23178": {
+      "values": "RMA",
+      "scale": "log2_like",
+      "basis": "sample records: RMA normalization in Affymetrix Expression Console 1.3.1; the values lie between 2.0 and 19.9"
+    },
+    "GSE25504|GPL6947": {
+      "values": "VST-transformed, robust-spline-normalized intensities (lumi)",
+      "scale": "log2_like",
+      "basis": "sample records: background subtracted, VST transformed and robust spline normalised with the lumi package, probes present in one or more samples retained; the values lie between 6.2 and 15.2"
+    },
+    "GSE267399|GPL11154": {
+      "values": "FPKM",
+      "scale": "linear",
+      "basis": "sample records: the supplementary file holds FPKM values for each sample; the values lie between 0 and 14,325"
+    },
+    "GSE270838|GPL24676": {
+      "values": "normalized counts",
+      "scale": "linear",
+      "basis": "the table is named normalized_count; the sample records describe StringTie quantification as read counts, FPKM and TPM and do not state how the counts were normalized; the values lie between 0.75 and 4,897,235"
+    },
+    "GSE294985|GPL29480": {
+      "values": "FPKM",
+      "scale": "linear",
+      "basis": "sample records: the supplementary file holds FPKM values for each sample, from an in-house pipeline; the values lie between 0 and 119,515"
+    },
+    "GSE310929|GPL18573": {
+      "values": "gene counts quantile-normalized to the refine.bio human reference",
+      "scale": "other",
+      "basis": "sample records: gene counts by featureCounts, duplicate gene symbols averaged, then quantile normalized with the human reference quantiles of refine.bio; the values lie between -50.5 and 226.3 and 6% are below zero, so they are on neither a count scale nor a plain log2 scale"
+    },
+    "GSE69686|GPL20292": {
+      "values": "RMA",
+      "scale": "log2_like",
+      "basis": "sample records: the data was normalized using RMA; the values lie between 0.5 and 14.1"
+    }
+  },
+  "not_collected": {},
+  "value_check_exceptions": {
+    "GSE26440|GPL570": {
+      "samples": [
+        "GSM648638",
+        "GSM648640",
+        "GSM648688"
+      ],
+      "basis": "these three control arrays were scanned again in 2010; their CEL files name the patient of their record (04-0010, 04-0011, 11-0052) but match no column of the series matrix well, and GSE66099 labels two of the same physical arrays with other patients (04-0012 and 11-0042). The resource keeps the CEL files with the records that GEO links them to, and the cohort stage marks the identity of these records as uncertain"
+    },
+    "GSE4607|GPL570": {
+      "samples": [
+        "GSM103069"
+      ],
+      "basis": "the CEL file of this record matches no column of the series matrix well; the same physical array is labelled patient 07-0006, day 1, in GSE9692, GSE26440, GSE13904 and GSE66099, while this record names only a sample number. The resource keeps the CEL file with the record that GEO links it to, and the cohort stage marks its identity as uncertain"
+    },
+    "GSE54514|GPL6947": {
+      "basis": "the series matrix of this study does not agree with its own sample records: a Y-chromosome probe (ILMN_1755537) follows the recorded sex for about half of its columns, against 162 of 163 arrays in the non-normalized table whose columns are assigned by the array barcode in each sample description. The resource reads this study from the non-normalized table (routes.decisions), and the sex check of the validation stage confirms that assignment"
+    },
+    "GSE57065|GPL570": {
+      "samples": [
+        "GSM1374010",
+        "GSM1374011",
+        "GSM1374012",
+        "GSM1374013",
+        "GSM1374014",
+        "GSM1374015",
+        "GSM1374016",
+        "GSM1374017",
+        "GSM1374018",
+        "GSM1374019",
+        "GSM1374020"
+      ],
+      "basis": "the series matrix holds the arrays of the healthy volunteers HV15 to HV25 three columns away from their records, in a cycle (the array of HV15 under HV18, and so on). Each CEL file names both its record and its volunteer (GSM1374010_HV15 and so on), in agreement with the record titles, so the resource follows the CEL files; the eleven volunteers are all recorded as female, so the sex check cannot tell the two orders apart"
+    }
+  }
+}

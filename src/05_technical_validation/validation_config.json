@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0",
+  "protocol": "The validation stage tests the resource inside single gene matrices against facts that do not depend on how it was built: the sex that the expression of each sample shows against its recorded sex, the agreement of two deposits of one sample, and the published direction of sepsis genes and of the Sepsis MetaScore between sepsis and healthy controls. No study is pooled with another and no value is changed. A disagreement is reported beside its sample or study, and nothing is removed.",
+  "values": {
+    "log_scales": ["log2", "log2_like", "log2 counts per million"],
+    "linear_scales": ["linear"],
+    "linear_offset": 1
+  },
+  "sex": {
+    "method": "The sex of every sample is read from its own expression without its recorded sex, by splitting the Y-chromosome genes less XIST into two groups within each gene matrix, or within each tissue of a matrix of several tissues, and the call is compared with the recorded sex.",
+    "female_gene": "XIST",
+    "male_genes": ["RPS4Y1", "DDX3Y", "KDM5D", "UTY", "EIF1AY", "USP9Y", "ZFY"],
+    "minimum_samples": 6,
+    "minimum_separation": 4,
+    "minimum_group": 2,
+    "minimum_group_share": 0.05,
+    "component_separation": 2,
+    "minimum_samples_per_tissue": 10,
+    "ambiguous_zone": 0.25,
+    "minimum_compared": 10,
+    "unreliable_below": 0.8,
+    "basis": "The limits are set in pooled standard deviations and group sizes rather than in log2 units, so that they do not depend on the scale of a platform; component_separation keeps a few outliers of a cohort of one sex from passing as the other sex, and a recorded sex that disagrees with the expression of most of a matrix is marked as unreliable (minimum_compared, unreliable_below)."
+  },
+  "repeats": {
+    "method": "Every two records of one sample are compared by the Spearman correlation of their gene-level values and by the rank of the linked record among all samples of the other matrix after every gene is centred within its own matrix; the report limits only count pairs in the receipt.",
+    "report": {"spearman_at_least": [0.95, 0.99]}
+  },
+  "biology": {
+    "method": "The eleven genes of the Sepsis MetaScore (Sweeney et al. 2015) and HLA-DRA are compared between sepsis and healthy controls inside every study platform and tissue, the score is computed by its published formula with its area under the ROC curve over all samples and over one sample per patient, and the marker genes of sorted cells are compared between the fractions of one matrix; the report limits only count strata in the receipt.",
+    "minimum_group": 5,
+    "report": {"auroc_at_least": [0.9, 0.8], "auroc_below": [0.5], "interval_lower_bound_at_least": [0.8]},
+    "minimum_score_genes": 3,
+    "sepsis_phases": ["during_sepsis"],
+    "bootstrap": {"replicates": 2000, "seed": 20261024, "level": 0.95},
+    "score_derivation": {
+      "discovery": ["GSE28750", "GSE32707", "GSE40012", "GSE66099"],
+      "validation": ["GSE6377", "GSE12838", "E-MEXP-3001", "GSE11755", "GSE13015", "GSE20346", "GSE21802", "GSE25504", "GSE27131", "GSE33341", "GSE40396", "E-MTAB-1548", "GSE5772", "GSE9960", "E-MEXP-3621", "GSE22098"],
+      "basis": "Sweeney et al. 2015 (doi 10.1126/scitranslmed.aaa5993) derived the score on the discovery cohorts GSE28750, GSE32707, GSE40012, the unique samples of the GPSSSI cohort deposited as GSE66099 and the Glue Grant buffy coat samples, and validated it on the other GEO and ArrayExpress studies listed here, as the article reports."
+    },
+    "score": {
+      "up": ["CEACAM1", "ZDHHC19", "C9orf95", "GNA15", "BATF", "C3AR1"],
+      "down": ["KIAA1370", "TGFBI", "MTCH1", "RPGRIP1", "HLA-DPB1"]
+    },
+    "lower_in_sepsis": ["HLA-DRA"],
+    "minimum_cells": 3,
+    "cell_fractions": ["neutrophils", "monocytes", "lymphocytes", "b_cells", "cd4_t_cells", "cd8_t_cells", "nk_cells", "pbmc"],
+    "cell_markers": {
+      "neutrophils": ["FCGR3B", "CSF3R", "CXCR2"],
+      "monocytes": ["CD14", "CSF1R"],
+      "lymphocytes": ["CD3E", "CD2"],
+      "b_cells": ["CD19", "MS4A1", "CD79A"],
+      "cd4_t_cells": ["CD4", "CD40LG"],
+      "cd8_t_cells": ["CD8A", "CD8B"],
+      "nk_cells": ["NCAM1", "KLRF1", "NCR1"]
+    }
+  },
+  "references": [
+    "https://doi.org/10.1126/scitranslmed.aaa5993",
+    "https://doi.org/10.1007/s00134-006-0204-8",
+    "https://www.genenames.org/"
+  ]
+}

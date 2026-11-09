@@ -1,0 +1,82 @@
+{
+  "version": "1.0.0",
+  "protocol": "The batch-correction stage removes the differences between studies from the gene-level values of bulk-blood and of PBMC samples and writes one corrected table for each, leaving every per-study table unchanged and imputing no value. Every sample is aligned to one reference distribution; studies with healthy controls are corrected on those controls, as COCONUT does, and the others by lining their class means up with references from those studies, and every correction is tested where the answer is known and checked before its study enters a table. Because matched groups make the class means of a study equal to the references, the studies corrected so (method_basis class_references) must not be used to find or confirm differences between classes across studies; such analyses should use the studies corrected on their healthy controls or the per-study tables, and allow for the residual difference between studies that the held-out test reports.",
+  "groups": {
+    "bulk_blood": {"label": "Bulk blood", "tissues": ["whole_blood", "blood_not_further_specified", "leukocytes"]},
+    "pbmc": {"label": "PBMC", "tissues": ["pbmc"]}
+  },
+  "inputs": {
+    "method": "Bulk blood (whole blood, blood not further specified and leukocytes) and PBMC are corrected as two groups over the genes that at least minimum_gene_share of their studies measure, and within a study unit only the first sample of every patient without a quality flag, of a phase that stands for its class, estimates the effects that are removed from all of its samples.",
+    "value_scales": ["log2", "log2_like", "log2 counts per million"],
+    "minimum_gene_share": 0.95,
+    "minimum_unit_samples": 5,
+    "minimum_healthy_controls": 5,
+    "minimum_reference_units": 2,
+    "neonatal_share": 0.5,
+    "phases_not_estimated": ["before_onset", "onset_not_recorded"]
+  },
+  "alignment": {
+    "method": "Every sample is given the reference distribution of its group, read at grid_points quantile positions, so that arrays and RNA sequencing become comparable while the order of its genes is kept; minimum_rank_correlation is the rank correlation below which that order counts as changed.",
+    "grid_points": 4000,
+    "minimum_rank_correlation": 0.9999
+  },
+  "flat_genes": {
+    "method": "The genes that sepsis changes least across the anchored units are selected for the flat-gene method, which the held-out test compares with the other methods and which corrects no unit.",
+    "minimum_group": 5,
+    "count": 1000,
+    "minimum_expression_quantile": 0.5,
+    "excluded_chromosomes": ["X", "Y", "mitochondria"],
+    "minimum_training_units": 3,
+    "minimum_shared_genes": 20,
+    "minimum_complete_genes": 100
+  },
+  "anchored": {
+    "method": "Study units with at least inputs.minimum_healthy_controls healthy controls are corrected on them, as COCONUT does: after the effect of sex is removed, the location and scale of every gene are estimated from the healthy controls and shrunk by empirical Bayes, as in ComBat.",
+    "basis": "floor_fraction is the largest round share of its median below which only genes not expressed in the healthy controls lie, so that the floor of the anchor standard deviation acts on those genes alone; the genes at the floor are counted in the stage 04 receipt.",
+    "anchor_class": "healthy_control",
+    "reference_classes": ["sepsis", "healthy_control", "non_septic_control"],
+    "floor_fraction": 0.15,
+    "minimum_prior_genes": 10
+  },
+  "unanchored": {
+    "method": "Study units without healthy controls are corrected by matched groups, which line the means and spreads of their sepsis, healthy and non-septic samples up with references from the anchored units; newborn units are not corrected.",
+    "basis": "The scale is estimated within classes, because a scale from all samples of a unit, as plain ComBat estimates it, assumes that a study of patients spreads as healthy controls do; plain ComBat is compared with matched groups in the held-out test (stage 05 receipt, paired_comparison), and no anchored unit is of newborns, so no correction of a newborn study could be tested.",
+    "methods": ["matched_groups"],
+    "matched_classes": ["sepsis", "healthy_control", "non_septic_control"],
+    "matched_age_groups": ["adult", "child"],
+    "minimum_matched": 5,
+    "components": [1, 2, 3, 4, 6, 8],
+    "comparison": {"replicates": 2000, "seed": 20261024, "level": 0.95, "minimum_units": 3}
+  },
+  "checks": {
+    "method": "Every corrected unit must pass the sex-gene and Sepsis MetaScore checks, and a unit without healthy controls must also not become more isolated from the other studies in a study-mixing check that applies to at least one of its classes; the mixing of anchored units and the comparison of two deposits of one sample are reported and decide nothing.",
+    "classes": ["sepsis", "healthy_control", "non_septic_control"],
+    "pca_genes": 2000,
+    "components": 20,
+    "neighbours": 10,
+    "minimum_class_samples": 5,
+    "mixing_worsening_limit": 0.1,
+    "minimum_sex_calls": 5,
+    "sex_agreement": 0.9,
+    "score_auroc": 0.75,
+    "minimum_score_genes": 3,
+    "location_report_limit": 10,
+    "scale_report_limit": 5
+  },
+  "quality_control": {
+    "method": "The tolerances of the master quality control: alignment_tolerance for aligned values rebuilt from the gene matrices, rebuild_tolerance for corrected values rebuilt from the effects and the model, model_tolerance for quantities derived again in 64-bit arithmetic, and anchor_centre_limit for the median distance of the corrected healthy controls of the anchored units from the anchor, in anchor standard deviations.",
+    "alignment_tolerance": 0.0001,
+    "rebuild_tolerance": 0.001,
+    "model_tolerance": 0.000001,
+    "anchor_centre_limit": 0.25
+  },
+  "references": [
+    "https://doi.org/10.1093/biostatistics/kxj037",
+    "https://doi.org/10.1126/scitranslmed.aaf7165",
+    "https://doi.org/10.1093/biostatistics/kxr034",
+    "https://doi.org/10.1093/biostatistics/kxv027",
+    "https://doi.org/10.1093/bioinformatics/19.2.185",
+    "https://doi.org/10.1126/scitranslmed.aaa5993",
+    "https://doi.org/10.1038/s41591-025-03956-5"
+  ]
+}

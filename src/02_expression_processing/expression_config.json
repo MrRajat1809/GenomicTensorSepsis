@@ -1,0 +1,122 @@
+{
+  "version": "1.0.0",
+  "protocol": "The expression stage reads every included study platform on its own, in the units of its deposit, and never combines studies. Each study platform follows one recorded route from the lowest data level that its deposit supports: array scanner files and deposited intensities are normalised within the study platform, read counts are kept with their TMM-normalised log2 counts per million, and values that the authors had already normalised are kept as deposited. Every included sample has a column in one matrix of its study platform or a recorded reason for having none.",
+  "register": "routes_register.json",
+  "http": {
+    "user_agent": "GenomicTensorSepsis/1.0.0",
+    "minimum_interval_seconds": 0.4,
+    "timeout_seconds": 300,
+    "retries": 8,
+    "retry_wait_seconds": 3
+  },
+  "platforms": {
+    "families": [
+      {"family": "rna_seq", "technology": "high-throughput sequencing"},
+      {"family": "affymetrix", "keyword": "affymetrix"},
+      {"family": "illumina_beadchip", "keyword": "illumina"},
+      {"family": "agilent", "keyword": "agilent"}
+    ],
+    "unmatched_family": "other_array",
+    "unrecorded": {"library_strategy": "RNA-Seq", "family": "rna_seq"},
+    "assays": {"array": ["affymetrix", "agilent", "illumina_beadchip", "other_array"], "rna-seq": ["rna_seq"]}
+  },
+  "inventory": {
+    "member_preview_kilobytes": 64,
+    "file_preview_kilobytes": 1024,
+    "maximum_preview_megabytes": 32,
+    "preview_rows": 200,
+    "minimum_identifier_characters": 3,
+    "label_suffix": "[ ._:-]*(avg[ ._]?signal|detection[ ._]?p[ ._-]?val(ue)?|bead[ ._]?std(err|ev)|avg[ ._]?nbeads|raw[ ._]?counts?|read[ ._]?counts?|counts?|fpkm|rpkm|tpm|bam|sorted|g?processed[ ._]?signal(\\(raw\\))?|normali[sz]ed|flag|signal)$",
+    "annotation_formats": ["illumina_manifest", "affymetrix_cdf", "affymetrix_library_file"],
+    "per_sample_data_formats": ["affymetrix_cel", "illumina_idat", "agilent_feature_extraction", "genepix_results", "imagene_results", "table", "workbook_sheet"]
+  },
+  "routes": {
+    "method": "Every study platform is read from one recorded data source at the lowest data level that its files support; RNA-seq is read from the NCBI-generated counts where they cover every sample.",
+    "tiers": {
+      "raw_array_files": {"meaning": "Scanner-level file for each array; the study is reprocessed from it.", "families": ["affymetrix", "agilent", "other_array"], "data_sources": ["per_sample_files"], "formats": {"affymetrix": ["affymetrix_cel"], "agilent": ["agilent_feature_extraction"], "other_array": ["imagene_results", "table"]}},
+      "unnormalized_intensities": {"meaning": "Probe-level intensities the authors exported before normalization; the study is normalized from them.", "families": ["illumina_beadchip", "agilent"], "data_sources": ["per_sample_files", "table"], "formats": {"illumina_beadchip": ["table", "workbook_sheet"]}},
+      "counts": {"meaning": "Read counts per gene, from NCBI or from the authors.", "families": ["rna_seq"], "data_sources": ["ncbi_counts", "per_sample_files", "table"], "formats": {"rna_seq": ["table"]}},
+      "author_normalized": {"meaning": "Only values the authors had already normalized are deposited; they are kept as deposited and labelled as such.", "families": ["affymetrix", "agilent", "illumina_beadchip", "other_array", "rna_seq"], "data_sources": ["table", "series_matrix"]},
+      "not_processed": {"meaning": "The study platform holds no messenger RNA expression data and is not read.", "families": ["affymetrix", "agilent", "illumina_beadchip", "other_array", "rna_seq"], "data_sources": ["none"]}
+    }
+  },
+  "labels": {
+    "method": "Every column of a routed table is assigned to the one sample whose record names it, or to none; a table whose labels no record holds is matched to the series matrix of its study by its values.",
+    "identifier_parts": 5,
+    "values": {"minimum_shared_rows": 10000, "minimum_correlation": 0.95, "minimum_margin": 0.25, "minimum_present_share": 0.5, "minimum_columns": 3},
+    "basis": "A match by values compares only the columns that hold a value in more than labels.values.minimum_present_share of their rows, and at least labels.values.minimum_columns columns and samples, because with two columns the centred ranks of one row are mirror images, so the two correlations of a column are equal and opposite and no margin can be judged."
+  },
+  "affymetrix": {
+    "method": "RMA within each study platform, never across studies.",
+    "designs": {
+      "HG-U133_Plus_2": {"package": "pd.hg.u133.plus.2"},
+      "HG-U133A_2": {"package": "pd.hg.u133a.2"},
+      "HG-U219": {"package": "pd.hg.u219"},
+      "HuGene-1_0-st-v1": {"package": "pd.hugene.1.0.st.v1", "target": "core"},
+      "HuGene-2_0-st": {"package": "pd.hugene.2.0.st", "target": "core"},
+      "HuGene-2_1-st": {"package": "pd.hugene.2.1.st", "target": "core"},
+      "HTA-2_0": {"package": "pd.hta.2.0", "target": "core"},
+      "HuEx-1_0-st-v2": {"package": "pd.huex.1.0.st.v2", "target": "core"},
+      "Clariom_D_Human": {"package": "pd.clariom.d.human", "target": "core"}
+    },
+    "workers": 1,
+    "block_megabytes": 256,
+    "minimum_free_gigabytes": 60
+  },
+  "single_channel": {
+    "method": "limma within each study platform, never across studies: normexp background correction, quantile normalization, log2, and the features of one probe averaged.",
+    "families": ["agilent", "other_array"],
+    "offset": 16,
+    "layouts": {
+      "agilent_feature_extraction": {"feature": ["FeatureNum"], "probe": "ProbeName", "foreground": "gMedianSignal", "background": "gBGMedianSignal", "kind": "ControlType", "measured": ["0"]},
+      "imagene": {"feature": ["Field", "Meta Row", "Meta Column", "Row", "Column"], "probe": "Gene ID", "foreground": "Signal Median", "background": "Background Median", "kind": "Control", "measured": [""]},
+      "codelink_export": {"feature": ["Feature_id"], "probe": "Probe_name", "foreground": "Spot_median", "background": "Bkgd_median", "kind": "Probe_type", "measured": ["DISCOVERY"], "masked_value": -9999}
+    },
+    "basis": "The offset added after background correction (single_channel.offset) is the default of limma's neqc, so that intensities near background do not spread over many log2 units."
+  },
+  "intensity_tables": {
+    "method": "limma within each study platform, never across studies: Illumina intensities by neqc, with the negative controls inferred from the detection p-values or, where none are deposited, the background estimated from the intensities, and Agilent processed signals by quantile normalization and log2.",
+    "offset": 16,
+    "estimator_without_detection": "rma75",
+    "detected_below": 0.01,
+    "same_median_intensity": 0.001,
+    "columns": {
+      "illumina_beadchip": {"signal": ["", "avgsignal"], "detection": ["detectionpval"], "correction": "normexp"},
+      "agilent": {"signal": ["gprocessedsignalraw"], "detection": [], "correction": "none"}
+    },
+    "basis": "Four studies deposit no detection p-values; their background is estimated from the distribution of the intensities of each array by limma's RMA-75 estimator, because on two studies that do have detection p-values (GSE100159 and GSE32707) values computed this way differed from the detection-based values by a root mean square of at most 0.09 log2 units in every intensity band, against up to 0.64 for limma's default saddle-point fit. The largest difference of median intensity at which two records of one BeadChip count as the same export (same_median_intensity) allows for deposits that round their intensities to different numbers of decimals; it only counts repeated deposits for the receipt."
+  },
+  "count_tables": {
+    "method": "Counts are kept as deposited, and TMM-normalised log2 counts per million are computed with edgeR within each study platform, never across studies.",
+    "prior_count": 2,
+    "count_measures": ["count", "rawcount", "readcount"],
+    "header_identifiers": ["gene", "genes", "gene_id", "gene_ids", "gene_name", "gene_symbol", "symbol", "ensembl", "ensembl_id", "ensembl_gene_id", "entrez_id", "feature", "feature_id", "id", "name", "transcript_id", "target_id"],
+    "summary_rows": "__(no_feature|ambiguous|too_low_aQual|not_aligned|alignment_not_unique)",
+    "basis": "The column labels in header_identifiers, by which a header whose labels are numbers is recognised in a table without a header row, are the labels of the identifier columns of the deposited count tables; they are compared without case and punctuation."
+  },
+  "normalization_groups": {
+    "method": "Each tissue of a study platform is normalized on its own, so that differences between tissues are not removed as technical variation."
+  },
+  "quality_control": {
+    "method": "The master quality control verifies the tables and matrices of every script and replays the processing: every matrix against the series matrix of its study, the streamed RMA against oligo::rma, and the log2 counts per million against their counts.",
+    "value_check": {
+      "minimum_shared_rows": 1000,
+      "rows_used": 5000,
+      "minimum_samples": 3,
+      "basis": "A value check needs at least value_check.minimum_samples shared samples, because with two columns the centred ranks of one row are mirror images, so a sample would count as most similar to its own column whenever their correlation is above zero."
+    },
+    "matrix_check": {"value_range_relative": 1e-5, "value_range_absolute": 1e-4, "library_size_relative": 1e-9, "log_cpm_absolute": 1e-3, "basis": "most matrices are stored as 32-bit floats, whose rounding is below 1e-7 of a value, so the lowest and highest value of a matrix must agree with its record within 1e-4 plus 1e-5 of the value; a library size is the sum of the same counts in 64-bit floats and differs from a recomputed sum only by rounding; the log2 counts per million are recomputed in 64-bit floats against values stored as 32-bit floats, whose rounding stays below 1e-5 log2 units, and 1e-3 log2 units is a change of less than 0.1% in a count per million"},
+    "rma_reference": {"studies": ["E-MEXP-3621|A-AFFY-37", "GSE137341|GPL16686"], "tolerance": 0.0001, "basis": "E-MEXP-3621 holds 10 arrays of a 3' array (HG-U133A_2), whose probes stage 04 takes from the probe sets of the design package; GSE137341 is the smallest study summarised at a target (10 arrays of HuGene-2_0-st at core), whose probes stage 04 takes from the transcript clusters of the design package; both are small, so that the check stays short"},
+    "tmm_report_log2": 1
+  },
+  "author_matrices": {
+    "method": "Values that the authors had already normalised are kept as deposited and labelled with what they are and the scale they are on, as the sample records and the tables state.",
+    "largest_log2_like_value": 32
+  },
+  "references": [
+    "https://www.ncbi.nlm.nih.gov/geo/info/soft.html",
+    "https://www.ncbi.nlm.nih.gov/geo/info/geo_paccess.html",
+    "https://www.ebi.ac.uk/biostudies/arrayexpress/help",
+    "https://www.fged.org/projects/mage-tab"
+  ]
+}

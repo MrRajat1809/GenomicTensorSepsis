@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0",
+  "protocol": "The annotation stage relates every row of every expression matrix to HGNC genes, through the annotation package or the GEO platform table of its chip, or through the gene identifier that an RNA-seq row carries. Every row is kept with the gene it maps to or the reason it maps to none, and the matrices of the expression stage are not changed. Gene-level matrices are built beside them, each study platform on its own: for each gene the row with the highest mean is kept on a logarithmic scale, and the rows are added up on a linear scale or as counts.",
+  "register": "annotation_register.json",
+  "http": {
+    "user_agent": "GenomicTensorSepsis/1.0.0",
+    "minimum_interval_seconds": 0.4,
+    "timeout_seconds": 300,
+    "retries": 8,
+    "retry_wait_seconds": 3
+  },
+  "index": {
+    "identifier_shapes": [
+      {"shape": "ensembl_gene", "pattern": "ENSG\\d{11}"},
+      {"shape": "ensembl_gene_versioned", "pattern": "ENSG\\d{11}\\.\\d+"},
+      {"shape": "ensembl_gene_with_suffix", "pattern": "ENSG\\d{11}(\\.\\d+)?_.+"},
+      {"shape": "illumina_probe", "pattern": "ILMN_\\d+"},
+      {"shape": "affymetrix_probe_set", "pattern": "AFFX.*|\\d+(_[a-z]+)?_at"},
+      {"shape": "affymetrix_transcript_cluster", "pattern": "TC[0-9A-Za-z_]+(\\.[a-z]+\\.\\d+)?"},
+      {"shape": "agilent_probe", "pattern": "A_\\d+_P\\d+"},
+      {"shape": "number", "pattern": "\\d+"},
+      {"shape": "name", "pattern": ".+"}
+    ]
+  },
+  "sources": {
+    "method": "The HGNC gene is the common gene key; array chips are annotated by their Bioconductor annotation packages, and a chip without a package by its GEO platform table.",
+    "hgnc": {
+      "url": "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt",
+      "file": "hgnc_complete_set.txt",
+      "columns": ["hgnc_id", "symbol", "name", "locus_group", "locus_type", "status", "location", "alias_symbol", "prev_symbol", "entrez_id", "ensembl_gene_id"]
+    },
+    "geo_platform": {"url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi", "parameters": {"targ": "self", "form": "text", "view": "full"}},
+    "organism_package": "org.Hs.eg.db",
+    "package_extras": {"array_address": "ARRAYADDRESS", "nuid": "NUID", "probe_quality": "PROBEQUALITY"}
+  },
+  "mapping": {
+    "method": "Every row of every matrix is kept and related to HGNC genes, the common gene key, by the Entrez gene, Ensembl gene or symbol that the row or its annotation names.",
+    "minimum_identifier_share": 0.9,
+    "value_separator": "\\s*(?:///|;|\\|)\\s*",
+    "entrez_gene": "\\d+",
+    "ensembl_gene": "(ENSG\\d{11})([._].*)?"
+  },
+  "gene_matrices": {
+    "method": "Gene-level matrices are built beside the original matrices, which stay untouched: on a logarithmic scale the row with the highest mean in the study is kept for each gene, on a linear scale the rows are added up, and for count studies the counts are added up and normalized again.",
+    "rules": {"log2": "highest_mean", "log2_like": "highest_mean", "other": "highest_mean", "linear": "sum", "log2 counts per million": "sum_counts"},
+    "counts_tolerance": 0.001,
+    "refinements": "Where the annotation rates its probes, a probe of a preferred quality is kept over the other probes of its gene, so that a probe rated bad is not kept for a higher mean while the gene has a better one. Identical rows of one gene are counted once in a sum, so that identical copies of a row in a count table do not double the counts of the gene. The normalized values of the count studies are computed with the normalization groups of the expression stage, and the expressed flag marks the genes whose log2 counts per million rest on reads.",
+    "preferred_probe_quality": ["Perfect", "Good"],
+    "expressed": {"minimum_count": 10, "minimum_total_count": 15, "large_n": 10, "minimum_proportion": 0.7},
+    "ncbi_check": {
+      "minimum_samples": 3,
+      "minimum_shared_genes": 1000,
+      "genes_used": 5000,
+      "basis": "A study platform with fewer than minimum_samples samples in both tables, or fewer than minimum_shared_genes genes with reads in both, cannot be compared; it fails the check unless ncbi_check_exceptions of annotation_register.json records it with its status and a reason, so that the check cannot pass by comparing nothing."
+    }
+  },
+  "references": [
+    "https://www.genenames.org/download/statistics-and-files/",
+    "https://bioconductor.org/packages/release/BiocViews.html#___ChipDb",
+    "https://www.ncbi.nlm.nih.gov/geo/info/soft.html"
+  ]
+}

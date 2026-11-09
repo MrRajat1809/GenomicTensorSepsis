@@ -1,0 +1,794 @@
+{
+  "rules": {
+    "E-MEXP-3621|A-AFFY-37": {
+      "sample_class": {"from": "samplingtimepoint", "values": {"onset of sepsis": "sepsis", "icu admission": "sepsis"}, "study_states": "trauma patients who developed severe sepsis/septic shock during their ICU stay", "note": "All samples are of trauma patients who developed sepsis, at ICU admission and at the onset of sepsis; the admission samples keep the class of their patients and are marked before_onset by their phase. The disease state is recorded as Normal or ARDS and is not used."},
+      "phase": {"from": "samplingtimepoint", "values": {"onset of sepsis": "during_sepsis", "icu admission": "before_onset"}, "study_states": "RNA was extracted from blood obtained upon admission (a) and at the onset of the disease (b)"},
+      "tissue": {"from": "celltype", "values": "tissue"},
+      "patient": {"from": "title", "text": "^(S[0-9]+)"},
+      "time": {"from": "samplingtimepoint", "values": {"icu admission": 1, "onset of sepsis": 2}, "unit": "ordinal"}
+    },
+    "E-MTAB-15164|A-GEOD-10558": {
+      "sample_class": {"from": "disease", "values": {"infection/sepsis": "infection_sepsis_not_stated"}, "other": "other_condition", "note": "The category Infection/Sepsis does not say which samples are sepsis."},
+      "tissue": {"from": "organism part", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "values": {"0 - less than 1 month": "neonate", "1 - 11 months": "child", "12 - 23 months": "child", "24 months - 4 years": "child", "5 years - 12 years": "child", ">12 years": "child"}},
+      "patient": {"from": "title", "text": "^(BAS[0-9]+)$"}
+    },
+    "E-MTAB-1548|A-MEXP-2183": {
+      "sample_class": {"from": "disease", "values": {"sepsis": "sepsis", "systemic inflammatory response syndrome": "other_condition", "normal": "non_septic_control"}, "study_states": "post-surgical patients with septic shock compared with patients without sepsis", "note": "Normal is the default disease term of ArrayExpress for a sample without the disease studied; the study compares post-surgical patients, and GSE131761 records the same arrays as control patients, so they are non-septic controls."},
+      "tissue": {"from": "organism part", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "individual", "text": "^(.+)$"},
+      "outcome": {"from": "clinical information", "values": {"septic shock survivor": "survivor", "septic shock non survivor": "non_survivor"}, "definition": "not stated"},
+      "septic_shock": {"from": "clinical information", "values": {"septic shock survivor": "yes", "septic shock non survivor": "yes"}}
+    },
+    "E-MTAB-15687|A-GEOD-22844": {
+      "sample_class": {"from": "disease", "values": {"sepsis": "sepsis"}},
+      "tissue": {"from": "organism part", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "developmental stage", "values": {"neonate": "neonate"}},
+      "patient": {"from": "individual", "text": "^(.+)$"},
+      "time": {"from": "trial assessment visit", "number": "^([0-9]+)$", "unit": "ordinal"}
+    },
+    "E-MTAB-17576|": {
+      "sample_class": {"from": "disease", "values": {"infectious disease with sepsis": "sepsis"}},
+      "tissue": {"from": "organism part", "values": "tissue"},
+      "age": {"study_states": "children with septic shock", "value": "child"},
+      "patient": {"from": "title", "text": "^(BAS[.][0-9]+)[.]TP"},
+      "time": {"from": "time", "number": "^([0-9]+)$", "unit": "ordinal"},
+      "septic_shock": {"study_states": "children with septic shock", "value": "yes"}
+    },
+    "E-MTAB-4421|A-MEXP-2210": {
+      "sample_class": {"study_states": "severe sepsis due to community acquired pneumonia", "value": "sepsis"},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "source name", "text": "^(CAP[0-9]+)$"},
+      "outcome": {"from": "28 day survival", "values": {"survivor": "survivor", "non-survivor": "non_survivor"}, "definition": "28-day"}
+    },
+    "E-MTAB-4451|A-MEXP-2210": {
+      "sample_class": {"study_states": "severe sepsis due to community acquired pneumonia", "value": "sepsis"},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "source name", "text": "^(CAP[0-9]+)$"},
+      "outcome": {"from": "28 day survival", "values": {"survivor": "survivor", "non survivor": "non_survivor"}, "definition": "28-day"}
+    },
+    "E-MTAB-4785|A-AFFY-141": {
+      "sample_class": {"from": "disease", "values": {"neonatal sepsis": "sepsis", "normal": "non_septic_control"}, "study_states": "Very Low Birth Weight Infants With Neonatal Sepsis", "note": "The infants recorded as normal are very low birth weight infants without sepsis, so they are not taken as healthy controls."},
+      "tissue": {"from": "organism part", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"study_states": "Very Low Birth Weight Infants With Neonatal Sepsis", "value": "neonate", "note": "The recorded age has no unit and is not used."}
+    },
+    "E-MTAB-5273|A-MEXP-2210": {
+      "sample_class": [
+        {"from": "disease", "values": {"normal": "non_septic_control", "community-acquired pneumonia": "next", "faecal peritonitis": "next"}, "study_states": "patients scheduled for elective cardiac surgery were also assayed as non-septic controls"},
+        {"from": "disease", "values": {"community-acquired pneumonia": "sepsis", "faecal peritonitis": "sepsis"}, "study_states": "sepsis due to community acquired pneumonia or faecal peritonitis"}],
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "source name", "text": "^((?:CAP|FP|CON)[0-9]+)", "note": "The participant code is the start of the sample name; what its suffixes mean is not recorded."},
+      "outcome": {"from": "clinical information", "values": {"alive at 28 day survival": "survivor", "dead at 28 day survival": "non_survivor", "na": "not_recorded"}, "definition": "28-day"}
+    },
+    "E-MTAB-5274|A-MEXP-2210": {
+      "sample_class": {"from": "disease", "values": {"community-acquired pneumonia": "sepsis", "faecal peritonitis": "sepsis"}, "study_states": "sepsis due to community acquired pneumonia or faecal peritonitis"},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "individual", "text": "^(.+)$"},
+      "outcome": {"from": "clinical information", "values": {"alive at 28 day survival": "survivor", "dead at 28 day survival": "non_survivor"}, "definition": "28-day"}
+    },
+    "E-MTAB-7581|A-MEXP-2210": {
+      "sample_class": {"from": "disease", "values": {"septic shock": "sepsis"}},
+      "tissue": {"from": "organism part", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "individual", "text": "^(.+)$"},
+      "outcome": {"from": "outcome.day.28", "values": {"alive": "survivor", "dead": "non_survivor"}, "definition": "28-day"},
+      "septic_shock": {"from": "disease", "values": {"septic shock": "yes"}},
+      "scores": {"apache_ii": {"from": "apache.ii", "number": "^([0-9]+(?:[.][0-9]+)?)$"}}
+    },
+    "GSE100159|GPL6884": {
+      "sample_class": {"from": "sample class", "values": {"melioidosis": "sepsis", "other infection": "sepsis", "control": "non_septic_control", "recovery": "other_condition"}, "study_states": "Sepsis (35 condition, 12 control, 47 total)", "note": "The controls are not described as healthy; in GSE13015 the same arrays are healthy donors and patients with diabetes."},
+      "phase": {"from": "sample class", "values": {"recovery": "recovery_or_follow_up"}, "other": "next"},
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE10474|GPL571": {
+      "sample_class": {"from": "source name", "values": {"patient with sepsis only": "sepsis", "patient with acute lung injury": "sepsis"}, "study_states": "13 patients with ALI + sepsis and 21 patients with sepsis alone", "note": "The record names plasma in a characteristic without a key, while the study describes blood RNA; the tissue is left as not recorded."}
+    },
+    "GSE106878|GPL10295": {
+      "sample_class": {"from": "disease", "values": {"septic shock": "sepsis"}},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "individual", "text": "^Pid (C[0-9]+)$"},
+      "time": {"from": "timepoint", "values": {"pre": 1, "post(24h)": 2}, "unit": "ordinal"},
+      "outcome": {"from": "survival (28 days)", "values": {"survived": "survivor", "died": "non_survivor"}, "definition": "28-day"},
+      "septic_shock": {"from": "disease", "values": {"septic shock": "yes"}}
+    },
+    "GSE110487|GPL10999": {
+      "sample_class": {"from": "tissue", "values": {"whole blood cells collected from patient after septic shock": "sepsis"}},
+      "tissue": {"from": "tissue", "values": {"whole blood cells collected from patient after septic shock": "whole_blood"}},
+      "patient": {"from": "patient", "text": "^(.+)$"},
+      "time": {"from": "timepoint", "values": {"t1": 1, "t2": 2}, "unit": "ordinal"},
+      "septic_shock": {"from": "tissue", "values": {"whole blood cells collected from patient after septic shock": "yes"}}
+    },
+    "GSE110487|GPL16791": {
+      "sample_class": {"from": "tissue", "values": {"whole blood cells collected from patient after septic shock": "sepsis"}},
+      "tissue": {"from": "tissue", "values": {"whole blood cells collected from patient after septic shock": "whole_blood"}},
+      "patient": {"from": "patient", "text": "^(.+)$"},
+      "time": {"from": "timepoint", "values": {"t1": 1, "t2": 2}, "unit": "ordinal"},
+      "septic_shock": {"from": "tissue", "values": {"whole blood cells collected from patient after septic shock": "yes"}}
+    },
+    "GSE11755|GPL570": {
+      "sample_class": [
+        {"from": "source name", "patterns": [["^Patient", "sepsis"]], "study_states": "six children with meningococcal sepsis"},
+        {"from": "source name", "patterns": [["^Control", "non_septic_control"]], "note": "The study calls them matched controls and does not say that they are healthy."}],
+      "tissue": {"from": "source name", "patterns": [["/Lymphocyte", "lymphocytes"], ["/Monocyte", "monocytes"], ["/Blood", "blood_not_further_specified"]]},
+      "age": {"study_states": "six children with meningococcal sepsis", "value": "child"},
+      "patient": {"from": "source name", "text": "^(Patient[0-9]+|Control-[a-d])/"},
+      "time": {"from": "source name", "number": "/T([0-9]+)$", "unit": "not_stated"}
+    },
+    "GSE119217|GPL16686": {
+      "sample_class": [
+        {"from": "sepsis severity", "values": {"control": "non_septic_control", "no_shock": "next", "fluid_responsive": "next", "vasopressor-responsive": "next"}, "study_states": "patients in the same age range who had neither febrile illness nor treatment with antibiotics"},
+        {"from": "sepsis severity", "values": {"no_shock": "sepsis", "fluid_responsive": "sepsis", "vasopressor-responsive": "sepsis"}, "note": "The record gives a sepsis severity; the study describes the children as treated for suspected sepsis."}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"study_states": "Children with Suspected Sepsis", "value": "child"},
+      "septic_shock": {"from": "shock status", "values": {"no_shock": "no", "shock": "yes", "control": "not_recorded"}}
+    },
+    "GSE12624|GPL4204": {
+      "sample_class": {"from": "posttraumatic course", "values": {"complicated by sepsis": "sepsis", "not complicated by sepsis": "non_septic_control"}, "note": "The label describes the course of the trauma patient, not the state at sampling: every sample was drawn at ICU admission, before the patients of the sepsis group developed sepsis, and is marked so by its phase."},
+      "phase": {"from": "posttraumatic course", "values": {"complicated by sepsis": "before_onset", "not complicated by sepsis": "next"}, "study_states": "Only whole blood samples drawn upon admission to the ICU were used for this investigation"},
+      "tissue": {"from": "source name", "values": {"peripheral blood, polytrauma": "blood_not_further_specified"}},
+      "patient": {"from": "title", "text": "^Blood_((?:Non)?Septic_Patient_[0-9]+)_"}
+    },
+    "GSE13015|GPL6106": {
+      "sample_class": {"from": "illness", "values": {"sepsis/melioidosis": "sepsis", "sepsis/other infections": "sepsis", "control/recovery": "other_condition", "control/type 2 diabetes": "non_septic_control", "control/healthy": "healthy_control"}},
+      "tissue": {"from": "source name", "patterns": [["^Whole blood", "whole_blood"]]},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "title", "text": "^([A-Z]+[0-9]+)$"}
+    },
+    "GSE13015|GPL6947": {
+      "sample_class": {"from": "illness", "values": {"sepsis/melioidosis": "sepsis", "sepsis/other infections": "sepsis", "control/type 2 diabetes": "non_septic_control", "control/healthy": "healthy_control"}},
+      "tissue": {"from": "source name", "patterns": [["^Whole blood", "whole_blood"]]},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "title", "text": "^(?:Rerun_)?([A-Z]+[0-9]+)$"}
+    },
+    "GSE131411|GPL10999": {
+      "sample_class": {"from": "source name", "patterns": [["^SepticShock", "sepsis"], ["^CardiogenicShock", "other_condition"]]},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "patient": {"from": "patient", "text": "^(.+)$"},
+      "time": {"from": "timepoint", "values": {"t1": 1, "t2": 2, "t3": 3}, "unit": "ordinal"},
+      "septic_shock": {"from": "source name", "patterns": [["^SepticShock", "yes"], ["^CardiogenicShock", "no"]]}
+    },
+    "GSE131411|GPL16791": {
+      "sample_class": [
+        {"from": "title", "patterns": [["^Control", "non_septic_control"]], "note": "The controls are not described in the record or in the study record."},
+        {"from": "source name", "patterns": [["^SepticShock", "sepsis"], ["^CardiogenicShock", "other_condition"]]}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "patient": {"from": "patient", "text": "^(.+)$"},
+      "time": {"from": "timepoint", "values": {"t1": 1, "t2": 2, "t3": 3}, "unit": "ordinal"},
+      "septic_shock": {"from": "source name", "patterns": [["^SepticShock", "yes"], ["^CardiogenicShock", "no"]]}
+    },
+    "GSE131761|GPL13497": {
+      "sample_class": {"from": "diagnosis", "values": {"septic shock": "sepsis", "non-septic shock": "other_condition", "control patient": "non_septic_control"}, "note": "The control patients are not described as healthy; the same arrays are recorded as normal in E-MTAB-1548."},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "septic_shock": {"from": "diagnosis", "values": {"septic shock": "yes"}, "other": "not_recorded"}
+    },
+    "GSE134347|GPL17586": {
+      "sample_class": {"from": "disease state", "values": {"sepsis": "sepsis", "healthy": "healthy_control", "noninfectious": "other_condition"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"}
+    },
+    "GSE137340|GPL10558": {
+      "sample_class": {"from": "diagnosis", "values": {"severe sepsis": "sepsis", "septic shock": "sepsis", "sepsis": "sepsis", "healthy": "healthy_control", "na": "not_recorded"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "source name", "text": "^Su[b]?ject (C?[0-9]+),"},
+      "time": {"from": "time of sample collection", "values": {"0 hr": 0, "24 hrs": 24, "na": null}, "unit": "hour"},
+      "outcome": {"from": "outcome", "values": {"survived": "survivor", "died": "non_survivor", "na": "not_recorded"}, "definition": "not stated"},
+      "septic_shock": {"from": "diagnosis", "values": {"septic shock": "yes", "severe sepsis": "no", "sepsis": "no", "healthy": "not_recorded", "na": "not_recorded"}}
+    },
+    "GSE137341|GPL16686": {
+      "sample_class": {"from": "diagnosis", "values": {"severe sepsis": "sepsis", "septic shock": "sepsis"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "title", "text": "^Subject ([0-9]+),"},
+      "time": {"from": "time of sample collection", "values": {"0 hr": 0, "24 hrs": 24}, "unit": "hour"},
+      "outcome": {"from": "outcome", "values": {"survived": "survivor", "died": "non_survivor"}, "definition": "not stated"},
+      "septic_shock": {"from": "diagnosis", "values": {"septic shock": "yes", "severe sepsis": "no"}}
+    },
+    "GSE138712|GPL16791": {
+      "sample_class": {"from": "clinical group", "values": {"confirmed late-onset sepsis": "sepsis", "possible late-onset sepsis": "other_condition", "no late-onset sepsis": "non_septic_control"}, "note": "Possible sepsis is not taken as sepsis; the infants without sepsis are very preterm infants, not healthy controls."},
+      "tissue": {"from": "source name", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"study_states": "very preterm infants", "value": "neonate"}
+    },
+    "GSE13904|GPL570": {
+      "sample_class": [
+        {"from": "title", "patterns": [["_Control_", "healthy_control"]], "study_states": "Normal children, children with SIRS, children with sepsis, and children with septic shock"},
+        {"from": "title", "patterns": [["_Septic Shock_", "sepsis"], ["_Sepsis_", "sepsis"], ["_SIRS", "other_condition"]]}],
+      "tissue": {"from": "(no key)", "patterns": [["^Whole blood", "whole_blood"]]},
+      "age": {"study_states": "Normal children, children with SIRS, children with sepsis, and children with septic shock", "value": "child"},
+      "patient": {"from": "title", "text": "^([0-9]+-[0-9]+)"},
+      "time": {"from": "title", "number": "_day([0-9]+)_", "unit": "day"},
+      "septic_shock": {"from": "title", "patterns": [["_Septic Shock_", "yes"], ["_Sepsis_", "no"]]}
+    },
+    "GSE142255|GPL17586": {
+      "sample_class": {"from": "disease state", "values": {"healthy control": "healthy_control", "patient with a septic shock but without cirrhosis": "sepsis", "patient with aclf that is related to sepsis": "sepsis", "patient with aclf that is unrelated to sepsis": "other_condition", "patient with stable cirrhosis": "other_condition", "patient with acutely decompensated cirrhosis": "other_condition"}},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "septic_shock": {"from": "disease state", "values": {"patient with a septic shock but without cirrhosis": "yes"}, "other": "not_recorded"}
+    },
+    "GSE145227|GPL23178": {
+      "sample_class": {"from": "disease state", "values": {"sepsis": "sepsis", "control": "healthy_control"}, "study_states": "pediatric sepsis patients and healthy controls"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "age": {"study_states": "pediatric sepsis patients and healthy controls", "value": "child"}
+    },
+    "GSE154918|GPL20301": {
+      "sample_class": {"from": "status", "values": {"hlty": "healthy_control", "seps_p": "sepsis", "shock_p": "sepsis", "inf1_p": "infection_sepsis_not_stated", "seps_fu": "other_condition", "shock_fu": "other_condition"}, "study_states": "heathy control (Hlty), uncomplicated infection (Inf1_P), sepsis (Seps_P), septic shock (Shock_P)", "note": "Follow-up samples of sepsis and septic shock patients are not taken as sepsis."},
+      "phase": {"from": "status", "values": {"seps_fu": "recovery_or_follow_up", "shock_fu": "recovery_or_follow_up"}, "other": "next"},
+      "tissue": {"from": "source name", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "septic_shock": {"from": "status", "values": {"shock_p": "yes", "seps_p": "no"}, "other": "not_recorded"}
+    },
+    "GSE163151|GPL24676": {
+      "sample_class": {"from": "disease state", "values": {"bacterial sepsis": "sepsis", "donor control": "non_septic_control", "covid-19": "infection_sepsis_not_stated", "viral acute respiratory illness": "infection_sepsis_not_stated", "non-viral acute respiratory illness": "other_condition"}, "note": "The donor controls are not described as healthy."},
+      "tissue": {"from": "source name", "values": "tissue"}
+    },
+    "GSE163196|GPL20795": {
+      "sample_class": {"from": "title", "patterns": [["SB1 stage", "sepsis"], ["SB2 stage", "other_condition"], ["^B[0-9]+: sepsis [0-9]+", "sepsis"], ["^B[0-9]+: normal [0-9]+", "other_condition"]], "study_states": "mRNA profiles of PBLs in onset (named SB1) or recovered (named SB2) conditions of sepsis during BM progression", "note": "All samples are of children with bacterial meningitis that developed sepsis, at its onset (SB1) or after recovery (SB2). The samples of December 2020 named normal carry the leukocyte count, sex and patient of recovered (SB2) samples deposited again in February 2024 (cohort links), so they are recovered patients, not healthy controls."},
+      "phase": {"from": "title", "patterns": [["SB1 stage", "during_sepsis"], ["SB2 stage", "recovery_or_follow_up"], ["^B[0-9]+: sepsis [0-9]+", "during_sepsis"], ["^B[0-9]+: normal [0-9]+", "recovery_or_follow_up"]], "study_states": "mRNA profiles of PBLs in onset (named SB1) or recovered (named SB2) conditions of sepsis during BM progression"},
+      "tissue": {"from": "source name", "values": "tissue"},
+      "sex": [{"from": "gender", "values": "sex"}, {"from": "sex", "values": "sex"}],
+      "age": [
+        {"from": "age", "number": "^([0-9]+) month$", "unit": "months"},
+        {"from": "age", "number": "^([0-9]+) day$", "unit": "days"},
+        {"from": "age at the time of sampling", "number": "^([0-9]+) day$", "unit": "days"}],
+      "patient": {"from": "patient", "text": "^(.+)$"}
+    },
+    "GSE171741|GPL24676": {
+      "sample_class": [
+        {"from": "group", "values": {"preaclf with septic shock": "sepsis", "aclf with septic shock treated": "sepsis", "healthy subjects": "healthy_control", "aclf not treated": "other_condition", "aclf treated": "other_condition", "preaclf": "other_condition"}},
+        {"from": "disease group", "values": {"ad": "other_condition", "hv": "healthy_control"}, "study_states": "age-matched healthy subjects"}],
+      "tissue": {"from": "source name", "values": "tissue"},
+      "patient": {"from": "title", "text": "^PBMC from sample ((?:AD|HV)[0-9]+)_[0-9]+$", "note": "The PBMC of each donor were exposed to several treatments; the title names the donor before the treatment number. The whole-blood samples name a sample, not a patient, and the study pairs admission and follow-up samples without saying which, so they carry no patient."},
+      "septic_shock": {"from": "group", "values": {"preaclf with septic shock": "yes", "aclf with septic shock treated": "yes"}, "other": "not_recorded"}
+    },
+    "GSE182522|GPL24676": {
+      "sample_class": [
+        {"from": "diagnosis", "values": {"sepsis": "sepsis"}},
+        {"study_states": "immunocompromised patients with sepsis", "value": "sepsis"}],
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "patient": {"from": "patient", "text": "^(.+)$"},
+      "time": {"from": "time", "values": {"day1": 1, "day8": 8}, "unit": "day"}
+    },
+    "GSE185263|GPL16791": {
+      "sample_class": {"from": "disease state", "values": {"sepsis": "sepsis", "healthy": "healthy_control"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "title", "text": "^([a-zA-Z]+[0-9]+)", "note": "The participant code is the sample name without its time suffix."},
+      "time": {"from": "title", "number": "[0-9]T([0-9]+)$", "unit": "not_stated"},
+      "outcome": {"from": "in hospital mortality", "values": {"survived": "survivor", "died": "non_survivor", "na": "not_recorded"}, "definition": "in-hospital"},
+      "scores": {"sofa": {"from": "sofa 24h post admisssion", "number": "^([0-9]+(?:[.][0-9]+)?)$"}}
+    },
+    "GSE189400|GPL24676": {
+      "sample_class": {"from": "disease state", "values": {"sepsisbsi": "sepsis", "sepsisperiph": "sepsis", "no-sepsis": "non_septic_control"}},
+      "tissue": {"from": "tissue", "values": "tissue", "note": "The record names plasma, while the study title names PAXgene blood."},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "title", "text": "^(EARLI_[0-9]+)_"}
+    },
+    "GSE196117|GPL20301": {
+      "sample_class": [
+        {"from": "condition", "values": {"sepsis": "sepsis", "control": "next"}},
+        {"from": "class", "values": {"healthy": "healthy_control"}}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "individual", "text": "^(.+)$"},
+      "time": {"from": "time", "values": {"treatment day 1": 1, "treatment day 5": 5, "na": null}, "unit": "day"}
+    },
+    "GSE199816|GPL28038": {
+      "sample_class": {"from": "diagnosis", "values": {"sepsis": "sepsis", "covid-19": "infection_sepsis_not_stated"}},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "patient": {"from": "title", "text": "patient_([A-Z]+[0-9]+)$"}
+    },
+    "GSE205672|GPL24676": {
+      "sample_class": {"from": "disease state", "values": {"sepsis patient": "sepsis", "healthy control": "healthy_control"}},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "patient": {"from": "title", "text": "^([0-9]+)_", "note": "The leading number of the sample name is taken as the participant code; the record does not say what it is."}
+    },
+    "GSE208587|GPL24676": {
+      "sample_class": {"from": "classification", "values": {"severe covid-19 (sepsis)": "sepsis", "mild covid-19": "infection_sepsis_not_stated"}},
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE211210|GPL24676": {
+      "sample_class": {"from": "subject status", "values": {"patients with acute sepsis": "sepsis", "health donors": "healthy_control"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "time": {"from": "time", "values": {"day 0": 0}, "unit": "day"}
+    },
+    "GSE216902|GPL24676": {
+      "sample_class": {"study_states": "critically ill elderly patients with sepsis", "value": "sepsis"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "age": {"study_states": "critically ill elderly patients with sepsis", "value": "adult"},
+      "patient": {"from": "patient", "text": "^(.+)$"},
+      "time": {"from": "time", "values": {"day1": 1, "day8": 8}, "unit": "day"}
+    },
+    "GSE217700|GPL16791": {
+      "sample_class": {"from": "source name", "patterns": [["^sepsis patients", "sepsis"], ["^healthy controls", "healthy_control"]]},
+      "tissue": {"from": "tissue", "values": {"whle blood": "whole_blood"}},
+      "patient": {"from": "individual", "text": "^(.+)$"}
+    },
+    "GSE222393|GPL16791": {
+      "sample_class": {"study_states": "COVID-19 and non-COVID-19 Sepsis", "value": "sepsis", "note": "The study treats both its COVID-19 and its non-COVID-19 patients as sepsis; the sample record gives only the COVID-19 status."},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "title", "text": "^(sepcv[0-9]+)T"},
+      "time": {"from": "title", "number": "[0-9]T([0-9]+)$", "unit": "not_stated"},
+      "outcome": {"from": "mortality", "values": {"survived": "survivor", "deceased": "non_survivor"}, "definition": "not stated"}
+    },
+    "GSE228541|GPL24676": {
+      "sample_class": {"from": "disease state", "values": {"healthy": "healthy_control"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "patient": {"from": "title", "text": "_([PH][0-9]+) [(]mRNA[)]$"}
+    },
+    "GSE228541|GPL28038": {
+      "sample_class": {"from": "disease state", "values": {"sepsis_patient": "sepsis", "healthy": "healthy_control"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "patient": {"from": "title", "text": "_([PH][0-9]+) [(]mRNA[)]$"}
+    },
+    "GSE232404|GPL16791": {
+      "sample_class": [
+        {"from": "case", "values": {"hc": "healthy_control", "saki": "next"}, "study_states": "5 cases of SAKI and 5 cases of healthy controls"},
+        {"from": "case", "values": {"saki": "sepsis"}, "study_states": "septic acute kidney injury"}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "age": {"study_states": "whole blood of adults", "value": "adult"}
+    },
+    "GSE232753|GPL24676": {
+      "sample_class": {"from": "disease state", "values": {"sepsis": "sepsis", "none": "healthy_control"}, "study_states": "patients with sepsis and healthy volunteers"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "time": {"from": "time", "values": {"day 0": 0}, "unit": "day"}
+    },
+    "GSE236713|GPL17077": {
+      "sample_class": [
+        {"from": "source name", "patterns": [["day: discharge from icu$", "other_condition"]], "note": "Samples taken at discharge from the ICU are follow-up samples and are not taken as sepsis."},
+        {"from": "disease", "values": {"sepsis": "sepsis", "sirs": "other_condition", "control": "next"}},
+        {"from": "disease 2", "values": {"healthy": "healthy_control"}}],
+      "phase": {"from": ["disease", "source name"], "patterns": [["^sepsis \\| .*day: discharge from icu$", "recovery_or_follow_up"]]},
+      "tissue": {"from": "sample type", "values": {"heparinised whole blood - purified peripheral blood leukocytes (pbls)": "leukocytes"}},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "adult patients within a multi-center clinical study", "value": "adult"},
+      "patient": {"from": "patient id", "text": "^([0-9]+)"},
+      "time": {"from": "source name", "values": {"peripheral blood, day: 1": 1, "peripheral blood, day: 2": 2, "peripheral blood, day: 5": 5, "peripheral blood, day: discharge from icu": 6}, "unit": "ordinal", "note": "The number orders the samples of a patient; discharge from the ICU has no recorded day and is placed last."},
+      "outcome": {"from": "died/survived", "values": {"survived": "survivor", "died": "non_survivor"}, "definition": "not stated"}
+    },
+    "GSE236892|GPL24676": {
+      "sample_class": {"study_states": "113 hypoinflammatory and 76 hyperinflammatory sepsis patients", "value": "sepsis"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": [{"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"}, {"from": "age", "values": {"90+": "adult"}}],
+      "patient": {"from": "description", "text": "^(EARLI_[0-9]+)$"}
+    },
+    "GSE241238|GPL24676": {
+      "sample_class": {"from": "condition", "values": {"sepsis": "sepsis", "healthy": "healthy_control"}},
+      "tissue": {"from": "cell type", "values": "tissue"}
+    },
+    "GSE243217|GPL30209": {
+      "sample_class": {"from": "disease state", "values": {"sepsis": "sepsis", "covid-19": "infection_sepsis_not_stated", "healthy donor": "healthy_control"}},
+      "tissue": {"from": "cell type", "values": "tissue", "note": "The record names peripheral blood as tissue and mononuclear cells as cell type, while the study title names whole blood."},
+      "patient": {"from": "title", "text": "^([A-Z]+[0-9]+) "}
+    },
+    "GSE25504|GPL13667": {
+      "sample_class": [
+        {"from": "title", "patterns": [["^Con", "non_septic_control"]], "study_states": "control and infected human neonates"},
+        {"from": "title", "patterns": [["^Inf", "sepsis"]], "study_states": "neonatal sepsis by determining genome-wide alterations in host RNA in infected infants"},
+        {"from": "title", "patterns": [["^Vir", "infection_sepsis_not_stated"], ["^NEC", "other_condition"]], "note": "The record does not explain these sample names; Vir is read as a viral infection and NEC as necrotising enterocolitis."}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "control and infected human neonates", "value": "neonate"},
+      "patient": {"from": "title", "text": "^([A-Za-z]+[0-9]+)$"}
+    },
+    "GSE25504|GPL15158": {
+      "sample_class": [
+        {"from": "title", "patterns": [["^Con", "non_septic_control"]], "study_states": "control and infected human neonates"},
+        {"from": "title", "patterns": [["^Inf", "sepsis"]], "study_states": "neonatal sepsis by determining genome-wide alterations in host RNA in infected infants"},
+        {"from": "title", "patterns": [["^Sus", "other_condition"]], "note": "The record does not explain this sample name; the description names a suspected infected set."}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "control and infected human neonates", "value": "neonate"},
+      "patient": {"from": "title", "text": "^([A-Za-z]+[0-9]+)$"}
+    },
+    "GSE25504|GPL570": {
+      "sample_class": [
+        {"from": "title", "patterns": [["^Con", "non_septic_control"]], "study_states": "control and infected human neonates"},
+        {"from": "title", "patterns": [["^Inf", "sepsis"]], "study_states": "neonatal sepsis by determining genome-wide alterations in host RNA in infected infants"}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "control and infected human neonates", "value": "neonate"},
+      "patient": {"from": "title", "text": "^([A-Za-z]+[0-9]+)$"}
+    },
+    "GSE25504|GPL6947": {
+      "sample_class": [
+        {"from": "title", "patterns": [["^Con", "non_septic_control"]], "study_states": "control and infected human neonates"},
+        {"from": "title", "patterns": [["^Inf", "sepsis"]], "study_states": "neonatal sepsis by determining genome-wide alterations in host RNA in infected infants"}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "control and infected human neonates", "value": "neonate"},
+      "patient": {"from": "title", "text": "^([A-Za-z]+[0-9]+)$"}
+    },
+    "GSE26378|GPL570": {
+      "sample_class": {"from": "disease state", "values": {"septic shock patient": "sepsis", "normal control": "healthy_control"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "age": {"from": "age (years)", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "outcome": {"from": "outcome", "values": {"survivor": "survivor", "nonsurvivor": "non_survivor"}, "definition": "not stated"},
+      "septic_shock": {"from": "disease state", "values": {"septic shock patient": "yes"}, "other": "not_recorded"}
+    },
+    "GSE26440|GPL570": {
+      "sample_class": {"from": "disease state", "values": {"septic shock patient": "sepsis", "normal control": "healthy_control"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "age": {"from": "age (years)", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "title", "text": " ([0-9]+-[0-9]+)[AC]?$"},
+      "outcome": {"from": "outcome", "values": {"survivor": "survivor", "nonsurvivor": "non_survivor", "n/a": "not_recorded"}, "definition": "not stated"},
+      "septic_shock": {"from": "disease state", "values": {"septic shock patient": "yes"}, "other": "not_recorded"}
+    },
+    "GSE267399|GPL11154": {
+      "sample_class": {"from": "disease", "values": {"sepsis without overt dic": "sepsis", "sepsis with overt dic": "sepsis"}},
+      "tissue": {"from": "cell type", "values": "tissue"}
+    },
+    "GSE270838|GPL24676": {
+      "sample_class": {"from": "title", "patterns": [[", Sepsis,", "sepsis"], [", Healthy,", "healthy_control"]]},
+      "tissue": {"from": "cell line", "values": "tissue"},
+      "patient": {"from": "title", "text": ", ((?:HC|SP)[0-9]+)$"}
+    },
+    "GSE272769|GPL17692": {
+      "sample_class": {"from": "description", "patterns": [["critically ill sepsis patien", "sepsis"]]},
+      "tissue": {"from": "source name", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "outcome": {"from": "mort30", "values": {"no": "survivor", "yes": "non_survivor"}, "definition": "30-day"},
+      "septic_shock": {"from": "shock", "values": {"yes": "yes", "no": "no"}}
+    },
+    "GSE273700|GPL24676": {
+      "sample_class": {"study_states": "intensive care unit (ICU) patients with sepsis", "value": "sepsis"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "patient": {"from": "patient", "text": "^(.+)$"},
+      "time": {"from": "time", "values": {"day1": 1, "day8": 8}, "unit": "day"}
+    },
+    "GSE279448|GPL24676": {
+      "sample_class": {"from": "group", "values": {"adult sepsis": "sepsis", "pediatric sepsis": "sepsis", "adult healthy control": "healthy_control", "pediatric healthy control": "healthy_control", "adult icu control": "non_septic_control", "pediatric icu control": "non_septic_control"}},
+      "tissue": {"from": "cell line", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"}
+    },
+    "GSE282464|GPL24676": {
+      "sample_class": {"from": "type of infection", "values": {"sepsis": "sepsis", "septic_shock": "sepsis"}, "other": "infection_sepsis_not_stated"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "septic_shock": {"from": "type of infection", "values": {"septic_shock": "yes", "sepsis": "no"}, "other": "not_recorded"}
+    },
+    "GSE286082|GPL33140": {
+      "sample_class": {"from": "source name", "values": {"sepsis immunosuppression patient": "sepsis", "healthy person": "healthy_control"}},
+      "tissue": {"from": "cell type", "values": "tissue"}
+    },
+    "GSE28750|GPL570": {
+      "sample_class": {"from": "health status", "values": {"sepsis": "sepsis", "healthy": "healthy_control", "post_surgical": "other_condition"}},
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE294059|GPL24676": {
+      "sample_class": {"from": "source name", "values": {"patients with sepsis": "sepsis", "nonseptic control": "non_septic_control"}},
+      "tissue": {"from": "cell type", "values": "tissue"}
+    },
+    "GSE294985|GPL29480": {
+      "sample_class": {"from": "title", "patterns": [["^sepsis patient", "sepsis"], ["^healthy control", "healthy_control"]]},
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE29536|GPL6102": {
+      "sample_class": {"from": "disease status", "values": {"healthy": "healthy_control", "melioidosis": "sepsis", "other infection": "sepsis", "healthy with dm": "non_septic_control", "diabetes": "non_septic_control"}, "other": "other_condition", "study_states": "patients with HIV, tuberculosis, sepsis, systemic lupus erythematosus", "note": "The record names melioidosis and other infection; the study record names this dataset as its sepsis dataset. The healthy controls belong to nine datasets of different diseases."},
+      "tissue": {"from": "source name", "values": "tissue"}
+    },
+    "GSE296830|GPL18573": {
+      "sample_class": {"from": "condition", "patterns": [["^severe sepsis", "sepsis"], ["^improving health status after sepsis", "other_condition"], ["^recovered health status", "other_condition"]], "note": "Samples taken during the temporary improvement after sepsis, and after recovery, are follow-up samples and are not taken as sepsis."},
+      "phase": {"from": "condition", "patterns": [["^severe sepsis", "during_sepsis"], ["^improving health status after sepsis", "recovery_or_follow_up"], ["^recovered health status", "recovery_or_follow_up"]], "study_states": "at the stage of severe sepsis, at temporary improvement and recovery"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "treatment", "number": "^([0-9]+)-year-old$", "unit": "years"},
+      "patient": {"from": "title", "text": "^Patient (B[0-9]+),"},
+      "time": {"from": "source name", "number": "day ([0-9]+)$", "unit": "day"}
+    },
+    "GSE310929|GPL18573": {
+      "sample_class": [
+        {"from": "outcome", "values": {"con": "non_septic_control", "rap": "next", "cci": "next", "ed": "next"}, "note": "CON is not explained in the record and is not taken as a healthy control."},
+        {"from": "outcome", "values": {"rap": "sepsis", "cci": "sepsis", "ed": "sepsis"}, "study_states": "adult sepsis patients", "note": "The record gives only the clinical course (RAP, CCI, ED); that these are sepsis patients rests on the study record."}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "outcome": {"from": "inhospdeath", "values": {"no": "survivor", "yes": "non_survivor"}, "definition": "in-hospital"},
+      "septic_shock": {"from": "shock", "values": {"yes": "yes", "no": "no"}},
+      "scores": {"sofa": {"from": "sofa", "number": "^([0-9]+(?:[.][0-9]+)?)$"}}
+    },
+    "GSE32707|GPL10558": {
+      "sample_class": [
+        {"from": "source name", "patterns": [["^untreated", "non_septic_control"]], "study_states": "those whithout sepsis, SIRS, or ARDS (untreated)"},
+        {"from": "source name", "patterns": [["^Sepsis", "sepsis"], ["^se/ARDS", "sepsis"], ["^SIRS", "other_condition"]], "study_states": "those with sepsis + ARDS (se/ARDS)"}],
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "patient": {"from": "subject id", "text": "^(.+)$"},
+      "time": {"from": "source name", "number": "Day ([0-9]+)$", "unit": "day"}
+    },
+    "GSE33118|GPL570": {
+      "sample_class": {"study_states": "Transcriptome of the septic shock", "value": "sepsis"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "values": {"20-39": "adult", "40-59": "adult", "60-79": "adult", "> 80": "adult"}},
+      "patient": {"from": "title", "text": "(patient[0-9]+)_t"},
+      "time": {"from": "title", "number": "_t([0-9]+)$", "unit": "not_stated"},
+      "outcome": {"from": "survival", "values": {"positive": "survivor", "negative": "non_survivor"}, "definition": "not stated"},
+      "septic_shock": {"study_states": "Transcriptome of the septic shock", "value": "yes"}
+    },
+    "GSE33119|GPL570": {
+      "sample_class": {"study_states": "Transcriptome of the septic shock", "value": "sepsis"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "sex", "values": "sex"},
+      "age": {"from": "age", "values": {"20-39": "adult", "40-59": "adult", "60-79": "adult", "> 80": "adult"}},
+      "patient": {"from": "title", "text": "(patient[0-9]+)_t"},
+      "time": {"from": "title", "number": "_t([0-9]+)$", "unit": "not_stated"},
+      "outcome": {"from": "survival", "values": {"positive": "survivor", "negative": "non_survivor"}, "definition": "not stated"},
+      "septic_shock": {"study_states": "Transcriptome of the septic shock", "value": "yes"}
+    },
+    "GSE335824|GPL30173": {
+      "sample_class": {"study_states": "adult patients presenting to the Emergency Department with suspected sepsis", "value": "other_condition", "note": "The patients were enrolled for suspected sepsis, which is not taken as sepsis."},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "age": {"study_states": "adult patients presenting to the Emergency Department with suspected sepsis", "value": "adult"},
+      "patient": {"from": "title", "text": ", ([A-Z]+-[0-9]+), T[0-9]$"},
+      "time": {"from": "timepoint", "values": {"t1": 1, "t2": 2, "t3": 3}, "unit": "ordinal"}
+    },
+    "GSE341493|GPL16791": {
+      "sample_class": {"from": "disease state", "values": {"healthy control": "healthy_control", "patient with sepsis without ards": "sepsis", "patient with sepsis-associated ards": "sepsis"}},
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE341837|GPL34284": {
+      "sample_class": {"from": "treatment", "values": {"sepsis with thyroid dysfunction": "sepsis", "sepsis without thyroid dysfunction": "sepsis"}},
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE341840|GPL34284": {
+      "sample_class": {"from": "treatment", "values": {"sepsis with thyroid dysfunction": "sepsis", "sepsis without thyroid dysfunction": "sepsis"}},
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE4607|GPL570": {
+      "sample_class": [
+        {"from": "dx", "values": {"control": "non_septic_control", "septicshock": "next", "sirs": "next", "sirs_resolved": "next"}, "study_states": "Control patients were recruited from the outpatient or inpatient departments", "note": "The controls are not described as healthy here; later deposits of the same series call their controls normal."},
+        {"from": "dx", "values": {"septicshock": "sepsis", "sirs": "other_condition", "sirs_resolved": "other_condition"}}],
+      "tissue": {"from": "source name", "values": "tissue"},
+      "age": {"study_states": "children with SIRS, and children with septic shock", "value": "child"},
+      "patient": {"from": "ptid", "text": "^([0-9]+_[0-9]+)"},
+      "time": {"from": "day", "number": "^([0-9]+)$", "unit": "day"},
+      "outcome": {"from": "survival", "values": {"survivor": "survivor", "nonsurvivor": "non_survivor"}, "definition": "not stated"},
+      "septic_shock": {"from": "dx", "values": {"septicshock": "yes"}, "other": "not_recorded"},
+      "scores": {"prism": {"from": "prism", "number": "^([0-9]+(?:[.][0-9]+)?)$"}}
+    },
+    "GSE48080|GPL4133": {
+      "sample_class": {"from": "diagnosis", "values": {"septic shock": "sepsis", "severe sepsis": "sepsis", "healthy volunteer": "healthy_control"}},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "patient": {"from": "title", "text": "^(P[0-9]+|Control [0-9]+)"},
+      "time": {"from": "time point", "values": {"d0 (at the time of sepsis diagnosis)": 0, "d7 (7 days after diagnosis)": 7}, "unit": "day"},
+      "outcome": {"from": "outcome", "values": {"alive": "survivor", "dead": "non_survivor", "healthy volunteer": "not_recorded"}, "definition": "not stated"},
+      "septic_shock": {"from": "diagnosis", "values": {"septic shock": "yes", "severe sepsis": "no", "healthy volunteer": "not_recorded"}}
+    },
+    "GSE54514|GPL6947": {
+      "sample_class": {"from": "disease status", "values": {"sepsis survivor": "sepsis", "sepsis nonsurvivor": "sepsis", "healthy": "healthy_control"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age (years)", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "group id", "text": "^(.+)$"},
+      "time": {"from": "group day", "number": "_D([0-9]+)$", "unit": "day"},
+      "outcome": {"from": "disease status", "values": {"sepsis survivor": "survivor", "sepsis nonsurvivor": "non_survivor", "healthy": "not_recorded"}, "definition": "not stated"},
+      "scores": {"apache_ii": {"from": "severity (apacheii)", "number": "^([0-9]+(?:[.][0-9]+)?)$"}}
+    },
+    "GSE57065|GPL570": {
+      "sample_class": [
+        {"from": "title", "patterns": [["^Blood_HV", "healthy_control"]], "study_states": "twenty-five healthy volunteers"},
+        {"from": "title", "patterns": [["^Blood_P", "sepsis"]], "study_states": "Blood samples were collected within 30 minutes, 24 and 48 hours after septic shock"}],
+      "tissue": {"from": "title", "patterns": [["^Blood_", "blood_not_further_specified"]]},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "title", "text": "^Blood_(P[0-9]+|HV[0-9]+)"},
+      "time": {"from": "collection time", "values": {"0 hr": 0, "24 hr": 24, "48 hr": 48}, "unit": "hour"},
+      "septic_shock": {"from": "title", "patterns": [["^Blood_P", "yes"]], "study_states": "Blood samples were collected within 30 minutes, 24 and 48 hours after septic shock"}
+    },
+    "GSE60424|GPL15456": {
+      "sample_class": {"from": "diseasestatus", "values": {"sepsis": "sepsis", "healthy control": "healthy_control"}, "other": "other_condition"},
+      "tissue": {"from": "celltype", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "donorid", "text": "^(.+)$"}
+    },
+    "GSE63042|GPL9115": {
+      "sample_class": {"from": "sirs vs sepsis", "values": {"sepsis": "sepsis", "sirs": "other_condition"}},
+      "tissue": {"from": "source name", "values": "tissue"},
+      "patient": {"from": "patient id", "text": "^(.+)$"},
+      "outcome": {"from": "sirs outcomes", "values": {"sepsis death": "non_survivor", "septic shock": "survivor", "severe sepsis": "survivor", "uncomplicated sepsis": "survivor"}, "other": "not_recorded", "definition": "not stated", "study_states": "including 78 sepsis survivors and 28 sepsis nonsurvivors", "note": "The groups of the record are exclusive: a sepsis patient who died is in the group sepsis death, and the study counts the sepsis patients of the other groups as survivors. The outcome of the SIRS patients is not recorded."},
+      "septic_shock": {"from": "sirs outcomes", "values": {"septic shock": "yes", "uncomplicated sepsis": "no", "severe sepsis": "no"}, "other": "not_recorded"}
+    },
+    "GSE63311|GPL10999": {
+      "sample_class": [
+        {"from": "group", "values": {"control t0": "non_septic_control", "sepsis t0": "next", "no sepsis t0": "next"}, "study_states": "11 non-urgent surgical controls"},
+        {"from": "group", "values": {"sepsis t0": "sepsis", "no sepsis t0": "non_septic_control"}, "note": "The patients without sepsis were suspected of sepsis at presentation."}],
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE65682|GPL13667": {
+      "sample_class": [
+        {"from": "title", "patterns": [["^healthy subject", "healthy_control"]]},
+        {"from": "abdominal sepsis and controls", "values": {"abdo_s": "sepsis", "ctrl_gi": "non_septic_control", "na": "next"}, "note": "The field names abdominal sepsis and its controls; the controls are intensive-care patients."},
+        {"from": "endotype class", "values": {"mars1": "sepsis", "mars2": "sepsis", "mars3": "sepsis", "mars4": "sepsis", "na": "next"}, "study_states": "critically ill patients with sepsis", "note": "The record gives only the Mars endotype, which the investigators defined in sepsis patients; the word sepsis is not in the sample record."},
+        {"from": "pneumonia diagnoses", "values": {"cap": "infection_sepsis_not_stated", "hap": "infection_sepsis_not_stated", "no-cap": "other_condition", "na": "next"}},
+        {"from": "title", "patterns": [["^intensive-care unit patient", "other_condition"]]}],
+      "tissue": {"from": "source name", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "outcome": {"from": "mortality event 28days", "values": {"0": "survivor", "1": "non_survivor", "na": "not_recorded"}, "definition": "28-day"}
+    },
+    "GSE66099|GPL570": {
+      "sample_class": {"from": "disease", "values": {"septicshock": "sepsis", "sepsis": "sepsis", "sirs": "other_condition", "control": "healthy_control"}, "study_states": "There is also a group of healthy controls"},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "age": {"study_states": "Pediatric SIRS and Septic Shock", "value": "child"},
+      "patient": {"from": "title", "text": "^([0-9]+-[0-9]+)$"},
+      "time": {"from": "icu day", "number": "^([0-9]+)$", "unit": "day"},
+      "septic_shock": {"from": "disease", "values": {"septicshock": "yes", "sepsis": "no"}, "other": "not_recorded"}
+    },
+    "GSE66890|GPL6244": {
+      "sample_class": {"from": "disease state", "patterns": [["^sepsis with ARDS", "sepsis"], ["^sepsis alone", "sepsis"], ["^not meeting", "other_condition"]], "note": "Five samples are recorded as excluded by the investigators and are not taken as sepsis."},
+      "tissue": {"from": "source name", "values": "tissue"},
+      "sex": {"from": "gender", "values": {"male": "male", "female": "female", "other": "other"}},
+      "age": {"from": "age years", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "septic_shock": {"from": "shock", "values": {"1": "yes", "0": "no"}}
+    },
+    "GSE69063|GPL19983": {
+      "sample_class": {"from": "disease status", "values": {"sepsis": "sepsis", "healthy control": "healthy_control", "anaphylaxis": "other_condition", "head trauma": "other_condition"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "patient": {"from": "title", "text": "from (.+?)(?: at Time T[0-9])?$"},
+      "time": {"from": "time point", "values": {"t0": 0, "t1": 1, "t2": 2, "n/a": null}, "unit": "ordinal"}
+    },
+    "GSE69528|GPL10558": {
+      "sample_class": {"from": "study group", "values": {"other sepsis": "sepsis", "septicemic melioidosis": "sepsis", "uninfected healthy": "healthy_control", "uninfected type 2 diabetes mellitus": "non_septic_control"}},
+      "tissue": {"from": "tissue", "values": "tissue"}
+    },
+    "GSE69686|GPL20292": {
+      "sample_class": {"from": "infection", "values": {"sepsis": "sepsis", "clinical sepsis": "sepsis", "uninfected": "non_septic_control", "uninfected chorio": "non_septic_control"}, "note": "The uninfected infants are neonates in hospital care and are not taken as healthy controls."},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "age": {"study_states": "Neonates manifest a unique host response to sepsis", "value": "neonate"}
+    },
+    "GSE70311|GPL10558": {
+      "sample_class": {"from": "subject subgroup", "values": {"patients with secondary sepsis after trauma": "sepsis", "patients with systemic inflammation without infection": "other_condition"}, "note": "The label describes the course of the trauma patient, not the state at sampling; the phase marks the samples drawn before the sepsis, which was secondary to the trauma."},
+      "phase": {"from": ["subject subgroup", "time point"], "patterns": [["^patients with secondary sepsis after trauma \\| .*\\(day 0\\)", "before_onset"], ["^patients with secondary sepsis after trauma", "onset_not_recorded"]], "study_states": "Whole blood from trauma patients was collected within the first 6 h after trauma (day 0)", "note": "The sample drawn within 6 h of the trauma precedes a sepsis secondary to it; the record does not give the day of onset, so it is not known whether the later samples precede it."},
+      "tissue": {"from": "cell type", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "patient": {"from": "subject id", "text": "^(.+)$"},
+      "time": {"from": "time point", "number": "day ([0-9]+)", "unit": "day"}
+    },
+    "GSE70461|GPL570": {
+      "sample_class": {"from": "clinical and therapeutic description", "patterns": [["^no sepsis", "non_septic_control"], ["^sepsis, but", "sepsis"], ["course of sepsis treatment", "sepsis"], ["course of continuous treatment|continuous oxygen therapy", "other_condition"]], "note": "The infants without sepsis are preterm infants and are not taken as healthy controls."},
+      "tissue": {"from": "source name", "patterns": [["^Human blood", "blood_not_further_specified"]]},
+      "sex": {"from": "sex; female=1, male=2", "values": {"1": "female", "2": "male"}},
+      "age": {"from": "pna; postnatal age = chronological age; living days", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "days"},
+      "patient": {"from": "title", "text": "^ID[0-9]+_(Infant[0-9]+)_"},
+      "time": {"from": "title", "number": "_Sample([0-9]+)$", "unit": "ordinal"}
+    },
+    "GSE72326|GPL10558": {
+      "sample_class": {"from": "group", "values": {"control icu_sepsis": "sepsis", "healthy control of sepsis and kidney disease": "healthy_control", "healthy control of sle": "healthy_control", "sle": "other_condition", "control kidney disease": "other_condition"}},
+      "tissue": {"from": "source name", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"}
+    },
+    "GSE72829|GPL10558": {
+      "sample_class": {"from": "source name", "patterns": [["healthy control", "healthy_control"], ["Bacterial infection|Viral infection|uncertain bacterial", "infection_sepsis_not_stated"], ["JIA|HSP", "other_condition"]]},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "childhood bacterial and viral infection", "value": "child"}
+    },
+    "GSE72829|GPL6883": {
+      "sample_class": {"from": "disease state", "values": {"sepsis": "sepsis", "sepsis and meningitis": "sepsis", "healthy": "healthy_control"}},
+      "tissue": {"from": "source name", "patterns": [["^Whole Blood", "whole_blood"]]},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "childhood bacterial and viral infection", "value": "child"}
+    },
+    "GSE72829|GPL6947": {
+      "sample_class": {"from": "source name", "patterns": [["healthy control", "healthy_control"], ["Bacterial infection|Viral infection|uncertain bacterial", "infection_sepsis_not_stated"]]},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "childhood bacterial and viral infection", "value": "child"}
+    },
+    "GSE74224|GPL5175": {
+      "sample_class": {"from": "group", "values": {"sepsis": "sepsis", "post-surgical": "non_septic_control"}, "study_states": "infection-negative systemic inflammation controls", "note": "The study enrols the post-surgical patients without infection as the controls of its sepsis patients."},
+      "tissue": {"from": "source name", "values": "tissue"},
+      "age": {"study_states": "Critically Ill Adults", "value": "adult"}
+    },
+    "GSE8121|GPL570": {
+      "sample_class": [
+        {"from": "(no key)", "patterns": [["_Normal,", "healthy_control"]]},
+        {"from": "title", "patterns": [["_SepticShock_", "sepsis"]]}],
+      "tissue": {"from": "source name", "patterns": [["^Whole blood", "whole_blood"]]},
+      "age": {"study_states": "Pediatric septic shock", "value": "child"},
+      "patient": {"from": "title", "text": "^([0-9]+_[0-9]+)_"},
+      "time": {"from": "title", "number": "_Day([0-9]+)_", "unit": "day"},
+      "septic_shock": {"from": "title", "patterns": [["_SepticShock_", "yes"]]}
+    },
+    "GSE84439|GPL16791": {
+      "sample_class": {"from": "disease", "values": {"sepsis": "sepsis", "sepsis/bmt": "sepsis", "ards": "other_condition", "ards/bmt": "other_condition"}},
+      "tissue": {"from": "tissue", "values": "tissue"},
+      "patient": {"from": "donor", "text": "^(.+)$"}
+    },
+    "GSE95233|GPL570": {
+      "sample_class": {"from": "source name", "patterns": [["^Patient", "sepsis"], ["^Control", "healthy_control"]], "study_states": "51 septic shock patients and 22 healthy volunteers"},
+      "tissue": {"from": "description", "values": {"gene expression data from whole blood": "whole_blood"}},
+      "sex": {"from": "gender", "values": {"m": "male", "f": "female", "h": "male"}, "note": "The value H is read as homme, French for man: the study is from France, and F stands for female and femme alike. The sex check of the validation stage, which never reads the recorded sex, also finds the four samples male."},
+      "age": {"from": "age", "number": "^([0-9]+(?:[.][0-9]+)?)$", "unit": "years"},
+      "patient": {"from": "source name", "text": "^(Control [0-9]+|Patient [0-9]+)"},
+      "time": {"from": "time point", "values": {"d01": 1, "d02": 2, "d03": 3, "na": null}, "unit": "day"},
+      "outcome": {"from": "survival", "values": {"survivor": "survivor", "non survivor": "non_survivor", "na": "not_recorded"}, "definition": "28-day", "study_states": "according to day 28 survival status"},
+      "septic_shock": {"from": "source name", "patterns": [["^Patient", "yes"]], "study_states": "51 septic shock patients and 22 healthy volunteers"}
+    },
+    "GSE9692|GPL570": {
+      "sample_class": {"from": "source name", "patterns": [["septic shock", "sepsis"], ["normal children", "healthy_control"]]},
+      "tissue": {"from": "source name", "patterns": [["^Whole blood", "whole_blood"]]},
+      "sex": {"from": "gender", "values": "sex"},
+      "age": {"study_states": "children with septic shock", "value": "child"},
+      "patient": {"from": "title", "text": "^([0-9]+[-_][0-9]+)"},
+      "time": {"from": "title", "number": "_Day([0-9]+)_", "unit": "day"},
+      "outcome": {"from": "(no key)", "patterns": [["Non survivor", "non_survivor"], ["Survivor", "survivor"]], "definition": "not stated"},
+      "septic_shock": {"from": "source name", "patterns": [["septic shock", "yes"]]}
+    },
+    "GSE9960|GPL570": {
+      "sample_class": {"from": "title", "patterns": [["^Sepsis", "sepsis"], ["^Control", "non_septic_control"]], "note": "The controls are not described in the record or in the study record."},
+      "tissue": {"from": "source name", "values": "tissue"}
+    }
+  },
+  "sepsis_definitions": {
+    "GSE228541": {"value": "sepsis-3", "study_states": "the diagnosis of sepsis followed the Sepsis-3 guidelines"},
+    "GSE243217": {"value": "sepsis-3", "study_states": "Sepsis was diagnosed using Sepsis-3 criteria"}
+  },
+  "same_sample": [
+    {"a": "E-MTAB-4451|A-MEXP-2210", "b": "E-MTAB-5274|A-MEXP-2210", "minimum_correlation": 0.98, "basis": "the arrays of the two GAinS studies are each other's most similar sample, and each pair carries the same GAinS patient code in its records; ArrayExpress deposited them without barcodes. The values are those of one array: over the genes that both deposits measure by a single probe, every pair agrees exactly in rank (rank correlation 1.0). The agreement over all genes is lower because the normalized matrix of E-MTAB-4451 holds fewer probes than the raw table of E-MTAB-5274, so for some genes measured by several probes the two deposits keep different probes (gene_matrices.preferred_probe_quality of the annotation stage). The receipt of stage 02 (identity.found_by_entry) records the number of pairs, their range of correlation and their lowest margin."},
+    {"a": "GSE163196|GPL20795", "b": "GSE163196|GPL20795", "minimum_correlation": 0.98, "basis": "the study states that the samples of February 2024 were added for consistency with the publication beside those of December 2020; samples of 2020 are each other's most similar sample with a sample of 2024, and each pair carries the same leukocyte count, sex and patient in its record. The receipt of stage 02 (identity.found_by_entry) records the number of pairs, their range of correlation and their lowest margin."},
+    {"a": "GSE199816|GPL28038", "b": "GSE243217|GPL30209", "minimum_correlation": 0.98, "basis": "the libraries of the two Osaka studies are each other's most similar sample, and every pair carries the same patient code in its titles (COV13, P7, P19, P25 and others); the counts differ because the studies were quantified separately. GSE228541 holds identical counts of most libraries of GSE243217, which the files link, so a library linked here joins all three studies; because such a copy would stand beside a library as its next most similar sample and hide the pair, the screen compares distinct samples only. The receipt of stage 02 (identity.found_by_entry) records the number of pairs, their range of correlation and their lowest margin."},
+    {"a": "GSE341837|GPL34284", "b": "GSE341840|GPL34284", "minimum_correlation": 0.98, "basis": "libraries of the two series, submitted together, are each other's most similar sample with a margin over any other sample that is larger than between any two samples of one patient in the resource; the records name them differently (EG8, EG9 and EG10 in GSE341837, SPTD11, SPTD13 and SPTD14 in GSE341840), so the link rests on the values. The receipt of stage 02 (identity.found_by_entry) records the number of pairs, their range of correlation and their lowest margin."}
+  ],
+  "replicates": [
+    {"study": "GSE232753|GPL24676", "minimum_correlation": 0.995, "basis": "the libraries form pairs of consecutive samples (Control 1 and Control 2, Sepsis 1 and Sepsis 2, and so on) that are each other's most similar sample, while no other two samples of the study agree as closely; each pair is taken as two libraries of one sample. The receipt of stage 02 (identity.found_by_entry) records the number of pairs, their range of correlation and their lowest margin."}
+  ],
+  "record_links": [
+    {"a": {"study": "GSE110487", "field": "title", "pattern": "^([EG][0-9]+T[0-9]+)$"}, "b": {"study": "GSE131411", "field": "title", "pattern": "^([EG][0-9]+T[0-9]+)_[A-Za-z]+ \\[re-analysis\\]$", "required": "\\[re-analysis\\]$"}, "basis": "GSE131411 marks records as re-analyses in their titles; each title carries the patient and time code of a record of GSE110487 (E07T1, G01T1 and so on), from the same investigators, so each is that library counted again. Every record that the title marks must give its key (the pattern 'required'). The receipt of stage 02 (record_links.pairs) records the number of pairs."}
+  ],
+  "patient_namespaces": [
+    {"name": "GAinS", "studies": ["E-MTAB-4421", "E-MTAB-4451", "E-MTAB-5273", "E-MTAB-5274"], "basis": "the four ArrayExpress studies of the Genomic Advances in Sepsis (GAinS) consortium name their patients by one series of codes (CAP0003 and so on); the records of E-MTAB-4421 and E-MTAB-5273 share 57 codes, and those of E-MTAB-4451 and E-MTAB-5274 share 54."},
+    {"name": "GSE110487_GSE131411", "studies": ["GSE110487", "GSE131411"], "basis": "GSE131411 re-analyses libraries of GSE110487 and names the patients by the same codes (E07, G01 and so on); their records share 21 codes."},
+    {"name": "sepcv", "studies": ["GSE185263", "GSE222393"], "basis": "both studies name their patients by one series of codes (sepcv001 and so on) from the same investigators, with the same recorded age and sex for a shared code; their records share 29 codes."},
+    {"name": "EARLI", "studies": ["GSE189400", "GSE236892"], "basis": "both studies name their patients by the code of the EARLI cohort (EARLI_10456 and so on); their records share 124 codes, and the expression of most shared patients is most similar to their own samples in the other study."}
+  ],
+  "record_flags": [
+    {"study": "GSE13015", "platform": "GPL6947", "field": "title", "pattern": "^Rerun_", "flag": "rerun of an array"},
+    {"study": "GSE131411", "field": "title", "pattern": "re-analysis", "flag": "recorded as a re-analysis of a sample of another series"},
+    {"study": "GSE137341", "field": "description", "pattern": "^Technical Replicate", "flag": "technical replicate of a sample that is also in GSE137340"},
+    {"study": "GSE171741", "field": "treatment", "pattern": ".", "flag": "PBMC exposed ex vivo to albumin or vehicle for 2 hours before the RNA was extracted"},
+    {"study": "GSE66890", "field": "title", "pattern": "[.]excluded$", "flag": "excluded by the investigators"}
+  ],
+  "replicate_groups": [
+    {"study": "GSE12624", "field": "title", "pattern": "^(Blood_(?:Non)?Septic_Patient_[0-9]+)_Replicate_[0-9]+$", "flag": "technical replicate array of a sample whose first array is also in the study", "study_states": "Each patient sample was hybridized in duplicate or triplicate on microarrays"}
+  ],
+  "identity_flags": [
+    {"study": "GSE26440", "samples": ["GSM648638", "GSM648640", "GSM648688"], "flag": "array may not be the sample of its record", "basis": "re-scanned control arrays whose CEL files match no column of the series matrix, two of them labelled with other patients in GSE66099 (value check of the expression stage)"},
+    {"study": "GSE4607", "samples": ["GSM103069"], "flag": "array may not be the sample of its record", "basis": "a CEL file that matches no column of the series matrix; the same array is labelled patient 07-0006, day 1, in four other studies (value check of the expression stage)"}
+  ]
+}

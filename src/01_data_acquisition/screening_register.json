@@ -1,0 +1,2943 @@
+{
+  "E-FPMI-7": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "peripheral blood monocytes from IRAK4-deficient patient and healthy donors, stimulated in vitro with TNF/IL-1/PGN/LPS"
+  },
+  "E-GEOD-12959": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "ancestry-related metabolic gene expression study; no sepsis patients; tissue not stated in record",
+    "flag": "uncertain"
+  },
+  "E-GEOD-24956": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "Agilent miRNA microarray only, PBMC of H1N1 influenza patients and healthy controls"
+  },
+  "E-GEOD-43217": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HT1080 fibrosarcoma cell line, polyIC and PKC inhibitor treatment"
+  },
+  "E-GEOD-43218": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HT1080 fibrosarcoma cell line, HDAC6 knockdown with polyIC"
+  },
+  "E-GEOD-44456": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "post-mortem hippocampus from alcoholics and controls"
+  },
+  "E-MEXP-1510": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "kidney proximal tubular epithelial cells incubated with septic or healthy plasma; no blood cells profiled"
+  },
+  "E-MEXP-2280": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "post-mortem medial temporal lobe brain tissue, neurodegenerative disorders"
+  },
+  "E-MEXP-3621": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "trauma ICU patients developing sepsis/severe sepsis/septic shock, white blood cell RNA at admission and sepsis onset, Affymetrix array"
+  },
+  "E-MEXP-3850": {
+    "decision": "exclude",
+    "reason": "no_expression_files",
+    "basis": "5 children with meningococcal sepsis, serial blood arrays; ArrayExpress holds the sample table but no raw or processed data file"
+  },
+  "E-MEXP-555": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy-donor PBMC infected in vitro with E. coli +/- TAT-BH4 peptides; all samples cultured"
+  },
+  "E-MTAB-10527": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "ED adults with bacteraemia, viral or no infection, whole blood RNA-seq; not described as sepsis"
+  },
+  "E-MTAB-10938": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "children with septic shock, whole blood RNA-seq; ArrayExpress holds only the sample table and the reads are in ENA"
+  },
+  "E-MTAB-11796": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "hospitalized community-acquired pneumonia patients (severe vs non-severe), blood arrays; not described as sepsis"
+  },
+  "E-MTAB-13307": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "ED adults with bacteraemia, viral infection, COVID-19 and healthy controls, whole blood RNA-seq; not described as sepsis"
+  },
+  "E-MTAB-14713": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "8 adults with culture-confirmed sepsis vs 3 healthy, leukocyte dual RNA-seq; ArrayExpress holds only the sample table and the reads are in ENA"
+  },
+  "E-MTAB-14798": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "healthy infant/adult whole blood challenged ex vivo with staphylococci plus unstimulated baseline; no sepsis patients",
+    "flag": "uncertain"
+  },
+  "E-MTAB-15164": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "critically ill children, PAXgene whole blood, Illumina HT-12; disease category 'Infection/Sepsis' for many samples",
+    "flag": "uncertain"
+  },
+  "E-MTAB-1548": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "post-surgical septic shock vs SIRS patients and controls, peripheral whole blood, Agilent array"
+  },
+  "E-MTAB-15687": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "neonates/infants with late-onset sepsis (S. epidermidis) during vancomycin therapy, whole blood arrays"
+  },
+  "E-MTAB-16334": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy donor whole blood infected ex vivo with C. albicans +/- caspofungin; no directly profiled patient blood"
+  },
+  "E-MTAB-17576": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "children with septic shock at PICU admission and 48h later, whole blood bulk RNA-seq"
+  },
+  "E-MTAB-1788": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "skeletal muscle array meta-analysis; no blood samples"
+  },
+  "E-MTAB-3005": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PBMC arrays from severe H7N9 influenza patients (recovered vs fatal); not described as sepsis"
+  },
+  "E-MTAB-3439": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "exfoliated intestinal cells from faecal samples of septic VLBW twins; no blood samples"
+  },
+  "E-MTAB-3732": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "compendium of 27887 public U133Plus2 arrays incl. blood; no sepsis visible in listed disease/clinical values",
+    "flag": "uncertain"
+  },
+  "E-MTAB-4421": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "adult ICU severe sepsis due to CAP (derivation cohort), blood leukocyte Illumina arrays"
+  },
+  "E-MTAB-4451": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "adult ICU severe sepsis due to CAP (validation cohort), blood leukocyte Illumina arrays"
+  },
+  "E-MTAB-4668": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "flow-sorted neutrophil precursor stages from blood of G-CSF-treated healthy donors"
+  },
+  "E-MTAB-4785": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "VLBW infants with neonatal sepsis vs non-septic infants, blood, Affymetrix genome-wide arrays"
+  },
+  "E-MTAB-5273": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "ICU sepsis due to CAP or faecal peritonitis plus cardiac surgery controls, blood leukocyte Illumina arrays"
+  },
+  "E-MTAB-5274": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "ICU sepsis due to CAP or faecal peritonitis (second cohort), blood leukocyte Illumina arrays"
+  },
+  "E-MTAB-5882": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood arrays of critically injured trauma patients and minor-injury controls; no sepsis cohort"
+  },
+  "E-MTAB-6093": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "PBMC of melioidosis sepsis patients cultured with B. pseudomallei/antigens; stimulus none = unstimulated culture control",
+    "flag": "uncertain"
+  },
+  "E-MTAB-62": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "atlas of 5372 public U133A arrays (blood and non-blood); no sepsis visible in listed groups/disease states",
+    "flag": "uncertain"
+  },
+  "E-MTAB-7261": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified blood neutrophils from healthy volunteers given IFN-gamma"
+  },
+  "E-MTAB-7581": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "VANISH trial septic shock patients, blood RNA at enrolment, Illumina HT-12 arrays"
+  },
+  "E-SMDB-2328": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "whole blood of two healthy donors incubated ex vivo up to 24h with/without live meningococci"
+  },
+  "E-TABM-852": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood arrays, B. pseudomallei infected (melioidosis) vs uninfected, diabetic or not; record never says sepsis",
+    "flag": "uncertain"
+  },
+  "EGAC00001002513": {
+    "decision": "exclude",
+    "reason": "not_a_dataset",
+    "basis": "data access committee entry, not a dataset"
+  },
+  "EGAC00001003275": {
+    "decision": "exclude",
+    "reason": "not_a_dataset",
+    "basis": "data access committee entry, not a dataset"
+  },
+  "EGAD00001006072": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "cell-free DNA methylation sequencing"
+  },
+  "EGAD00001008730": {
+    "decision": "exclude",
+    "reason": "controlled_access",
+    "basis": "GAinS adult sepsis cohort, leukocyte RNA-seq (dataset of EGAS00001003772)"
+  },
+  "EGAD00001010927": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell profiling of whole blood leukocytes and circulating HSPCs in sepsis"
+  },
+  "EGAD00001015369": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "GAinS genotyping dataset"
+  },
+  "EGAD00001015407": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "critically ill patients with pneumonia, BAL and blood cells; record does not call them septic",
+    "flag": "uncertain"
+  },
+  "EGAD00010000950": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "WTCCC2 bacteraemia susceptibility genotyping array"
+  },
+  "EGAD00010001509": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "WTCCC2 bacteraemia susceptibility genotyping array"
+  },
+  "EGAD00010002327": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "host genotyping in bacterial meningitis"
+  },
+  "EGAD00010002328": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "host genotyping in bacterial meningitis"
+  },
+  "EGAS00001001756": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "WTCCC2 bacteraemia susceptibility genotyping"
+  },
+  "EGAS00001003074": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "critically ill patients with pneumonia, BAL and blood cells; record does not call them septic",
+    "flag": "uncertain"
+  },
+  "EGAS00001003772": {
+    "decision": "exclude",
+    "reason": "controlled_access",
+    "basis": "GAinS adult sepsis cohort, leukocyte RNA-seq"
+  },
+  "EGAS00001005039": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell RNA-seq in COVID-19"
+  },
+  "EGAS00001005206": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "alveolar macrophage cultures exposed to COVID-19 patient IgG"
+  },
+  "EGAS00001005430": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "exome sequencing in critically ill children"
+  },
+  "EGAS00001005493": {
+    "decision": "exclude",
+    "reason": "controlled_access",
+    "basis": "multi-omic blood atlas comparing COVID-19 with influenza, sepsis and healthy volunteers, including blood transcriptomes",
+    "flag": "uncertain"
+  },
+  "EGAS00001005993": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "host genotyping in bacterial meningitis"
+  },
+  "EGAS00001006266": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "genotyping for mannose-binding lectin in critical COVID-19"
+  },
+  "EGAS00001006283": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "whole blood single-cell multiomics and HSPC profiling in sepsis; bulk RNA-seq of the cohort is held elsewhere",
+    "flag": "uncertain"
+  },
+  "EGAS00001006990": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell profiling after BCG vaccination"
+  },
+  "EGAS00001007229": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood RNA-seq around major abdominal surgery, postoperative pneumonia; no sepsis patients"
+  },
+  "EGAS00001007555": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "neonatal and adult monocytes"
+  },
+  "EGAS00001007556": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "lower respiratory tract single-cell profiling in COVID-19 aspergillosis"
+  },
+  "EGAS00001007786": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "GAinS genotyping"
+  },
+  "GSE100150": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries of 16 disease datasets; the sepsis cohort is its SubSeries GSE100159",
+    "overlaps_with": "GSE100159"
+  },
+  "GSE100159": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Sepsis subseries: whole blood from sepsis patients (melioidosis 18, other infection 15) plus controls, Illumina array"
+  },
+  "GSE101880": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Purified cord blood monocytes from neonates, unstimulated or stimulated with live bacteria in culture; no whole blood/PBMC"
+  },
+  "GSE103119": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Whole blood array of children with community-acquired pneumonia and healthy controls; pneumonia not described as sepsis"
+  },
+  "GSE103170": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Isolated peripheral neutrophils only, from systemic JIA patients and healthy controls"
+  },
+  "GSE10361": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Title and attrs indicate platelets (cell type:Platelets, CtrPlate) from sepsis-induced ALI; source only says Human Blood Cells",
+    "flag": "uncertain"
+  },
+  "GSE104423": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PBMC RNA-seq of advanced heart failure patients before MCS surgery; sepsis appears only as a later cause of death"
+  },
+  "GSE10474": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "MICU patients with sepsis alone (21) or sepsis plus ALI (13); whole blood RNA within 48h of admission, Affymetrix array"
+  },
+  "GSE10640": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Radiation/chemo response study; human PBMC from irradiated or chemo patients and healthy donors, plus mouse samples; no sepsis"
+  },
+  "GSE106878": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "47 septic shock patients (CORTICUS), PAXgene whole blood leukocytes pre/post hydrocortisone or placebo, Illumina array"
+  },
+  "GSE108239": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "HERV-V3 array (HERV/MaLR loci plus only 1559 immunity genes); healthy-volunteer PBMC cultured with or without LPS",
+    "flag": "uncertain"
+  },
+  "GSE108685": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Human experimental endotoxemia: healthy volunteers given IV LPS with MSC or placebo, PAXgene whole blood array"
+  },
+  "GSE10929": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Platform comparison, 2 PAXgene whole blood samples: one scleroderma, one bacteremia patient; not described as sepsis"
+  },
+  "GSE110487": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "31 septic shock ICU patients, whole blood RNA-seq at T1 and T2 (responders vs non-responders to early therapy)"
+  },
+  "GSE111543": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "SMART-seq2 single-cell RNA-seq of monocyte-derived dendritic cells infected in vitro with Salmonella (few bulk control wells)"
+  },
+  "GSE111545": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Mini-bulk RNA-seq of monocyte-derived dendritic cells infected in vitro with Salmonella; no whole blood/PBMC, no patients"
+  },
+  "GSE112098": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "All samples are urine RNA from septic patients (validation cohort); no blood samples"
+  },
+  "GSE112099": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "All samples are urine RNA from septic and vascular surgery patients (discovery cohort); no blood samples"
+  },
+  "GSE112100": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Superseries of urine RNA arrays from septic and vascular surgery patients; no blood samples"
+  },
+  "GSE116849": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Cultured adult renal stem/progenitor cells with or without LPS; no blood samples"
+  },
+  "GSE11755": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Children with meningococcal sepsis; design states RNA from whole blood plus lymphocyte/monocyte/granulocyte fractions, Affymetrix",
+    "flag": "uncertain"
+  },
+  "GSE118657": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Whole blood of ventilated critically ill patients (PREVAIL trial); some with baseline infection but none labelled sepsis",
+    "flag": "uncertain"
+  },
+  "GSE11907": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Modular framework superseries; blood/PBMC from SLE, sJIA, diabetes, melanoma, E. coli/S. aureus infections etc; sepsis not stated",
+    "flag": "uncertain"
+  },
+  "GSE11908": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Module construction set; PBMC from SLE, sJIA, diabetes, melanoma, E. coli/S. aureus infections etc; sepsis not stated",
+    "flag": "uncertain"
+  },
+  "GSE119217": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Whole blood array of children treated for suspected sepsis in ED; sepsis_severity attr incl fluid/vasopressor-responsive shock",
+    "flag": "uncertain"
+  },
+  "GSE121349": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "HERV-V3 array GPL22462 (HERV/MaLR loci plus about 1559 immunity genes), not genome-wide mRNA; septic shock whole blood",
+    "flag": "uncertain"
+  },
+  "GSE121350": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "HERV-V3 array GPL22462 (HERV/MaLR loci plus about 1559 immunity genes), not genome-wide mRNA; septic shock whole blood",
+    "flag": "uncertain"
+  },
+  "GSE121352": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "Superseries on HERV-V3 array GPL22462 (HERV/MaLR loci plus about 1559 immunity genes); septic shock whole blood",
+    "flag": "uncertain"
+  },
+  "GSE122274": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Bulk RNA-seq of human kidney biopsies (ATN/AIN, some with sepsis); no blood samples"
+  },
+  "GSE122552": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Highly purified neutrophils only, from SJIA patients and controls"
+  },
+  "GSE123729": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Isolated peripheral granulocytes only, from septic shock, SIRS and presurgical patients"
+  },
+  "GSE123730": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Isolated peripheral NK cells only, from septic shock, SIRS and presurgical patients"
+  },
+  "GSE123731": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Superseries of isolated granulocytes and NK cells from septic shock, SIRS and presurgical patients; no whole blood/PBMC"
+  },
+  "GSE124105": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "In vitro activated macrophages derived from cord blood and adult peripheral blood; no whole blood/PBMC, no patients"
+  },
+  "GSE124885": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x single-cell 5' expression and TCR/BCR libraries from sorted BALF cells of children with pneumonia"
+  },
+  "GSE124917": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Primary human renal fibroblasts infected in vitro with uropathogenic E. coli; no blood samples"
+  },
+  "GSE12624": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "polytrauma ICU patients, PAXgene blood, course complicated by sepsis (34) vs not (36); CodeLink UniSet Human I array of about 10,000 genes",
+    "flag": "uncertain"
+  },
+  "GSE128303": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Monocyte-derived macrophages from 4 donors treated in vitro with dengue virus, LPS and MON-DNJ; no whole blood/PBMC"
+  },
+  "GSE12838": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Buffy coat, neutrophils and monocytes from ICU patients with ventilator-associated pneumonia; not described as sepsis"
+  },
+  "GSE128740": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Whole blood RNA-seq of lymphatic malformation patients and healthy controls; no sepsis"
+  },
+  "GSE13015": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Whole blood Illumina arrays: septicemic melioidosis (40) and sepsis from other infections (37) plus uninfected controls"
+  },
+  "GSE131411": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Whole blood RNA-seq of 21 septic shock and 11 cardiogenic shock ICU patients at three time points"
+  },
+  "GSE131761": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Whole blood Agilent array from postsurgical septic shock (81), non-septic shock (33) and control patients (15)"
+  },
+  "GSE13205": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Vastus lateralis skeletal muscle biopsies from septic ICU patients and controls; no blood samples"
+  },
+  "GSE133822": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Sorted CD4, CD8 T cells and CD14 monocytes only, from sepsis, critically ill, cancer patients and healthy controls"
+  },
+  "GSE134347": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Whole blood leukocyte HTA 2.0 array: ICU sepsis patients (156), noninfectious ICU (59), healthy (83)"
+  },
+  "GSE134358": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "Small non-coding RNA only (Affymetrix miRNA-4_1 array) in whole blood; no mRNA profiling in this subseries"
+  },
+  "GSE134364": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries; sepsis whole blood mRNA arrays are SubSeries GSE134347, the rest is small-RNA and endotoxaemia data",
+    "overlaps_with": "GSE134347"
+  },
+  "GSE135753": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Cultured human macrophages from healthy donors treated in vitro with NAPRT, NAMPT or LPS; cell origin not stated, no patients",
+    "flag": "uncertain"
+  },
+  "GSE135838": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Post-mortem parietal cortex brain tissue from sepsis and non-sepsis cases; no blood samples"
+  },
+  "GSE136200": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Sorted CD14 monocytes, CD4, CD8 T cells and CD19 B cells only, from sepsis patients and healthy subjects"
+  },
+  "GSE136540": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HT-29 and differentiated THP-1 cell lines infected in vitro with Vibrio vulnificus; no blood samples"
+  },
+  "GSE137340": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Whole blood Illumina array: ICU patients with sepsis, severe sepsis or septic shock (day 1 and 2) and healthy controls"
+  },
+  "GSE137341": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Whole blood Affymetrix array from patients with severe sepsis or septic shock at 0 and 24 h"
+  },
+  "GSE137342": {
+    "decision": "exclude",
+    "reason": "superseries_of_included_subseries",
+    "basis": "SuperSeries of GSE137340 and GSE137341, both included"
+  },
+  "GSE13736": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells infected in vitro with S. aureus isolates; no blood samples"
+  },
+  "GSE138712": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood RNA-seq of very preterm infants with confirmed/possible late-onset sepsis vs no sepsis"
+  },
+  "GSE13904": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "pediatric sepsis and septic shock (plus SIRS, controls), whole blood, Affymetrix GPL570 array"
+  },
+  "GSE139913": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified circulating CD14+ monocytes only (sepsis ICU, non-sepsis ICU, healthy)"
+  },
+  "GSE141864": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "post-mortem heart, lung, kidney, liver, spleen tissue from meningococcal septic shock; no blood"
+  },
+  "GSE142254": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated blood neutrophils only (ACLF, stable cirrhosis, healthy)"
+  },
+  "GSE142255": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Tempus whole blood, septic shock without cirrhosis and sepsis-induced ACLF patients, Affymetrix HTA 2.0 array"
+  },
+  "GSE142256": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries; whole blood samples are SubSeries GSE142255, the rest is sorted neutrophils",
+    "overlaps_with": "GSE142255"
+  },
+  "GSE144406": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "pediatric MODS/ECMO whole blood RNA-seq; no sample labelled sepsis, MODS trigger (infection or trauma) not given per sample",
+    "flag": "uncertain"
+  },
+  "GSE145227": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "pediatric sepsis (10) vs controls (12), blood, Affymetrix lncRNA+mRNA array"
+  },
+  "GSE145987": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "cultured human coronary artery endothelial cells treated with Wnt5A; no blood"
+  },
+  "GSE146691": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "cultured human coronary artery endothelial cells treated with IL-1b + Wnt5A; no blood"
+  },
+  "GSE150707": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "sorted CD8+ T cells and CD68+ monocytes only (HLH and severe sepsis children)"
+  },
+  "GSE151263": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell RNA-seq of PBMC from sepsis patients with/without ARDS; no bulk samples"
+  },
+  "GSE151764": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "sample titles indicate OIRRA (Oncomine Immune Response) targeted panel, not genome-wide; also post-mortem lung only",
+    "flag": "uncertain"
+  },
+  "GSE154918": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "peripheral blood RNA-seq of sepsis and septic shock patients, plus uncomplicated infection and healthy controls"
+  },
+  "GSE15495": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "cultured human coronary artery endothelial cells exposed to group B streptococcus; no blood"
+  },
+  "GSE154998": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "buffy coat RNA-seq of COVID19+ vs COVID19- ICU patients; no patient described as septic in the record",
+    "flag": "uncertain"
+  },
+  "GSE15512": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 monocytic cell line treated with lipoteichoic acid; no patient blood"
+  },
+  "GSE156382": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "enriched blood neutrophils (PMN) only: ACLF sepsis/sterile, CLD, healthy"
+  },
+  "GSE157344": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x Chromium scRNA-seq of blood and BAL cells from COVID-19 patients and healthy controls"
+  },
+  "GSE157737": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "FACS-sorted blood neutrophil/G-MDSC/monocyte populations only (breast cancer, sepsis, controls)"
+  },
+  "GSE158055": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of PBMC, BALF and sputum from COVID-19 patients and controls; all samples single-cell"
+  },
+  "GSE159249": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified CD14+ monocytes from healthy donor PBMCs, uncultured or cultured with LPS; no bulk blood"
+  },
+  "GSE160016": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "human liver tissue from NAFLD and non-NAFLD organ donors; no blood"
+  },
+  "GSE160022": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "SuperSeries: mouse liver/Kupffer cells and human donor liver tissue; no blood samples"
+  },
+  "GSE160306": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "post-mortem human retina tissue (diabetic retinopathy); no blood"
+  },
+  "GSE16031": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood from scleroderma and bacteremia patients (not described as sepsis) plus sorted Tregs; platform comparison"
+  },
+  "GSE160310": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "SuperSeries: post-mortem human retina mRNA-seq and miRNA-seq (diabetic retinopathy); no blood"
+  },
+  "GSE160329": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified CD14+ monocytes only (community-acquired pneumonia and healthy volunteers)"
+  },
+  "GSE160331": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "SuperSeries: CD14+ monocyte RNA-seq and RRBS only (community-acquired pneumonia, controls)"
+  },
+  "GSE16129": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PBMC arrays from children with invasive S. aureus infection (bacteremia, osteomyelitis); not labelled sepsis in record",
+    "flag": "uncertain"
+  },
+  "GSE161854": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "in vitro monocyte-derived dendritic cells infected with Salmonella (dual RNA-seq); no patient blood profiled"
+  },
+  "GSE162113": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "mouse organs plus human hPSC-derived cardiomyocytes infected with SARS-CoV-2; no blood"
+  },
+  "GSE162806": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell RNA-seq of PBMC from trauma patients/controls and of mouse PBMC/bone marrow cells"
+  },
+  "GSE163151": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood RNA-seq includes bacterial sepsis patients (also COVID-19, influenza, donor controls); NP swabs also present"
+  },
+  "GSE163195": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "bulk RNA-seq of CSF cells from children with bacterial meningitis; no blood samples"
+  },
+  "GSE163196": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "bulk RNA-seq of peripheral blood leukocytes from children with sepsis during bacterial meningitis"
+  },
+  "GSE163219": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries; blood leukocyte RNA-seq is SubSeries GSE163196, the rest is cerebrospinal fluid cells",
+    "overlaps_with": "GSE163196"
+  },
+  "GSE163317": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood RNA-seq of 4 COVID-19 patients before/after anakinra; not described as sepsis"
+  },
+  "GSE164120": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified CD71+ erythroid cells from SoJIA peripheral blood and healthy cord blood"
+  },
+  "GSE164948": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell transcriptomic/proteomic profiling of pooled PBMC (COVID-19, CAP, controls)"
+  },
+  "GSE165410": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "cultured human lung microvascular endothelial cells with siRNA and TNF-alpha; no blood"
+  },
+  "GSE166489": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell RNA-seq (GEX/ADT/BCR) of PBMC from MIS-C patients and healthy donors"
+  },
+  "GSE167363": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell RNA-seq of PBMC from gram-negative sepsis survivors/non-survivors and controls; no bulk samples"
+  },
+  "GSE167480": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 cell line stimulated with SARS-CoV-2 spike protein or LPS; no patient blood"
+  },
+  "GSE16836": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified CD16+ and CD16- blood monocytes from healthy donors only"
+  },
+  "GSE168400": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "peripheral blood RNA-seq of critically ill COVID-19 ICU patients; not described as sepsis"
+  },
+  "GSE168440": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "urine cell RNA from sepsis and post-surgical SIRS patients (validation cohort); no blood samples"
+  },
+  "GSE168442": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "urine cell RNA from sepsis and post-surgical SIRS patients (discovery cohort); no blood samples"
+  },
+  "GSE168443": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "SuperSeries: urine cell RNA from sepsis and SIRS patients; no blood samples"
+  },
+  "GSE168721": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated blood monocytes only (2 RNF213-mutation patients, 2 healthy)"
+  },
+  "GSE168742": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "mouse and 2 human heart samples (cardiomyocyte single-cell, some spatial); no blood"
+  },
+  "GSE171741": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Tempus whole blood bulk RNA-seq, cirrhosis/ACLF cohort; group attr has 'with septic shock' samples (24); PBMC part is 10x scRNA-seq",
+    "flag": "uncertain"
+  },
+  "GSE174183": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "septic shock ICU patients but all 19 samples are purified primary monocytes"
+  },
+  "GSE174409": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "postmortem brain (DLPFC and nucleus accumbens), opioid use disorder vs control"
+  },
+  "GSE175453": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "CITE-seq single-cell profiling of circulating immune cells, late sepsis vs healthy"
+  },
+  "GSE178404": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "Seq-Well scRNA-seq of PBMCs from COVID-19 and influenza ICU patients"
+  },
+  "GSE178883": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated human neutrophils cultured with PMA +/- hydrogen gas; no whole blood or PBMC"
+  },
+  "GSE180387": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "septic shock patients but all samples are isolated polymorphonuclear cells (PMN)"
+  },
+  "GSE180578": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x scRNA-seq/CITE-seq of PBMC and endotracheal aspirate, COVID-19, ARDS and healthy"
+  },
+  "GSE182522": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PBMC bulk RNA-seq, 36 sepsis patients (diagnosis=Sepsis) sampled day 1 and day 8"
+  },
+  "GSE183607": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "serum exosomal circRNA profiling in hepatic alveolar echinococcosis; circRNA only, no sepsis patients"
+  },
+  "GSE184039": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PBMC RNA-seq before/after major abdominal surgery grouped by CRP; sepsis only a later outcome, no sample labelled sepsis"
+  },
+  "GSE185263": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood RNA-seq, 348 sepsis patients (ER and ICU) plus 44 healthy controls"
+  },
+  "GSE185778": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x single-nucleus RNA-seq of kidney biopsies, COVID-19 acute kidney injury"
+  },
+  "GSE186054": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "sepsis patients and healthy controls but samples are sorted CD15+CD16+ neutrophils"
+  },
+  "GSE188280": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell RNA-seq of retina and choroid, AMD vs normal eyes"
+  },
+  "GSE188309": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood array in hospitalised community-acquired pneumonia; patients not described as sepsis"
+  },
+  "GSE189194": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "T84 colonic epithelial cell line infected with Vibrio vulnificus strains"
+  },
+  "GSE189400": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "title says [paxgene] (whole blood RNA-seq) with SepsisBSI/Sepsisperiph patients, but sample source/tissue fields say Plasma",
+    "flag": "uncertain"
+  },
+  "GSE189401": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "plasma cell-free RNA-seq ([plasma] subseries), sepsis vs no-sepsis; no cellular blood sample"
+  },
+  "GSE189403": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries; the PAXgene part is SubSeries GSE189400, the rest is plasma RNA",
+    "overlaps_with": "GSE189400",
+    "flag": "uncertain"
+  },
+  "GSE189847": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "healthy-donor monocyte-derived macrophages polarised in culture and infected with Salmonella"
+  },
+  "GSE190181": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "cultured HUVEC endothelial cells treated with TNF or PBS"
+  },
+  "GSE191262": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "mouse kidney (LPS model) and human HEK293 cell line only; no blood samples"
+  },
+  "GSE192580": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of CD45+ immune cells from thyroid fine needle aspirates"
+  },
+  "GSE193219": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy donor whole blood and phagocytes infected ex vivo with S. aureus; buffer controls also incubated"
+  },
+  "GSE196117": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PAXgene whole blood RNA-seq, ICU sepsis patients (clarithromycin trial) day 1 and day 5, plus healthy"
+  },
+  "GSE196192": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PBMC RNA-seq of Lyme disease, influenza, bacteremia and uninfected controls; none described as sepsis"
+  },
+  "GSE196399": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "white blood cell RNA-seq, severe community-acquired pneumonia vs healthy; not described as sepsis"
+  },
+  "GSE197204": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "blood RNA-seq of critically ill COVID-19 ICU patients; not described as septic"
+  },
+  "GSE197259": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "SuperSeries: blood and serum samples of critically ill COVID-19 patients; not described as septic"
+  },
+  "GSE198103": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "FFPE colorectal tumor and adjacent normal tissue from patients who died with or without sepsis"
+  },
+  "GSE199816": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "ICU bacterial sepsis patients (18) vs COVID-19 (9); whole blood/PBMC bulk RNA-seq"
+  },
+  "GSE200117": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "flow-sorted NK cell and monocyte subsets (Tim-3, Nectin-2) from cardiac arrest patients and healthy"
+  },
+  "GSE200118": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x scRNA-seq of PBMC from cardiac arrest patients and healthy (design also mentions sorted bulk); no sepsis either way",
+    "flag": "uncertain"
+  },
+  "GSE201958": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP1-MD2-CD14 cell line with lncRNA overexpression, +/- LPS"
+  },
+  "GSE20346": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PAXgene whole blood array; critically ill bacterial pneumonia and influenza patients plus vaccinees; record never says sepsis",
+    "flag": "uncertain"
+  },
+  "GSE204776": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "EA.hy926 endothelial cell line +/- LPS (in vitro 'sepsis' model)"
+  },
+  "GSE20508": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 cell line infected with Streptococcus suis"
+  },
+  "GSE205672": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PBMC bulk RNA-seq, sepsis patients and healthy (FUSE cohort), plus monocytes; titles say 'unstim', culture status not stated",
+    "flag": "uncertain"
+  },
+  "GSE20568": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "postmortem nucleus accumbens, alcohol and smoking study"
+  },
+  "GSE206264": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "blood RNA-seq at day 4 of critically ill COVID-19 patients; not described as septic"
+  },
+  "GSE208550": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "EA.hy926 endothelial cell line +/- LPS (in vitro 'sepsis' model)"
+  },
+  "GSE208581": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood RNA-seq of preoperative non-infected surgical patients; Sepsis+ (77) is a later postoperative outcome, not state at sampling",
+    "flag": "uncertain"
+  },
+  "GSE208587": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood RNA-seq; 51 samples classified by the study as 'Severe COVID-19 (Sepsis)', plus 10 mild COVID-19"
+  },
+  "GSE210622": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-nucleus RNA-seq of kidney tissue, AKI vs control"
+  },
+  "GSE210797": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "non-viral sepsis patients and healthy donors but samples are isolated platelets"
+  },
+  "GSE211210": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "blood total RNA bulk RNA-seq from 5 acute sepsis patients and 5 healthy donors, untreated, day 0"
+  },
+  "GSE212091": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified monocytes from volunteers given LPS in vivo (endotoxemia), some re-stimulated ex vivo"
+  },
+  "GSE212092": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of bone marrow and PBMC from volunteers given LPS in vivo"
+  },
+  "GSE212532": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "tracheal aspirate RNA-seq in ventilated children with respiratory failure"
+  },
+  "GSE214648": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "hiPSC-derived liver buds and liver organoids"
+  },
+  "GSE21497": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "vastus lateralis muscle biopsies after spinal cord injury"
+  },
+  "GSE215915": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq + scATAC-seq multiome of PBMC, hospitalised COVID-19"
+  },
+  "GSE216007": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x multiome single-nucleus RNA/ATAC of sorted CD34+ HSPC from sepsis and healthy PBMC"
+  },
+  "GSE216009": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq + AbSeq (BD Rhapsody) of whole-blood leukocytes in sepsis; all libraries single-cell"
+  },
+  "GSE216011": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "SuperSeries of single-cell RNA / multiome libraries (whole-blood leukocytes, HSPCs); no bulk expression samples"
+  },
+  "GSE216902": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "37 elderly ICU sepsis patients, bulk RNA-seq of PBMC at day 1 and day 8"
+  },
+  "GSE217700": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "4 sepsis patients vs 4 healthy controls, whole blood, lncRNA+mRNA RNA-seq"
+  },
+  "GSE217906": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "Design describes only scRNA-seq of PBMC (PICS, sepsis, HC); 9 of 16 libraries tagged plain transcriptomic, probably mislabelled scRNA-seq",
+    "flag": "uncertain"
+  },
+  "GSE21802": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Critically ill pandemic H1N1 pneumonia patients and controls, whole blood array; not described as sepsis"
+  },
+  "GSE218494": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Plasma RNA-seq only (pneumonia-induced sepsis, pneumonia, healthy); no cellular blood sample"
+  },
+  "GSE218743": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of thyroid FNA CD45+ immune cells in thyroiditis; single-cell 5' GEX/TCR libraries only"
+  },
+  "GSE220189": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of PBMC from S. aureus infected subjects and controls; all libraries single-cell"
+  },
+  "GSE221066": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "ICU COVID-19 patients, peripheral blood leukocyte RNA-seq; COVID-19 only, not called sepsis"
+  },
+  "GSE221234": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Whole blood RNA-seq, all 124 samples labelled COVID-19; sepsis signatures applied but patients not diagnosed as sepsis",
+    "flag": "uncertain"
+  },
+  "GSE222393": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Non-COVID-19 sepsis and COVID-19 ICU patients, whole blood bulk RNA-seq at ICU admission and about 1 week later"
+  },
+  "GSE223458": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Jurkat cell line Ago2/IgG pulldown arrays; no patient blood samples"
+  },
+  "GSE224095": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x scRNA-seq of PBMC from sepsis patients and healthy controls; single-cell only"
+  },
+  "GSE224652": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HL-60 neutrophil-like cell line (human) and mouse bone marrow neutrophils; no human blood sample"
+  },
+  "GSE225236": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells treated with IL-6+R or PBS; cell culture only"
+  },
+  "GSE225884": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Primary human aortic smooth muscle cells incubated at different pH/lactate; cell culture only"
+  },
+  "GSE228541": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "14 CAP-associated sepsis patients vs 15 healthy, whole blood mRNA RNA-seq"
+  },
+  "GSE228542": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries; mRNA-seq is SubSeries GSE228541, the rest is microRNA-seq",
+    "overlaps_with": "GSE228541"
+  },
+  "GSE229173": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of PBMC from acute cholangitis and septic shock patients; single-cell only"
+  },
+  "GSE231460": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC with Robo4 siRNA / TNF-alpha treatment; cell culture only"
+  },
+  "GSE232404": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "5 septic AKI patients vs 5 healthy, whole blood total RNA-seq with circRNA, miRNA and mRNA analysed"
+  },
+  "GSE232753": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "20 sepsis patients vs 8 healthy volunteers, blood bulk RNA-seq at day 0"
+  },
+  "GSE233483": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "iPSC-derived liver organoids with LPS/IFN-gamma stimulation; no blood samples"
+  },
+  "GSE233538": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "iPSC, iPSC-derived EMP/Kupffer cells, cord-blood HSPC and primary Kupffer cells; no whole blood or PBMC"
+  },
+  "GSE233539": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "SuperSeries of iPSC-derived liver organoid and Kupffer cell RNA-seq; no whole blood or PBMC"
+  },
+  "GSE233626": {
+    "decision": "exclude",
+    "reason": "third_party_reanalysis",
+    "basis": "third-party reanalysis of existing GEO samples; owns no sample records"
+  },
+  "GSE233627": {
+    "decision": "exclude",
+    "reason": "third_party_reanalysis",
+    "basis": "third-party reanalysis of existing GEO samples; owns no sample records"
+  },
+  "GSE235433": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "PBMC-derived monocytes differentiated to macrophages/foam cells in culture and infected with SARS-CoV-2"
+  },
+  "GSE235435": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Carotid atherosclerotic plaque explants infected with SARS-CoV-2; tissue only"
+  },
+  "GSE235436": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of cells isolated from carotid plaque; single-cell only"
+  },
+  "GSE23590": {
+    "decision": "exclude",
+    "reason": "not_human",
+    "basis": "Baboon (Papio cynocephalus) E. coli sepsis model, lung and liver tissue; no human samples"
+  },
+  "GSE236030": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of tracheal aspirate and whole blood from severe COVID-19; single-cell only"
+  },
+  "GSE236099": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq with ADT of PBMC and sorted CD3+ T cells from preterm babies with sepsis; single-cell only"
+  },
+  "GSE236167": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Dermal microvascular endothelial cell line, PARP15 mutant, stimulated/unstimulated; cell culture only"
+  },
+  "GSE236177": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of buffy coat leukocytes from hypoxic COVID-19 pneumonia patients; single-cell only"
+  },
+  "GSE236713": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "ICU abdominal/pulmonary sepsis vs OOHCA SIRS vs healthy; peripheral blood leukocytes, Agilent array, 324 sepsis samples"
+  },
+  "GSE236877": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "NanoString panel of 469 candidate genes in pediatric critical influenza whole blood; not genome-wide"
+  },
+  "GSE236892": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "189 sepsis patients (EARLI, hypo/hyperinflammatory phenotypes), whole blood host RNA-seq"
+  },
+  "GSE237109": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Bulk RNA-seq of PBMC from severely ill COVID-19 patients +/- dexamethasone; not called sepsis"
+  },
+  "GSE237861": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Post-mortem brain, heart, lung, kidney and colon tissue from septic shock patients; no blood"
+  },
+  "GSE237960": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "Whole blood exposed ex vivo to heat-killed E. coli or S. aureus plus unstimulated controls; no patient samples"
+  },
+  "GSE237965": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Phase I trial of MRG-001 in healthy subjects, white blood cell RNA-seq; no sepsis patients"
+  },
+  "GSE240861": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Isolated CD4+ and CD8+ T cells from sepsis patients in ketogenic diet trial; sorted cells only"
+  },
+  "GSE241139": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC stimulated with LPS plus sIL-6R; cell culture only"
+  },
+  "GSE241238": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PBMC from 4 septic patients and 4 healthy donors, bulk RNA-seq"
+  },
+  "GSE242127": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "PBMC single-cell sequencing from 3 sepsis-ARDS patients at day 1 and day 7; all libraries single-cell"
+  },
+  "GSE243066": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "34 ARDS patients vs 15 healthy, peripheral blood RNA-seq; ARDS not described as sepsis"
+  },
+  "GSE243217": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "22 Sepsis-3 patients, 35 COVID-19 and 15 healthy, whole blood (peripheral blood) bulk RNA-seq"
+  },
+  "GSE243219": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries; mRNA-seq is SubSeries GSE243217, the rest is microRNA-seq",
+    "overlaps_with": "GSE243217"
+  },
+  "GSE243750": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Alzheimer SuperSeries: sorted blood neutrophils, brain and microglia, human and mouse; no whole blood, no sepsis"
+  },
+  "GSE244903": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "Arraystar circRNA array on CD133+ cells from sepsis patients and controls; circRNA only"
+  },
+  "GSE245131": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq and scTCR-seq of FACS-sorted gamma-delta T and B cells from preterm infants; single-cell only"
+  },
+  "GSE246398": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Tracheal aspirate RNA-seq from ventilated pneumococcal pneumonia patients and controls; no blood"
+  },
+  "GSE246795": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "tracheal aspirate metatranscriptomics from critically ill COVID-19 patients; no blood samples"
+  },
+  "GSE247488": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "CITE-seq single-cell GEX/BCR/ADT libraries of FACS-sorted IgD- B cells from PBMC"
+  },
+  "GSE249010": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "multi-species blood incl. human incubated ex vivo with LPS or no-LPS control for 2/6/24 h; no patients"
+  },
+  "GSE250280": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "droplet single-nucleus RNA-seq of human frontal gyrus and mouse thalamus (FTD); no blood"
+  },
+  "GSE252275": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated platelets from septic patients and controls, bulk RNA-seq; no whole blood or PBMC"
+  },
+  "GSE252331": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "CITE-seq single-cell GEX/ADT of blood myeloid cells and PBMC from septic patients and healthy controls"
+  },
+  "GSE253782": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PAXgene whole blood from cardiac surgery patients with cardiopulmonary bypass SIRS; no infection or sepsis"
+  },
+  "GSE25504": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "neonatal sepsis: infected vs control neonates, whole peripheral blood, genome-wide expression arrays"
+  },
+  "GSE260461": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "snRNA-seq of sorted nuclei from post-mortem Alzheimer and control brain tissue; no blood"
+  },
+  "GSE261559": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated blood neutrophils from community-acquired pneumonia patients and matched controls only"
+  },
+  "GSE262638": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "human lung tissue explants infected ex vivo with S. pneumoniae; no blood samples"
+  },
+  "GSE262911": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified CD14+ monocytes from buffy coats, cultured with IFNg/LPS in vitro; no patients"
+  },
+  "GSE263469": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq (Singleron) of bronchoalveolar lavage cells from critical Omicron COVID-19 patients"
+  },
+  "GSE26378": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "82 children with septic shock and 21 controls, whole blood RNA, Affymetrix GPL570 array"
+  },
+  "GSE264050": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "bulk RNA-seq of NeuN+ neuronal nuclei from post-mortem prefrontal cortex, Parkinson disease; no blood"
+  },
+  "GSE26440": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "98 children with septic shock and 32 controls, whole blood RNA, Affymetrix GPL570 array"
+  },
+  "GSE266887": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC and HL60 cell lines transfected with oligonucleotides; no patient blood"
+  },
+  "GSE267399": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "blood leukocytes from septic patients at admission (with/without later overt DIC), bulk RNA-seq, 6 samples"
+  },
+  "GSE267418": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "cultured HUVEC endothelial cells restimulated with TNF/IFN; no blood samples"
+  },
+  "GSE268406": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of FACS-enriched TLR4-acK+ monocytes from sepsis patient; single sample, single-cell only"
+  },
+  "GSE269269": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of PBMC from acute myocardial infarction patients; single-cell only, no sepsis"
+  },
+  "GSE270788": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "paired single-nucleus RNA + ATAC multiome of human heart tissue (MI, heart failure, donors)"
+  },
+  "GSE270838": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PBMC from 24 sepsis patients and 12 healthy controls, bulk RNA-seq (NovaSeq)"
+  },
+  "GSE272163": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "A549 lung epithelial cell line treated with RSL3 and dipyridamole; no patient samples"
+  },
+  "GSE272392": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PBMC/blood RNA-seq of severe COVID-19 Delta patients, survivors vs deceased; not described as sepsis"
+  },
+  "GSE272769": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "161 ICU sepsis patients (123 with septic shock), whole blood RNA within 24 h, Affymetrix HuGene array"
+  },
+  "GSE273700": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PBMC from 52 ICU sepsis patients at day 1 and day 8, bulk whole-transcriptome RNA-seq"
+  },
+  "GSE274466": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-nucleus RNA-seq of airway epithelial air-liquid-interface cultures infected with RSV"
+  },
+  "GSE275259": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of PBMC from heatstroke, sepsis and healthy subjects; single-cell only"
+  },
+  "GSE276095": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PAXgene whole blood RNA-seq of ICU patients with bloodstream infection; record never calls them sepsis",
+    "flag": "uncertain"
+  },
+  "GSE277430": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "snRNA-seq of post-mortem brain white matter and cortex, multiple sclerosis; no blood"
+  },
+  "GSE279126": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells treated with LPS and Xuebijing in vitro; no patient blood"
+  },
+  "GSE279448": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "bulk RNA-seq of PBMC from adult (116) and pediatric (16) sepsis patients plus ICU and healthy controls"
+  },
+  "GSE279451": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "CITE-seq single-cell profiling of PBMC from adult sepsis patients and controls"
+  },
+  "GSE279452": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq (with VDJ) of PBMC from adult and pediatric sepsis patients and controls"
+  },
+  "GSE281679": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "EA.hy926 endothelial cell line with ENO1 knockdown and LPS+lactate stimulation"
+  },
+  "GSE282464": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood bulk RNA-seq, respiratory infection cohort; type_of_infection includes Sepsis (17) and septic shock"
+  },
+  "GSE285385": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "sorted CD4 T, CD8 T and CD14 monocytes from PBMC of traumatic brain injury patients"
+  },
+  "GSE285386": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "sorted classical/intermediate/non-classical monocytes from PBMC of traumatic brain injury patients"
+  },
+  "GSE286082": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PBMC from 3 sepsis-induced immunosuppression patients vs 3 healthy; Agilent ceRNA array (lncRNA+mRNA+circRNA)",
+    "flag": "uncertain"
+  },
+  "GSE286141": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "PBMC from healthy donors cultured untreated or with haptoglobin (HC-Hp, Fu-Hp) in vitro"
+  },
+  "GSE286921": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "multiplexed scRNA-seq of healthy donor PBMC treated in vitro with fucosylated haptoglobin"
+  },
+  "GSE286922": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "multiplexed scRNA-seq of PBMC from 2 healthy donors and 2 sepsis patients; single-cell only"
+  },
+  "GSE28750": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "10 sepsis patients, 11 post-surgical and 20 healthy, whole blood, Affymetrix GPL570 array"
+  },
+  "GSE287876": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "FACS-sorted naive/effector Treg and Tfr cells from human PBMC; no bulk blood or PBMC"
+  },
+  "GSE287877": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "FACS-sorted nTreg and nTfr cells from PBMC, treated in vitro with TPC or IL2"
+  },
+  "GSE288346": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PAXgene whole blood from lung transplant recipients and healthy controls after mRNA vaccination; no sepsis"
+  },
+  "GSE288562": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "BD Rhapsody single-cell WTA plus ADT of PBMC from lung transplant and healthy vaccinees"
+  },
+  "GSE2900": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "Lymphochip lymphoid-focused spotted cDNA array (GPL2614); one sample labelled sepsis with malaria",
+    "flag": "uncertain"
+  },
+  "GSE290450": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "bulk RNA-seq of post-mortem brain tissue, multiple sclerosis vs non-MS controls; no blood"
+  },
+  "GSE290552": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "bulk RNA-seq of post-mortem brain tissue, multiple sclerosis vs non-MS controls; no blood"
+  },
+  "GSE290554": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "SuperSeries of post-mortem brain tissue bulk RNA-seq, multiple sclerosis vs controls; no blood"
+  },
+  "GSE290679": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x scRNA-seq of PBMC from ICU patients with and without sepsis and healthy controls; single-cell only"
+  },
+  "GSE292448": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "plasma extracellular vesicle RNA from meningococcal septic shock and pneumococcal patients, Affymetrix array"
+  },
+  "GSE293707": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of pooled PBMC from COVID-19 patients and healthy; all 4 libraries single cell"
+  },
+  "GSE293708": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "bulk RNA-seq of PBMC from COVID-19 patients and healthy controls; no patients described as septic"
+  },
+  "GSE294059": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PBMC bulk RNA-seq from 5 patients with sepsis and 5 nonseptic controls"
+  },
+  "GSE294060": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries; human PBMC RNA-seq is SubSeries GSE294059, the rest is a mouse cell line",
+    "overlaps_with": "GSE294059"
+  },
+  "GSE294890": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated human blood neutrophils stimulated in vitro with LPS, uric acid, fMLP; purified cells only"
+  },
+  "GSE294985": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood RNA-seq from 30 sepsis patients and 10 healthy controls"
+  },
+  "GSE295012": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "immortalized dermal microvascular endothelial cell line with GPNMB siRNA; no blood samples"
+  },
+  "GSE295042": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "CD14+ cells from PBMC differentiated to osteoclasts in culture (M-CSF/RANKL, day 18); sorted cells only"
+  },
+  "GSE295173": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of PBMC/monocytes from trauma patients and healthy controls; all 30 libraries single cell"
+  },
+  "GSE29536": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "410 whole blood Illumina arrays over 9 datasets; design lists sepsis cohort (Thai melioidosis/other infection)"
+  },
+  "GSE296044": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified blood neutrophils stimulated in vitro with EVs/LPS, plus HL-60 cell line; no whole blood or PBMC"
+  },
+  "GSE296830": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "blood RNA-seq (mRNA and miRNA) of 6 patients at severe sepsis, improvement and recovery stages"
+  },
+  "GSE297509": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "blood monocyte-derived macrophages with siRNA and LPS/Salmonella challenge, plus THP1 line; no bulk blood"
+  },
+  "GSE298552": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "blood RNA-seq of critically ill patients in amino acid dose trial; sepsis not mentioned in record"
+  },
+  "GSE298859": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells treated with IL-6 and LPS in vitro; no blood samples"
+  },
+  "GSE299261": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells with IL-6 priming and JunB siRNA in vitro; no blood samples"
+  },
+  "GSE299503": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "BEAS-2B bronchial epithelial cell line with lncRNA overexpression; no blood samples"
+  },
+  "GSE300129": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood arrays of ICU COVID-19 ARDS patients (thrombotic vs not) and healthy; not described as sepsis"
+  },
+  "GSE300480": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "sorted CD14+ monocytes from critically ill patients in vitamin D AKI trial; no bulk blood"
+  },
+  "GSE30119": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "pediatric whole blood arrays, S. aureus infection (bacteremia, osteoarticular) vs healthy; not called sepsis",
+    "flag": "uncertain"
+  },
+  "GSE301783": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "A549 lung cell line with GALNT2 knockout/overexpression; no blood samples"
+  },
+  "GSE301821": {
+    "decision": "exclude",
+    "reason": "no_usable_expression_values",
+    "basis": "whole blood RNA-seq of 8 sepsis-induced liver injury patients and 8 healthy volunteers; its two mRNA tables, one for 6 healthy and one for 7 patient samples, hold transcript-level values on different sets of transcripts (60,303 and 56,019 rows) and of different kinds (whole numbers in one, decimals in the other), with rows broken by line breaks inside annotation text, so they cannot be read into one matrix of comparable values"
+  },
+  "GSE302306": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified CD66b+ neutrophils from septic shock, cardiac surgery and healthy subjects; sorted cells only"
+  },
+  "GSE303333": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-cell GEX and TCR libraries of CD45+ sorted PBMC from pediatric MODS/sepsis and healthy; no bulk"
+  },
+  "GSE3037": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated blood neutrophils from sepsis-induced ALI patients, treated in vitro with LPS/HMGB1; no bulk blood"
+  },
+  "GSE30385": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "blood arrays of ventilated trauma patients who did or did not later develop VAP; not described as sepsis"
+  },
+  "GSE306283": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "placental trophoblast cells, severe preeclampsia vs normal pregnancy; no blood samples"
+  },
+  "GSE307512": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x single-nucleus RNA-seq of post-mortem hippocampus from sepsis and control patients"
+  },
+  "GSE310929": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood bulk RNA-seq, 193 samples of adult sepsis cohort with SOFA and shock annotations"
+  },
+  "GSE312053": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "explanted lung only (scRNA-seq and Visium HD spatial) from ARDS/septic shock patient; no blood samples"
+  },
+  "GSE313307": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "post-mortem prefrontal cortex RNA-seq, Alzheimer disease with or without infection; no blood samples"
+  },
+  "GSE3140": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy adult PBMC and cord blood MNC incubated in vitro with or without LPS; no patients",
+    "flag": "uncertain"
+  },
+  "GSE314561": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "iPSC-derived cardiomyocytes exposed to septic serum in vitro; no blood cells profiled"
+  },
+  "GSE314947": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "sorted CD4 T cells, CD8 T cells and CD14 monocytes from traumatic brain injury patients"
+  },
+  "GSE316654": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "human colon organoids treated with isovalerate; no blood samples"
+  },
+  "GSE316690": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 macrophage cell line with LPS with or without 3-HPA; no blood samples"
+  },
+  "GSE316708": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated CD66b+ cells from sepsis and trauma patients and healthy subjects; sorted cells only"
+  },
+  "GSE317767": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PAXgene whole blood RNA-seq of sepsis survivors enrolled after ICU stay in a vaccine trial; no sample taken during sepsis",
+    "flag": "uncertain"
+  },
+  "GSE319702": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy donor PBMC treated 4 h in vitro with heat-killed E. coli or PBS; every sample cultured"
+  },
+  "GSE326579": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "HUVEC and healthy donor PBMC cultured 24 h with LPS/TNF treatments; every PBMC sample cultured"
+  },
+  "GSE32707": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood Illumina arrays of ICU patients with sepsis, sepsis+ARDS, SIRS and controls, day 0 and 7"
+  },
+  "GSE327100": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "sorted CD14+ cells treated with lactate in vitro (RNA-seq plus ChIP-seq); no bulk blood"
+  },
+  "GSE327326": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "T84 intestinal epithelial cell line intoxicated with Vibrio vulnificus mutants; no blood samples"
+  },
+  "GSE328660": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy donor PBMC cultured 24 h with lactate or PBS (RNA-seq plus ChIP-seq); every sample cultured"
+  },
+  "GSE330266": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x single-nucleus RNA-seq of human liver, MASLD vs control; all samples single nucleus"
+  },
+  "GSE33118": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "blood Affymetrix GPL570 arrays of 20 septic shock (pneumonia) patients within 12 h of diagnosis"
+  },
+  "GSE33119": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "blood Affymetrix GPL570 arrays of 20 septic shock patients before and after activated protein C"
+  },
+  "GSE33341": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "human blood arrays of S. aureus/E. coli bacteremia and healthy, plus mice; record says bacteremia, not sepsis",
+    "flag": "uncertain"
+  },
+  "GSE333704": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "10x scRNA-seq of PBMC from 2 sepsis patients and 2 healthy controls; all libraries single cell"
+  },
+  "GSE335386": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "primary human pulmonary microvascular endothelial cells with FKBP5 knockdown/overexpression; no blood"
+  },
+  "GSE335824": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood RNA-seq of ED patients with suspected sepsis in albumin vs crystalloid resuscitation trial"
+  },
+  "GSE336039": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC with USP2 overexpression treated with LPS; no blood samples"
+  },
+  "GSE336631": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "NanoString targeted panel on lymph node tissue (Castleman disease); not genome-wide"
+  },
+  "GSE337015": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "bulk RNA-seq of FFPE lymph node tissue (Castleman disease, DLBCL, sentinel nodes); no blood samples"
+  },
+  "GSE341493": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "sepsis and sepsis-associated ARDS patients vs healthy, peripheral blood, bulk total RNA-seq"
+  },
+  "GSE341495": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SuperSeries; long-RNA sequencing is SubSeries GSE341493",
+    "overlaps_with": "GSE341493"
+  },
+  "GSE341837": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "sepsis patients with/without thyroid dysfunction, peripheral blood, bulk RNA-seq discovery cohort"
+  },
+  "GSE341840": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "sepsis patients peripheral blood, SRA transcriptomic RNA-seq records; but DESIGN text describes qRT-PCR validation",
+    "flag": "uncertain"
+  },
+  "GSE342074": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "scRNA-seq of PBMC from 3 sepsis and 3 healthy; library source transcriptomic single cell for all 6"
+  },
+  "GSE344550": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "cultured macrophages infected in vitro with Candida parapsilosis strains; no patient blood samples"
+  },
+  "GSE345117": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HBE human bronchial epithelial cell line treated with TNF-alpha and glibenclamide"
+  },
+  "GSE347117": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HK-2 renal tubular epithelial cell line, LPS vs vehicle"
+  },
+  "GSE35590": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated circulating neutrophils only, from healthy volunteers given LPS (experimental endotoxemia)"
+  },
+  "GSE40012": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PAXgene whole blood of ICU bacterial/influenza pneumonia, non-infective SIRS, healthy; record never labels them sepsis",
+    "flag": "uncertain"
+  },
+  "GSE4013": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "cynomolgus macaques infected with variola on human cDNA arrays (organism field says human); no sepsis patients"
+  },
+  "GSE4607": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "paediatric septic shock (69 samples) vs SIRS and controls, whole blood, Affymetrix GPL570"
+  },
+  "GSE46914": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy donor PBMCs cultured in medium or LPS/IFNg endotoxin tolerance model; all samples cultured"
+  },
+  "GSE46955": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated blood monocytes only (sepsis, recovery, healthy), with or without ex vivo LPS"
+  },
+  "GSE48080": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "severe sepsis and septic shock patients (CAP), peripheral mononuclear cells D0/D7, Agilent whole-genome array"
+  },
+  "GSE49753": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "monocyte-derived dendritic cells from healthy donors cultured with septic or control plasma"
+  },
+  "GSE49754": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy donor PBMCs cultured 6 h with septic plasma, control plasma, LPS or medium; no patient cells profiled"
+  },
+  "GSE49755": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "healthy donor neutrophils (PMN) cultured with septic or control plasma; reporter assay"
+  },
+  "GSE49756": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "healthy donor neutrophils (PMN) cultured with septic or control plasma; reporter assay"
+  },
+  "GSE49757": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "healthy donor neutrophils (PMN) cultured with septic or control plasma; reporter assay"
+  },
+  "GSE49758": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "SuperSeries: healthy donor neutrophils, MoDCs and PBMCs all cultured with patient plasma/LPS/medium"
+  },
+  "GSE51043": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HeLa cells transfected with Salmonella steA plasmid"
+  },
+  "GSE52026": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PBMC from men with impaired glucose tolerance in a meal frequency diet trial; no sepsis"
+  },
+  "GSE52027": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "skeletal muscle biopsies from men with impaired glucose tolerance, diet trial"
+  },
+  "GSE52028": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "SuperSeries: PBMC and muscle from impaired glucose tolerance diet trial; no sepsis"
+  },
+  "GSE5262": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "septic shock PBMC on inflammation-dedicated slide of 340 genes; targeted array, not genome-wide"
+  },
+  "GSE5271": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "sepsis PBMC time course on inflammation-dedicated slide of 340 genes; targeted array, not genome-wide"
+  },
+  "GSE53471": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "umbilical cord blood from healthy full-term newborns in Finland, Estonia, Russia; no sepsis"
+  },
+  "GSE53472": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "rehybridized cord blood samples from healthy full-term newborns; no sepsis"
+  },
+  "GSE53702": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "skeletal muscle biopsies, critical illness myopathy vs orthopedic controls"
+  },
+  "GSE54514": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "ICU sepsis survivors and nonsurvivors vs healthy, PAXgene whole blood, Illumina HT-12 array"
+  },
+  "GSE55537": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood of 2 healthy donors and a C5-deficient patient, ex vivo E. coli incubation plus T0 baselines; no sepsis"
+  },
+  "GSE5580": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "severe trauma patients with MODS and healthy subjects: total leukocytes, T cells, monocytes; no sepsis"
+  },
+  "GSE55962": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "total leukocytes from COPD patients, smokers and non-smokers before/after smoking; no sepsis"
+  },
+  "GSE5660": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells stimulated with APC or APC microparticles in vitro"
+  },
+  "GSE5661": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells incubated with microparticles from sepsis patients; no blood cell RNA"
+  },
+  "GSE5663": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "12 human samples are spleen (septic vs injured patients); the 33 blood arrays are mouse CLP/LPS models"
+  },
+  "GSE57065": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "septic shock ICU patients at H0/H24/H48 vs healthy volunteers, whole blood, Affymetrix GPL570"
+  },
+  "GSE5760": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "multiple trauma patients, PAXgene blood grouped by TNF genotype; no sample labelled as from a septic patient",
+    "flag": "uncertain"
+  },
+  "GSE5772": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "sepsis vs control ICU patients; SOURCE_NAME says Neutrophil vs reference RNA, though summary says circulating leukocytes",
+    "flag": "uncertain"
+  },
+  "GSE5883": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "cultured human lung microvascular endothelial cells (HMVEC-L) exposed to LPS"
+  },
+  "GSE60424": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "Tempus whole blood plus 6 sorted subsets per donor, sepsis among disease groups, bulk RNA-seq"
+  },
+  "GSE61477": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "human blood monocytes prestimulated in vitro with MRP8/14 or LPS"
+  },
+  "GSE62281": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "human coronary artery endothelial cells treated with Wnt5A or IL-1beta"
+  },
+  "GSE6269": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "paediatric PBMC, acute influenza/E. coli/S. aureus/S. pneumoniae infections (UTI, bacteremia); not labelled sepsis",
+    "flag": "uncertain"
+  },
+  "GSE63042": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "CAPSOD sepsis (uncomplicated, severe, septic shock, death) vs SIRS, whole blood, bulk RNA-seq"
+  },
+  "GSE63311": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "emergency ward patients, 37 Sepsis T0 vs no sepsis and surgical controls, whole blood, bulk RNA-seq"
+  },
+  "GSE6377": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "buffy coat time course of ventilated ICU patients with ventilator-associated pneumonia; not described as sepsis",
+    "flag": "uncertain"
+  },
+  "GSE64456": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood of febrile infants classed bacterial (SBI) vs non-bacterial infection vs healthy; no sepsis label"
+  },
+  "GSE64457": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "purified neutrophils only, from septic shock patients and healthy controls"
+  },
+  "GSE65088": {
+    "decision": "exclude",
+    "reason": "ex_vivo_stimulated",
+    "basis": "healthy donor whole blood infected ex vivo with bacteria or fungi vs mock-treated; all samples incubated"
+  },
+  "GSE6535": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "ICU gram-pos/gram-neg sepsis vs controls; SOURCE_NAME says Neutrophil vs reference RNA, though text says leukocytes",
+    "flag": "uncertain"
+  },
+  "GSE65517": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "magnetically sorted blood monocytes only (breast cancer, sepsis, tuberculosis, healthy)"
+  },
+  "GSE65630": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 monocytic cell line stimulated with LPS with or without LC53"
+  },
+  "GSE65682": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "MARS ICU cohort incl. sepsis (CAP/HAP, abdominal sepsis), PAXgene whole blood, Affymetrix U219 array"
+  },
+  "GSE66099": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "pediatric septic shock (181) and sepsis (18) day-1 whole blood, Affymetrix U133 Plus 2 array"
+  },
+  "GSE66890": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "ICU sepsis alone and sepsis with ARDS patients, whole blood RNA, Affymetrix Gene 1.0 ST array"
+  },
+  "GSE67401": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood RNA-seq of SIRS/critical illness patients grouped by AKI/hemodialysis; record never labels any as sepsis or infected",
+    "flag": "uncertain"
+  },
+  "GSE67652": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated neutrophil granulocytes from sepsis patients and healthy controls only"
+  },
+  "GSE69063": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "ED sepsis patients (57 samples) plus anaphylaxis/trauma/healthy, peripheral blood, Affymetrix array"
+  },
+  "GSE69528": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "sepsis patients (melioidosis and other pathogens) vs uninfected controls, whole blood, Illumina HT-12 array"
+  },
+  "GSE69686": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "neonatal sepsis and clinical sepsis vs uninfected infants, whole blood, microarray"
+  },
+  "GSE70311": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "trauma patients with secondary sepsis (46 samples), PAXgene whole blood leukocyte RNA, Illumina HT-12 array"
+  },
+  "GSE70461": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "preterm infants, whole blood U133 Plus 2 arrays; 18 samples annotated as sepsis"
+  },
+  "GSE7103": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "periprosthetic membrane tissue from endoprosthesis loosening, no blood expression samples"
+  },
+  "GSE72326": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "SLE whole blood Illumina study; includes 15 'Control ICU_sepsis' patients (documented bacterial pneumonia) as control group",
+    "flag": "uncertain"
+  },
+  "GSE72829": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "superseries: pediatric whole blood incl. 21 sepsis and 3 sepsis+meningitis (meningococcal) patients, Illumina arrays"
+  },
+  "GSE74224": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "74 sepsis vs 31 post-surgical SIRS ICU adults, peripheral blood, Affymetrix exon array"
+  },
+  "GSE75911": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "U937 cell line transfected with miR-608 inhibitor, no patient blood"
+  },
+  "GSE76293": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated blood PMN (neutrophils) from ARDS patients and healthy volunteers, incl. cultured PMN; no bulk blood"
+  },
+  "GSE78929": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "vastus lateralis muscle biopsies from ICU-acquired weakness patients and controls"
+  },
+  "GSE79962": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "post-mortem/explant cardiac tissue (septic cardiomyopathy, IHD, DCM, donors), no blood"
+  },
+  "GSE80496": {
+    "decision": "exclude",
+    "reason": "overlaps_included_study",
+    "basis": "SubSeries fully contained in SuperSeries GSE72829, which is kept because its other SubSeries were not found by the search",
+    "overlaps_with": "GSE72829"
+  },
+  "GSE8121": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "pediatric septic shock day 1 and day 3 vs normal children, whole blood, Affymetrix U133 Plus 2"
+  },
+  "GSE82036": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells infected in vitro with S. aureus isolates, no blood samples"
+  },
+  "GSE82166": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated healthy-donor monocytes stimulated in vitro with N. meningitidis and IL-10"
+  },
+  "GSE82315": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated healthy-donor monocytes incubated with meningococcal patient plasma; no patient blood cells profiled"
+  },
+  "GSE82316": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "superseries of isolated monocytes stimulated in vitro (N. meningitidis, IL-10, patient plasma)"
+  },
+  "GSE83824": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 macrophage cell line +/- LPS, no blood samples"
+  },
+  "GSE84104": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "MCF7 breast cancer cell line, tamoxifen treated; no blood samples"
+  },
+  "GSE84161": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "monocytes purified from healthy buffy coats, cultured with LPS and Tpl-2/MEK inhibitors"
+  },
+  "GSE84439": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "whole blood RNA-seq of sepsis (7) and sepsis/BMT (6) patients plus ARDS patients"
+  },
+  "GSE89376": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "isolated neutrophil granulocytes from sepsis patients and healthy controls only"
+  },
+  "GSE93861": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "single Ebola virus disease patient and healthy controls, peripheral blood arrays; not described as sepsis"
+  },
+  "GSE95233": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "51 septic shock patients (admission and D2/D3) vs 22 healthy volunteers, blood, Affymetrix U133 Plus 2"
+  },
+  "GSE9692": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "30 children with septic shock vs 15 normal children, whole blood, Affymetrix U133 Plus 2"
+  },
+  "GSE97287": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PBMC from systemic capillary leak syndrome patients (crisis vs convalescent); no sepsis patients"
+  },
+  "GSE9960": {
+    "decision": "include",
+    "reason": "eligible",
+    "basis": "PBMC from critically ill sepsis patients (54) vs non-infectious SIRS controls, Affymetrix U133 Plus 2"
+  },
+  "OEX00027423": {
+    "decision": "exclude",
+    "reason": "not_human",
+    "basis": "CD4 T cells from spleens of CLP mice"
+  },
+  "PRJEB100561": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "chorion and decidua tissue from first-trimester pregnancies with/without SARS-CoV-2; no blood"
+  },
+  "PRJEB111201": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "sepsis and septic shock adults plus healthy controls, PAXgene whole blood serial bulk RNA-seq"
+  },
+  "PRJEB124578": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "ICU adults with lower respiratory infection, whole-blood RNA-seq; sepsis only as background, cohort not labelled septic",
+    "flag": "uncertain"
+  },
+  "PRJEB21872": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "14 unlabelled human RNA-seq samples; likely Candida-infected reconstituted epithelium model, patient work was plasma NGS",
+    "flag": "uncertain"
+  },
+  "PRJEB43380": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "blood RNA-seq of COVID-19 patients, asymptomatic to critical; not described as sepsis"
+  },
+  "PRJEB45262": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "leukocyte-depleted platelet RNA-seq from sepsis and coronary artery disease patients"
+  },
+  "PRJEB47146": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "serum mRNA sequencing in dengue patients and controls; serum RNA only, no sepsis"
+  },
+  "PRJEB47673": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC endothelial cells transduced with APEX1 vector and treated with LPS in vitro"
+  },
+  "PRJEB66479": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "skin punch biopsies after intradermal gold nanoparticle injection in type 1 diabetes trial"
+  },
+  "PRJNA1008068": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood RNA-seq of ventilated trauma/surgery ICU patients with or without ICU-acquired pneumonia; not called sepsis"
+  },
+  "PRJNA1033613": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "cfDNA footprinting method study; 4 PAXgene blood RNA-seq samples with no sepsis stated, apparently healthy donors",
+    "flag": "uncertain"
+  },
+  "PRJNA1057108": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "umbilical cord MSC and their exosomes; no blood samples"
+  },
+  "PRJNA1097551": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "sepsis caused by severe CABP (ventilated/vasopressors), Cx611 vs placebo, whole blood RNA-seq"
+  },
+  "PRJNA1099757": {
+    "decision": "exclude",
+    "reason": "no_public_reads",
+    "basis": "Ghanaian sepsis cohort (120 sepsis, 42 healthy), whole blood RNA-seq time course"
+  },
+  "PRJNA1101467": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "plasma cell-free RNA modification sequencing of tRNA/small ncRNA; single sample is a skin scraping"
+  },
+  "PRJNA1102666": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "brain/microglia samples for sepsis-associated encephalopathy mechanism study; no blood"
+  },
+  "PRJNA1121408": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "iPSC-derived brain-like endothelial cells infected with coxsackievirus B3 in vitro"
+  },
+  "PRJNA1142094": {
+    "decision": "exclude",
+    "reason": "no_public_reads",
+    "basis": "Ubon Sepsis Study participants (melioidosis and other infections), whole blood RNA-seq"
+  },
+  "PRJNA1153008": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "donor macrophages cultured in vitro on Zn-doped titanium implant coatings; no blood or PBMC samples"
+  },
+  "PRJNA1155657": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HL-60 cell line sample for FAM19A4 neutrophil activation study"
+  },
+  "PRJNA1157894": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "bone marrow mesenchymal stem cells from arthroplasty patients (aseptic loosening)"
+  },
+  "PRJNA1166748": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "implant coating/osseointegration study; 6 samples labelled blood, aseptic loosening context, no sepsis patients",
+    "flag": "uncertain"
+  },
+  "PRJNA1174783": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "single-nucleus RNA-seq of brain and kidney from a septic shock case"
+  },
+  "PRJNA1187030": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "CD4+ T cells from blood of SS and NSS patients; title-only evidence, no summary"
+  },
+  "PRJNA1188732": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "faecal samples from cardiopulmonary bypass patients in probiotic study; no blood"
+  },
+  "PRJNA1191529": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "PBMC of ICU sepsis patients at admission and discharge, bulk total RNA-seq; study aim is circRNA",
+    "flag": "uncertain"
+  },
+  "PRJNA1218242": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Huh7 hepatocyte cell line treated with drugs in vitro"
+  },
+  "PRJNA1220204": {
+    "decision": "exclude",
+    "reason": "no_public_reads",
+    "basis": "Ugandan adults with suspected sepsis (severe infection), PAXgene whole blood bulk RNA-seq"
+  },
+  "PRJNA1230375": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "whole blood RNA-seq for sepsis secondary to pyogenic liver abscess vs healthy; only 2 pooled-looking sample records",
+    "flag": "uncertain"
+  },
+  "PRJNA1247439": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "human heart tissue sample for sepsis-induced myocardial injury study; no blood"
+  },
+  "PRJNA1248679": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "human heart samples for sepsis-induced myocardial dysfunction study; no blood"
+  },
+  "PRJNA1256764": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "human heart tissue samples for septic myocardial injury study; no blood"
+  },
+  "PRJNA1257023": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "human heart tissue samples for sepsis-induced myocardial injury study; no blood"
+  },
+  "PRJNA1297692": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "HUVEC cell line with BHLHE40 knockdown; endothelial in vitro study"
+  },
+  "PRJNA1308652": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "PBMC from ICU patients with/without sepsis and healthy controls, 10x Chromium single-cell RNA-seq"
+  },
+  "PRJNA1347104": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "Summary: scRNA-seq (10x Chromium) of PBMC; all 9 samples are healthy donors (subject is affected = No)"
+  },
+  "PRJNA1358292": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "81 children with septic shock (disease=Septic Shock), day-1 whole blood RNA-seq, CCHMC"
+  },
+  "PRJNA1371019": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "BEAS-2B lung epithelial cell line, LPS vs control; no patient blood"
+  },
+  "PRJNA1371076": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "Title/summary: mRNA-seq of blood samples from septic patients; tissue=blood, 8 samples S1-S8"
+  },
+  "PRJNA1404867": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "Summary: blood RNA-seq of septic patients and healthy; whole blood; but isolate attr reads healthy individual for all 19",
+    "flag": "uncertain"
+  },
+  "PRJNA1430401": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "41 children admitted with sepsis (disease=Sepsis), Kilifi Kenya; PBMC bulk RNA-seq at admission"
+  },
+  "PRJNA1475955": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "NCM460 colonic epithelial cell line; no blood samples"
+  },
+  "PRJNA1495224": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "A549 lung cell line (NC vs overexpression); no blood samples"
+  },
+  "PRJNA1511296": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Dermal microvascular endothelial cells exposed to long COVID plasma; no blood cell samples"
+  },
+  "PRJNA264046": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Single sample from HCT116 colon cancer cell line; no blood"
+  },
+  "PRJNA277544": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Primary bronchial epithelial cells (NHBE) exposed to pneumolysin/statin; no blood"
+  },
+  "PRJNA341405": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PfSPZ malaria vaccine trial, healthy Malian adults, whole blood pre/post vaccination; no sepsis"
+  },
+  "PRJNA352064": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 monocytic cell line, in vitro inflammation study; no patient blood"
+  },
+  "PRJNA380820": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Controlled human malaria infection in Tanzanian volunteers, whole blood RNA-seq; no sepsis patients"
+  },
+  "PRJNA398556": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Purified cord blood monocytes from newborns of obese vs lean mothers; no whole blood/PBMC"
+  },
+  "PRJNA413142": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Blood monocyte-derived primary macrophages from healthy donors cultured with UHMWPE particles"
+  },
+  "PRJNA422660": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Elderly sepsis vs normal (N-1..3, S-1..3) but tissue=plasma for all 6 samples; plasma RNA only",
+    "flag": "uncertain"
+  },
+  "PRJNA491748": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Tibialis anterior muscle biopsies, critical illness myopathy vs controls; no blood"
+  },
+  "PRJNA515293": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Peripheral blood monocyte-derived macrophages treated with atheroma plaque homogenate +/- GSK2033"
+  },
+  "PRJNA521077": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Isolated platelets (cell_type=Platelet) from septic patients and healthy donors; RNA-seq and ribosome footprints"
+  },
+  "PRJNA587604": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "MEG01 megakaryocyte cell line, LPS vs control; no patient blood"
+  },
+  "PRJNA601661": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Total circulating leukocytes from neonates undergoing cardiopulmonary bypass surgery; no sepsis diagnosis"
+  },
+  "PRJNA605220": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "16S rRNA V1-V2 amplicon sequencing of CSF (and water controls) in infant hydrocephalus; no host mRNA"
+  },
+  "PRJNA607653": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "PBMC mRNA-seq, 24 sepsis patients and 20 healthy controls (disease=Sepsis)"
+  },
+  "PRJNA625581": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "PBMC RNA-seq of sepsis patients with poor prognosis and healthy cases (sample titles, cell_type=PBMC)"
+  },
+  "PRJNA638753": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "COVID-19 critically ill and non-critical patients plus healthy, whole white blood cells; not described as sepsis"
+  },
+  "PRJNA682250": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "All 376 samples body site=lung (severe pneumonia cohort, SCRIPT); no blood samples"
+  },
+  "PRJNA688888": {
+    "decision": "exclude",
+    "reason": "single_cell",
+    "basis": "Single-cell transcriptomic profiling of hESC-derived RPE differentiation and fetal/adult eye; no blood"
+  },
+  "PRJNA720011": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Cultured macrophages stimulated with RANKL or TYMP (osteoclast differentiation); blood origin not stated"
+  },
+  "PRJNA767452": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "ICU patients incl. sepsis-associated delirium, PBMC (isolate=PBMC); no sample-level diagnosis, bulk vs single-cell unstated",
+    "flag": "uncertain"
+  },
+  "PRJNA777938": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Whole blood of ICU COVID-19 and other AHRF patients and ventilated controls; no patients described as septic"
+  },
+  "PRJNA779249": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Blood of critically ill COVID-19 ICU patients and controls; not described as sepsis"
+  },
+  "PRJNA792730": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 cell line infected with Mycoplasma pneumoniae in vitro; no patient blood"
+  },
+  "PRJNA794277": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "128 adults with sepsis in Uganda (disease=sepsis), PAXgene whole blood total RNA-seq"
+  },
+  "PRJNA803436": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PfSPZ malaria vaccine/CHMI trial in healthy Tanzanian volunteers, whole blood; no sepsis"
+  },
+  "PRJNA821871": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "19 patients: 10 septic non-shock and 9 septic shock (isolate attr), tissue=blood RNA-seq"
+  },
+  "PRJNA833449": {
+    "decision": "exclude",
+    "reason": "sorted_cells",
+    "basis": "Isolated pDC from healthy control and COVID-19 inborn-error patient, stimulated with IAV/SARS-CoV-2"
+  },
+  "PRJNA850012": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "Fecal samples from sepsis patients (isolate=faeces), 16S rRNA gut flora sequencing per summary; no host blood mRNA"
+  },
+  "PRJNA871032": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PfSPZ malaria vaccine trial, Malian adults, whole blood pre/post vaccination; no sepsis"
+  },
+  "PRJNA871225": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "PfSPZ malaria vaccine trial, US malaria-naive adults, whole blood pre/post vaccination; no sepsis"
+  },
+  "PRJNA905077": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "Summary: transcriptome sequencing of PBMC of patients with sepsis; isolate=BLOOD, 10 samples"
+  },
+  "PRJNA914756": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "Whole blood of MRSA bacteremia patients (persisters vs resolvers); bacteremia not described as sepsis"
+  },
+  "PRJNA943267": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Sorted LEPR+/- cells from peri-implant fibrous tissue and bone; no blood"
+  },
+  "PRJNA943438": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "THP-1 cell line with WTAP transfection; no patient blood"
+  },
+  "PRJNA954715": {
+    "decision": "exclude",
+    "reason": "raw_reads_only",
+    "basis": "PBMC mRNA-seq of 9 sepsis patients and 7 volunteers (sample titles Sepsis-n / Volunteers-n)"
+  },
+  "PRJNA971142": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Glioma patient-derived xenograft tumours (G411 GBM cells in mice); no blood"
+  },
+  "PRJNA988150": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "Pancreatic cancer tissue and lymph node from one SLE/transplant patient; no blood"
+  },
+  "phs000159": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "whole-genome sequencing of acute myeloid leukaemia"
+  },
+  "phs000292": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "genetics of early-onset stroke; genotype data"
+  },
+  "phs000546": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "exome sequencing of heart cohorts"
+  },
+  "phs000594": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "large granular lymphocyte leukaemia drug trial"
+  },
+  "phs000631": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "ARDS genetic association studies"
+  },
+  "phs000686": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "acute lung injury genetic risk study"
+  },
+  "phs000928": {
+    "decision": "exclude",
+    "reason": "no_sepsis_patients",
+    "basis": "whole blood transcriptome of healthy elderly volunteers given a probiotic"
+  },
+  "phs000979": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "post-mortem brain tissue"
+  },
+  "phs001313": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "genetics of 21-hydroxylase deficiency"
+  },
+  "phs001441": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "admixture mapping genotypes in S. aureus bacteraemia"
+  },
+  "phs001496": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "warfarin pharmacogenomics"
+  },
+  "phs001505": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "whole-exome sequencing in S. aureus bacteraemia"
+  },
+  "phs001568": {
+    "decision": "exclude",
+    "reason": "not_transcriptome_wide_mrna",
+    "basis": "genetic epidemiology of chronic lymphocytic leukaemia"
+  },
+  "phs001807": {
+    "decision": "exclude",
+    "reason": "not_blood",
+    "basis": "liver tissue RNA-seq in alcohol-related liver disease"
+  }
+}

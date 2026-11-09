@@ -1,0 +1,93 @@
+{
+  "version": "1.0.0",
+  "dpi": 300,
+  "font_family": "DejaVu Sans",
+  "font_size": 9,
+  "minimum_font_size": 8,
+  "seed": 20261013,
+  "layout": {
+    "minimum_blank_axes_width": 0.8,
+    "tolerance_points": 0.5,
+    "basis": "The main figures are drawn on canvases 14 inches wide, no text is smaller than 8 points, and dense panels move to a supplementary page. minimum_blank_axes_width is the share of its panel that a diagram without axis lines must keep, and tolerance_points the distance in points by which a text may cross the edge of the figure or cover another text."
+  },
+  "display": {
+    "sex_split_columns": 12,
+    "difference_limit": 3,
+    "calendar_days": 28,
+    "ridge_bins": 240
+  },
+  "interpretation": "The figures describe the resource and its checks. Every count is read from the tables of the completed, QC-passed stages and written to figure_data.csv beside the figures. Only two kinds of panel combine the expression values of several studies: the stacked view of Fig4, which stacks the per-study tables as they are, and the views of the corrected tables of Fig6 and SuppFig6, before and after the correction of the batch-correction stage.",
+  "output_policy": "Every panel is exported on its own and inside its assembled figure, as PDF and as PNG at 300 dpi, with its caption outside the figure. A file is accepted only if it was drawn without a warning and its texts and diagrams pass the layout check (minimum_font_size and layout).",
+  "class_order": ["sepsis", "healthy_control", "non_septic_control", "other_condition", "not_recorded"],
+  "class_labels": {"sepsis": "Sepsis", "healthy_control": "Healthy control", "non_septic_control": "Non-septic control", "other_condition": "Other condition", "not_recorded": "Not recorded"},
+  "class_colors": {"sepsis": "#DB4325", "healthy_control": "#4A6FE3", "non_septic_control": "#55A868", "other_condition": "#B9A0CD", "not_recorded": "#E0E0E0"},
+  "family_order": ["affymetrix", "illumina_beadchip", "agilent", "other_array", "rna_seq"],
+  "family_labels": {"affymetrix": "Affymetrix array", "illumina_beadchip": "Illumina BeadChip", "agilent": "Agilent array", "other_array": "Other array", "rna_seq": "RNA-seq"},
+  "family_colors": {"affymetrix": "#2A9D8F", "illumina_beadchip": "#E9C46A", "agilent": "#F4A261", "other_array": "#A68A64", "rna_seq": "#264653"},
+  "tissue_groups": {
+    "Whole blood": ["whole_blood"],
+    "Blood, unspecified": ["blood_not_further_specified"],
+    "Leukocytes": ["leukocytes"],
+    "PBMC": ["pbmc"],
+    "Sorted cells": ["neutrophils", "monocytes", "lymphocytes", "b_cells", "cd4_t_cells", "cd8_t_cells", "nk_cells"],
+    "Plasma": ["plasma"],
+    "Nasopharyngeal swab": ["nasopharyngeal_swab"],
+    "Not recorded": ["not_recorded"]
+  },
+  "age_labels": {"adult": "Adult", "child": "Child", "neonate": "Neonate", "not_recorded": "Not recorded"},
+  "variables": {
+    "sample_class": "Class",
+    "tissue": "Material",
+    "sex": "Sex",
+    "age_group": "Age group",
+    "age_years": "Age in years",
+    "patient": "Patient identifier",
+    "time_point": "Time point",
+    "outcome": "Outcome",
+    "septic_shock": "Septic shock",
+    "score": "Severity score"
+  },
+  "basis_labels": {"sample_record": "Sample record", "sample_record_and_study_description": "Record and study description", "study_description": "Study description", "not_recorded": "Not recorded"},
+  "mapping_order": ["one_gene", "several_genes", "no_gene_in_annotation", "gene_not_in_hgnc", "accession_not_resolved", "not_in_annotation"],
+  "mapping_labels": {"one_gene": "One gene", "several_genes": "Several genes", "no_gene_in_annotation": "No gene annotated", "gene_not_in_hgnc": "Not in HGNC", "accession_not_resolved": "Unresolved accession", "not_in_annotation": "Not in the annotation"},
+  "mapping_colors": {"one_gene": "#4A6FE3", "several_genes": "#F3B032", "no_gene_in_annotation": "#E0E0E0", "gene_not_in_hgnc": "#B9A0CD", "accession_not_resolved": "#55A868", "not_in_annotation": "#777777"},
+  "scale_order": ["log2", "log2_like", "log2 counts per million", "linear", "other"],
+  "stacked_view": {
+    "note": "Illustration only: the gene-level tables are stacked as they are, on the genes that all of them hold, to show that samples then group by study and technology. Nothing in the resource is built from this stack.",
+    "scales": ["log2", "log2_like", "log2 counts per million"],
+    "minimum_genes": 12000,
+    "genes": 2000
+  },
+  "quantiles": [0.05, 0.25, 0.5, 0.75, 0.95],
+  "link_labels": {"chip_type_scan_time_and_median_intensity": "Affymetrix array\n(scan time)", "beadchip_barcode_and_position": "Illumina BeadChip\n(barcode)", "slide_identifier_and_median_intensities": "Agilent array\n(slide)", "identical_counts": "RNA-seq library\n(identical counts)", "expression_identity": "Near-identical\nprofile (declared)", "record_names_a_re_analysis": "Re-analysis\nnamed in the record"},
+  "flag_labels": {"low_library_size": "Fewer than {minimum_library_size:,} reads", "few_genes_detected": "Few genes detected", "low_detection": "Low detection", "low_dynamic_range": "Low dynamic range", "flagged_in_record": "Flagged in the record", "technical_replicate": "Technical replicate", "identity_uncertain": "Identity uncertain"},
+  "captions": {
+    "Fig1": "Selection of the studies and samples. A, every record that the searches of the public repositories returned, the candidates kept after deduplication, the studies screened against the eligibility rules (with the first reason that excluded each) and the included studies, by repository and technology, with their study platforms. B, the sample records of the included studies: those without expression values (listed with their reason in a ledger and left out of the sample tables), the sample records with values, the repeat deposits of one array or library in several studies (kept and marked), the distinct samples, and one sample marked for every patient. A sample without a patient identifier counts as its own patient, so the last count is an upper bound on the number of patients. Apart from the records without values, no record is removed at any step.",
+    "Fig2": "What the resource holds. A, distinct samples by the year in which their study platform (a study on one platform) was released, added up over the years and stacked by technology; the last year is the part before the searches were run. B, the distinct samples from their technology to the material sampled to their curated class; every band is as wide as its samples. C, every study platform as one sector, ordered by technology and year of release. From the outside in: the technology; the share of its sample records in each curated class; its sample records on a logarithmic scale (dotted circles: 10 and 100); and the share of its records that record sex, age, a patient identifier, a time point, the outcome and septic shock (grey: none). Bands join the study platforms that hold the same arrays or libraries, as wide as the samples they share and coloured by cohort group.",
+    "Fig3": "What the records say. A, the curated class of every sample record (inner ring) and what it rests on (outer ring): its own record, its record together with a quoted sentence of the study record, or the study record alone; centre: all sample records. B, the recorded age in years of the distinct samples of every class, as a density reflected at zero so that newborns keep their weight (grey band: under 18). C, the distinct sepsis samples from their recorded septic shock to their recorded outcome. D, when the distinct samples of the longitudinal study platforms were drawn: by day of sampling where the records give days or hours (left), and by the order of the time points where they give only an order or no unit (right); shade and number: distinct samples. The share of the sample records of every study platform that record each curated variable is shown in SuppFig2.",
+    "Fig4": "Genes and scales. A, the probe-level rows of every technology, flowing to their mapping outcome to HGNC genes (right: share of all rows). B, the genes of every gene-level table: one row for every table, grouped by technology, and one column for every gene, ordered by the number of tables that hold it (above). C, the values of every gene-level table as released, one density ridge per table ordered by its median: the tables on a log scale (left; values beyond -8 and 20 are not drawn) and those on other scales (right, on a signed logarithm); colour: the scale of the table. D and E, illustration only: the samples of the log-scale tables stacked as they are, without any correction, on the most variable genes that all of them hold; samples group by technology and study (D) rather than by class (E). Nothing in the resource is built from this stack.",
+    "Fig5": "Technical validation inside single studies. A, every sample read as female, male or ambiguous in a table that measures XIST, placed by its own table: XIST from the mean of the samples read as male (0) to that of the samples read as female (1), and the Y-chromosome genes from the female (0) to the male (1) mean; colour: recorded sex; dark rim: a recorded sex that disagrees with the sex read from expression; above and right, the densities by recorded sex, in proportion to their samples. The count of agreeing records covers every tested table, including those without XIST (SuppFig3). B, two records of one sample deposited in two studies (or twice in one), by the evidence that links them: the correlation of their gene profiles after every gene is centred on its median in its own table, drawn as a raincloud (density, median and middle half, every pair); a cross marks a record that is not the most similar one in the other table. C, the ROC curve of the Sepsis MetaScore between sepsis and healthy controls in every study platform and tissue (thin), with the median curve and the middle half of the curves at every false-positive rate; sepsis samples drawn before the onset are left out, and every curve encloses the area the validation stage reports. D, the standardised difference between sepsis and healthy controls of every published gene (rows) in every study platform and tissue (columns, ordered by an average-linkage clustering tree), the genes by their approved symbols (C9orf95 and KIAA1370 as NMRK1 and ATOSA); left strip: the published direction; top strip: tissue. E, the marker genes of sorted cell fractions: the mean log2 expression of every marker set in every fraction (number), standardised over the fractions of the same study (shade); a frame marks the fraction that the marker set should mark.",
+    "Fig6": "Removal of the differences between studies (bulk blood). A to C, every sample of the corrected bulk-blood table on its first two principal components, after the alignment of value distributions and before the correction (A), and after it (B, C); marker shape in C: how the study of a sample was corrected. The class means of studies corrected by matched groups were lined up with those of the studies with healthy controls, so part of the separation of classes in C follows from the correction. D, the share of the variance of each of the first two components that technology, study and class explain, as an arrow from before the correction (open circle) to after it (filled; blue where the share falls, red where it rises); the last row reads the class over the studies corrected on their healthy controls alone. E, the test where the answer is known: each study with healthy controls held out in turn, its controls hidden and its correction estimated from its other samples by each method (plain ComBat: ComBat with the study as batch); one thin line for every held-out study and a bold line for the median. Left, the distance of the hidden controls from the healthy controls of the other studies after the same method, in within-study standard deviations, with the dispersion that each method leaves among the studies it learns from (grey bar) and the error that sampling the hidden controls alone gives (dotted line); right, the error of their spread. F, study mixing of every study and class before against after the correction, in one principal-component space: the share of the ten nearest neighbours that come from the own study, less the share expected by chance (lower: better mixed); bubble size: samples; circled: studies left out because they failed a check that decides for their tier; squared: studies that failed a check which does not decide for their tier, and so stay in. G, every sample record of the resource, from the sample type it was corrected with (not grouped: left out before the grouping) to its outcome in the batch correction.",
+    "SuppFig1": "Sample records of every study platform by curated class, and all its records; shade: sample records on a logarithmic scale; left strip: technology.",
+    "SuppFig2": "For every study platform (columns), the share of its sample records that record each curated variable (rows; from the most recorded down): A, the microarray study platforms; B, the RNA-seq study platforms. White: not recorded in any sample record. Within every technology the study platforms are sorted by their shares, row by row from the top. Bars above: the sample records of every study platform, in the colour of its technology, on a logarithmic scale; right: the share of all the sample records of the panel that record the variable.",
+    "SuppFig3": "The sex check in every tested gene matrix, or in every tissue of a matrix that the validation stage split by tissue: the density of the difference between the Y-chromosome genes and XIST (or of the Y-chromosome genes alone, marked with an asterisk) by the sex read from it, every curve in proportion to its samples (a group too small for a density is drawn as short ticks); dotted line: the midpoint between the two groups; below: the recorded sexes that agree with expression; orange title: recorded sex marked unreliable. Every panel has its own scale.",
+    "SuppFig4": "Agreement of repeated deposits for every two tables that share samples, grouped by cohort group: the median and lowest correlation of the two records of a sample, with every gene centred on its median in its own table and as a plain Spearman correlation, and how many of the linked records are the most similar one in the other table.",
+    "SuppFig5": "Quality measures and flags of the sample records; nothing is removed by a flag. A, reads assigned to genes in every RNA-seq library, one density strip per study platform ordered by its median (shade: the libraries of the study platform, darkest at its densest value; tick: median); red: below the limit of the cohort stage (dashed line); right: the libraries flagged. B, the dynamic range of every array read from an intensity table, relative to the median of its study platform, in the same form. C, the sample records that carry each flag, by technology; right: all records with the flag.",
+    "SuppFig6": "Removal of the differences between studies (PBMC) and the checks of every study. A, every sample of the corrected PBMC table on its first two principal components, after alignment and before correction, and after it. B, agreement of one split of the sex genes over all studies with the sex called inside each study, before and after the correction, one line for every study; dotted line: the limit a study must reach after it. C, the area under the ROC curve of the score between the sepsis samples of a study and the healthy controls of the other studies, before and after; a study corrected by matched groups passes by construction. D, two deposits of one sample held by two corrected studies: their distance before against after the correction (dashed line: equal distances; red: deposits no longer nearest their twin); both hold the same sample, so the distance after is the noise that estimating two corrections adds."
+  },
+  "correction": {
+    "groups": {"bulk_blood": "Bulk blood", "pbmc": "PBMC"},
+    "view_genes": 2000,
+    "method_order": ["none", "plain_combat", "flat_genes", "matched_groups"],
+    "method_labels": {"none": "No\ncorrection", "plain_combat": "Plain\nComBat", "flat_genes": "Flat\ngenes\n(dropped)", "matched_groups": "Matched\ngroups\n(used)"},
+    "tier_labels": {"anchored": "With healthy controls (corrected on them)", "unanchored": "Without healthy controls (matched groups)"},
+    "tier_colors": {"anchored": "#457B9D", "unanchored": "#E76F51"},
+    "factor_labels": {"family": "Technology", "study_accession": "Study", "sample_class": "Class", "sample_class_anchored": "Class, in studies\nwith healthy controls"},
+    "group_order": ["bulk_blood", "pbmc", ""],
+    "group_labels": {"bulk_blood": "Bulk blood", "pbmc": "PBMC", "": "Not grouped"},
+    "group_colors": {"bulk_blood": "#355070", "pbmc": "#E56B6F", "": "#B4B4B4"},
+    "outcome_order": ["in_table_bulk_blood", "in_table_pbmc", "repeat_deposit", "sample_type_not_corrected", "newborn_study_not_corrected", "no_class_to_line_up", "value_scale_not_comparable", "no_method_passed_the_checks", "no_check_applicable", "study_has_too_few_samples"],
+    "outcome_labels": {"in_table_bulk_blood": "In the corrected bulk-blood table", "in_table_pbmc": "In the corrected PBMC table", "in_corrected_table": "In a corrected table", "repeat_deposit": "Repeat deposit, checks only", "sample_type_not_corrected": "Swab, plasma, sorted cells", "newborn_study_not_corrected": "Newborn study", "no_class_to_line_up": "Nothing to line up", "value_scale_not_comparable": "Not on a log scale", "no_method_passed_the_checks": "Failed the checks", "no_check_applicable": "No mixing check", "study_has_too_few_samples": "Under five samples"},
+    "outcome_colors": {"in_corrected_table": "#457B9D", "repeat_deposit": "#B9A0CD"}
+  }
+}

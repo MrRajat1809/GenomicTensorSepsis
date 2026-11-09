@@ -1,0 +1,222 @@
+{
+  "version": "1.0.0",
+  "protocol": "The acquisition stage searches GEO, ArrayExpress, ENA and the catalogues of controlled-access repositories with fixed terms for studies released up to the census date, stores every response unmodified, and keeps every record found in the census with a status. It harvests the study and sample records of every candidate study and downloads the expression files of the included studies with their SHA-256 checksums; a rebuild reads these stored answers and asks the repositories again only on request.",
+  "register": "screening_register.json",
+  "http": {
+    "user_agent": "GenomicTensorSepsis/1.0.0",
+    "minimum_interval_seconds": 0.4,
+    "timeout_seconds": 300,
+    "retries": 8,
+    "retry_wait_seconds": 3
+  },
+  "search": {
+    "census_date": "2026-10-11",
+    "release_dates": {
+      "formats": [
+        "%Y-%m-%d",
+        "%Y%m%d"
+      ],
+      "undated": {
+        "ega": "OmicsDI records of EGA carry no publication date",
+        "dbgap": "OmicsDI records of dbGaP carry no publication date",
+        "ena": "a child study reached through the runs of a matched umbrella project has no study record of its own"
+      }
+    },
+    "terms": [
+      "sepsis",
+      "septic",
+      "septicemia",
+      "septicaemia",
+      "urosepsis",
+      "bacteremia",
+      "bacteraemia",
+      "bloodstream infection",
+      "systemic inflammatory response",
+      "critically ill",
+      "critical illness",
+      "severe infection",
+      "organ dysfunction",
+      "community acquired pneumonia"
+    ],
+    "geo": {
+      "organism": "Homo sapiens",
+      "dataset_types": [
+        "Expression profiling by array",
+        "Expression profiling by high throughput sequencing"
+      ],
+      "summary_batch": 200,
+      "superseries_marker": "This SuperSeries is composed of"
+    },
+    "arrayexpress": {
+      "organism": "homo sapiens",
+      "page_size": 100,
+      "study_types": {
+        "transcription profiling by array": "array",
+        "RNA-seq of coding RNA": "rna-seq",
+        "RNA-seq of total RNA": "rna-seq"
+      }
+    },
+    "ena": {
+      "tax_id": 9606,
+      "library_source": "TRANSCRIPTOMIC",
+      "library_strategy": "RNA-Seq",
+      "run_batch": 40,
+      "matching": "Quoted phrase on study title and description; single-word terms are also matched as substrings because ENA wildcards do not span words."
+    },
+    "catalogue": {
+      "index": "OmicsDI",
+      "page_size": 100,
+      "repositories": {
+        "EGA": "controlled",
+        "dbGaP": "controlled",
+        "NODE": "unknown"
+      }
+    }
+  },
+  "harvest": {
+    "ena_sample_batch": 50,
+    "ena_run_fields": "run_accession,sample_accession,experiment_accession,library_layout,library_selection,instrument_model,read_count,base_count,fastq_bytes,fastq_ftp"
+  },
+  "eligibility": {
+    "decided": "Screening decides which studies are downloaded; roles, patients and samples are decided at the cohort stage.",
+    "unit": "The resource keeps every sample of an included study; repeated deposits of one sample and repeated samples of one patient are marked at the cohort stage, with one sample marked for every patient.",
+    "study": "A study is eligible when at least one of its samples meets every sample criterion and comes from a patient with sepsis. Other samples in the same study do not affect the decision.",
+    "sample": {
+      "organism": "Homo sapiens",
+      "assay": "Transcriptome-wide mRNA expression by microarray or bulk RNA sequencing",
+      "tissue": [
+        "whole blood",
+        "total blood leukocytes or buffy coat",
+        "peripheral blood mononuclear cells"
+      ],
+      "excluded": [
+        "purified or sorted cell populations, extracellular vesicles, plasma or serum RNA",
+        "single-cell or single-nucleus profiles",
+        "non-blood tissue, cell lines and organoids",
+        "samples cultured, stimulated or treated outside the body"
+      ]
+    },
+    "sepsis": "Sepsis, severe sepsis or septic shock as diagnosed by the source study, at any age. The definition a study used is recorded, not re-adjudicated. Bacteraemia, pneumonia, COVID-19, influenza or critical illness count only where the study itself calls the patient septic. Human experimental endotoxaemia is not sepsis.",
+    "roles": {
+      "sepsis": "Patient with sepsis, severe sepsis or septic shock",
+      "sirs": "Non-infectious systemic inflammation or critical illness",
+      "healthy": "Healthy control",
+      "infection_without_sepsis": "Infected patient whom the study does not call septic"
+    },
+    "comparators": "SIRS, healthy and infection-without-sepsis samples are retained only from studies that also contribute sepsis patients.",
+    "repeat_samples": "When a patient has several samples all are kept with their time point; the cohort stage marks the earliest, so that one sample per patient can be selected with a single flag.",
+    "age": "All ages are retained and labelled neonate, paediatric or adult.",
+    "raw_reads": "Studies available only as raw sequencing reads are not quantified in this version. They are excluded and documented with the reason raw_reads_only.",
+    "later_versions": "Studies excluded as controlled_access, no_public_reads or raw_reads_only pass the scientific criteria and are candidates for a later version of the resource."
+  },
+  "technology": {
+    "geo_sample_types": {
+      "RNA": "array",
+      "SRA": "rna-seq"
+    },
+    "sequencing_library_strategies": [
+      "ATAC-seq",
+      "Bisulfite-Seq",
+      "ChIP-Seq",
+      "OTHER",
+      "RNA-Seq",
+      "miRNA-Seq",
+      "ncRNA-Seq"
+    ]
+  },
+  "screening": {
+    "method": "Each candidate study has one recorded decision, the first reason that holds in the order of the reasons, and every decision is checked against the harvested records; the technology of a study is the one its sample records name.",
+    "reasons": {
+      "not_a_dataset": "The record is not a study or dataset, for example a data access committee entry.",
+      "third_party_reanalysis": "A series that reanalyses the samples of another series and owns none of its own.",
+      "not_human": "No human samples.",
+      "not_transcriptome_wide_mrna": "No transcriptome-wide mRNA measurement by microarray or bulk RNA sequencing: microRNA or other small RNA only, methylation, chromatin, genotype or exome, protein, cell-free DNA, or a targeted gene panel.",
+      "single_cell": "Every expression profile is single-cell or single-nucleus.",
+      "not_blood": "No sample is whole blood, total leukocytes or PBMC.",
+      "sorted_cells": "Blood-derived, but every sample is a purified or sorted cell population, extracellular vesicles, or plasma or serum RNA.",
+      "ex_vivo_stimulated": "Every blood sample was cultured, stimulated or treated outside the body.",
+      "no_sepsis_patients": "No eligible blood sample comes from a patient the study itself diagnoses with sepsis.",
+      "superseries_of_included_subseries": "A GEO SuperSeries whose samples all belong to included studies.",
+      "overlaps_included_study": "Shares samples with an included study that is the preferred unit, named in overlaps_with.",
+      "controlled_access": "Passes the scientific criteria as far as the public record shows, but is held under controlled access.",
+      "no_public_reads": "Passes the scientific criteria and is registered in ENA or SRA, but its reads are not public.",
+      "raw_reads_only": "Passes the scientific criteria and is public, but exists only as raw sequencing reads with no expression matrix in a repository.",
+      "no_expression_files": "Passes the scientific criteria, but the repository holds the sample table without any raw or processed expression file.",
+      "no_usable_expression_values": "Passes the scientific criteria, but its deposited expression files cannot be read into comparable values for its samples.",
+      "eligible": "Meets every study criterion and is openly available as expression data."
+    }
+  },
+  "download": {
+    "minimum_free_gigabytes_after_download": 20,
+    "block_megabytes": 4,
+    "skip_patterns": [
+      "[.]pdf([.]gz)?$"
+    ]
+  },
+  "deduplication": {
+    "source_priority": [
+      "geo",
+      "arrayexpress",
+      "ena",
+      "ega",
+      "dbgap",
+      "node"
+    ]
+  },
+  "recall": {
+    "basis": "Every GEO and ArrayExpress cohort used by one of three published multi-cohort analyses of sepsis transcriptomes whose own record names sepsis: Sweeney et al. 2015, Sci Transl Med 7:287ra71 (doi 10.1126/scitranslmed.aaa5993; discovery and validation cohorts); Sweeney et al. 2018, Crit Care Med 46:915-925 (doi 10.1097/CCM.0000000000003084; discovery and validation cohorts); and Sweeney et al. 2018, Nat Commun 9:694 (doi 10.1038/s41467-018-03078-2; discovery and community-acquired validation cohorts). Reaching a cohort does not include it; screening decides each study on its records, and the recall result is in the census receipt (recall).",
+    "studies": {
+      "geo": [
+        "GSE5772",
+        "GSE6377",
+        "GSE9960",
+        "GSE10474",
+        "GSE11755",
+        "GSE12838",
+        "GSE13015",
+        "GSE20346",
+        "GSE21802",
+        "GSE25504",
+        "GSE28750",
+        "GSE32707",
+        "GSE33341",
+        "GSE40012",
+        "GSE54514",
+        "GSE57065",
+        "GSE63042",
+        "GSE65682",
+        "GSE66099",
+        "GSE66890",
+        "GSE69528",
+        "GSE74224"
+      ],
+      "arrayexpress": [
+        "E-MEXP-3621",
+        "E-MEXP-3850",
+        "E-MTAB-1548",
+        "E-MTAB-4421",
+        "E-MTAB-4451"
+      ]
+    },
+    "outside_scope": {
+      "basis": "Cohorts of the same analyses whose study records never name sepsis, so that the eligibility rule cannot take them as sepsis studies; the search is not expected to reach them, and the stored search of 2026-10-11 (search.json) reaches none of them.",
+      "studies": [
+        "GSE22098",
+        "GSE27131",
+        "GSE28658",
+        "GSE40396",
+        "GSE40586",
+        "GSE63990",
+        "E-MEXP-3001",
+        "E-MEXP-3567"
+      ]
+    }
+  },
+  "references": [
+    "https://www.ncbi.nlm.nih.gov/books/NBK25499/",
+    "https://www.ncbi.nlm.nih.gov/geo/info/geo_paccess.html",
+    "https://www.ebi.ac.uk/biostudies/help",
+    "https://www.ebi.ac.uk/ena/portal/api/",
+    "https://www.omicsdi.org/ws/"
+  ]
+}

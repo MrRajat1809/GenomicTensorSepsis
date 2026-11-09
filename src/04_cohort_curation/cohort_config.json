@@ -1,0 +1,74 @@
+{
+  "version": "1.0.0",
+  "protocol": "This stage describes every included sample record that has expression values: it catalogues the recorded fields verbatim, links the records of one sample and the samples of one patient, curates labels by written rules that keep the wording each value rests on, flags doubtful samples without removing them, and defines benchmark tasks whose splits keep each patient on one side. A record without expression values takes no part in the cohort tables and is listed with its recorded fields and the reason the expression stage gave. A value that the records do not give is marked as not recorded, never guessed, and no study is combined with another.",
+  "register": "curation_register.json",
+  "catalogue": {
+    "record_fields": ["title", "source_name", "description", "sample_type", "organism", "molecule", "library_strategy", "library_source", "library_selection", "instrument_model", "data_processing", "last_update_date"],
+    "examples": 6
+  },
+  "links": {
+    "method": "Repeated deposits are marked, not removed: the records of one array or library share one sample identifier, named after the earliest released record, and study platforms that share a sample form one cohort group.",
+    "median_tolerance": 0.001,
+    "primary_record": "earliest_release",
+    "evidence_added": "The screen of near-identical expression profiles, the links that rest on it or on records named as re-analyses, the replicate libraries and the patient namespaces find the arrays, libraries and patients that included studies share where their files give no link. The screen compares distinct samples only, every record marked as a re-analysis must give a key, accessions are ordered by their letters and then their number, and the replicate arrays of one sample are one patient. Their entries are listed in curation_register.json.",
+    "identity": {
+      "families": ["affymetrix", "agilent", "illumina_beadchip", "other_array", "rna_seq"],
+      "value_scales": ["log2", "log2_like", "log2 counts per million"],
+      "minimum_common_genes": 2000,
+      "genes_used": 4000,
+      "candidate_correlation": 0.98,
+      "candidate_margin": 0.005
+    }
+  },
+  "curation": {
+    "method": "Every sample receives one of five sample classes, a sample is sepsis only where the record says so, and the curated variables are those named in the vocabularies below. The rule sets of curation_register.json are written from the complete list of recorded values of every study platform and from the study records, on four principles: a control that no record calls healthy or normal is a non-septic control; the samples of GSE65682 that carry a Mars endotype are sepsis on the basis of the study description; a cohort enrolled for suspected sepsis is sepsis only where the sample record itself names sepsis; and follow-up or recovery samples of sepsis patients are an other condition. Stage 03 writes one line per rule and value in outputs/cohort_curation/label_rules_review.csv, so that every rule can be checked.",
+    "vocabularies": {
+      "sample_class": ["sepsis", "healthy_control", "non_septic_control", "infection_sepsis_not_stated", "other_condition", "not_recorded"],
+      "tissue": ["whole_blood", "blood_not_further_specified", "leukocytes", "pbmc", "neutrophils", "monocytes", "lymphocytes", "b_cells", "cd4_t_cells", "cd8_t_cells", "nk_cells", "plasma", "nasopharyngeal_swab", "not_recorded"],
+      "sex": ["male", "female", "other", "not_recorded"],
+      "outcome": ["survivor", "non_survivor", "not_recorded"],
+      "septic_shock": ["yes", "no", "not_recorded"],
+      "age_group": ["neonate", "child", "adult", "not_recorded"],
+      "time_unit": ["day", "hour", "ordinal", "not_stated"],
+      "sepsis_phase": ["before_onset", "during_sepsis", "onset_not_recorded", "recovery_or_follow_up", "not_applicable"],
+      "sepsis_definition": ["sepsis-3", "not_stated_in_record"]
+    },
+    "age_groups": {"neonate_up_to_days": 28, "adult_from_years": 18},
+    "record_fields": ["title", "source name", "description"],
+    "shared": {
+      "sex": {"male": "male", "m": "male", "female": "female", "f": "female", "na": "not_recorded", "": "not_recorded", "--": "not_recorded"},
+      "tissue": {"whole blood": "whole_blood", "whole peripheral blood": "whole_blood", "whole blood cells": "whole_blood", "blood": "blood_not_further_specified", "peripheral blood": "blood_not_further_specified", "blood sample": "blood_not_further_specified", "pbmc": "pbmc", "pbmcs": "pbmc", "peripheral blood mononuclear cells": "pbmc", "peripheral blood mononuclear cells (pbmcs)": "pbmc", "human pbmc": "pbmc", "mononuclear cells": "pbmc", "circulating mononuclear cells": "pbmc", "leukocyte": "leukocytes", "leukocytes": "leukocytes", "white blood cells": "leukocytes", "blood leukocytes": "leukocytes", "blood leucocytes": "leukocytes", "peripheral blood leukocytes": "leukocytes", "circulating leukocytes": "leukocytes", "monocytes": "monocytes", "neutrophils": "neutrophils", "b-cells": "b_cells", "cd4": "cd4_t_cells", "cd8": "cd8_t_cells", "nk": "nk_cells", "plasma": "plasma", "np swab": "nasopharyngeal_swab"}
+    }
+  },
+  "sepsis_definitions": {
+    "method": "Recorded only where the study record states the definition, in a sentence found verbatim in the study record; the other studies say nothing about it in their records."
+  },
+  "quality": {
+    "method": "Samples are flagged, not removed; every measure is compared with the median of its own study platform, by the limits below, which are set from the statistics of the expression stage. The dynamic range is left missing where the median of an array is not above zero, because a ratio to such a median (as of a background-subtracted array) is no dynamic range. The flags that rest on the records, on replicate arrays or on the value check of the expression stage are listed in curation_register.json.",
+    "minimum_library_size": 1000000,
+    "genes_detected_below_share_of_study_median": 0.5,
+    "detected_share_below_share_of_study_median": 0.5,
+    "dynamic_range_below_share_of_study_median": 0.3333,
+    "replicate_flag": "second library of a replicate pair whose profiles agree as closely as two deposits of one library"
+  },
+  "cohort_tables": {
+    "method": "Every sample with expression values is kept and repeats are marked. One sample is marked for every patient: the one without a quality flag, then the earliest by its recorded time point, then of whole blood, then the lowest by accession. Cohort groups that share an identified patient are joined into one patient-safe group."
+  },
+  "benchmark": {
+    "method": "Three benchmark tasks, with split schemes that assign whole patient-safe groups to one side of every fold. A record is a sample of a task where it is the primary record and the sample marked for its patient, carries no quality flag, is of a tissue and a phase that the task admits, and has a label of the task; otherwise the first reason that applies is recorded. A model is scored within each test group, never over the held-out groups pooled.",
+    "tissues": ["whole_blood", "blood_not_further_specified", "leukocytes"],
+    "phases_left_out": ["before_onset", "recovery_or_follow_up"],
+    "minimum_per_class": 5,
+    "temporal_split_date": "2020-01-01",
+    "technologies": {"affymetrix": "array", "agilent": "array", "illumina_beadchip": "array", "other_array": "array", "rna_seq": "rna_seq"},
+    "tasks": [
+      {"task": "sepsis_vs_healthy_control", "variable": "sample_class", "positive": "sepsis", "negative": "healthy_control"},
+      {"task": "sepsis_vs_non_septic_control", "variable": "sample_class", "positive": "sepsis", "negative": "non_septic_control"},
+      {"task": "mortality_in_sepsis", "within_class": "sepsis", "variable": "outcome", "positive": "non_survivor", "negative": "survivor"}
+    ]
+  },
+  "references": [
+    "https://www.ncbi.nlm.nih.gov/geo/info/soft.html",
+    "https://www.fged.org/projects/mage-tab"
+  ]
+}

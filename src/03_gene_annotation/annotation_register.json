@@ -1,0 +1,188 @@
+{
+  "sources": {
+    "A-AFFY-141": {
+      "source": "bioconductor",
+      "package": "hugene10sttranscriptcluster.db",
+      "basis": "array design: Affymetrix GeneChip Human Gene 1.0 ST Array [HuGene-1_0-st-v1]"
+    },
+    "A-AFFY-37": {
+      "source": "bioconductor",
+      "package": "hgu133a2.db",
+      "basis": "array design: Affymetrix GeneChip Human Genome U133A 2.0 [HG-U133A_2]"
+    },
+    "A-GEOD-10558": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv4.db",
+      "basis": "array design: Illumina HumanHT-12 V4.0 expression beadchip"
+    },
+    "A-GEOD-22844": {
+      "source": "bioconductor",
+      "package": "clariomdhumantranscriptcluster.db",
+      "basis": "array design: [Clariom_D_Human] Affymetrix Human Clariom D Assay, transcript (gene) version"
+    },
+    "A-MEXP-2183": {
+      "source": "bioconductor",
+      "package": "HsAgilentDesign026652.db",
+      "basis": "array design: Agilent Human Gene Expression 4x44K v2 Microarray 026652"
+    },
+    "A-MEXP-2210": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv4.db",
+      "basis": "array design: Illumina HumanHT-12_V4_0_R1_15002873_B"
+    },
+    "GPL10295": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv2.db",
+      "basis": "platform record: Illumina human-6 v2.0 expression beadchip (using nuIDs as identifier); its rows are nuIDs"
+    },
+    "GPL10558": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv4.db",
+      "basis": "platform record: Illumina HumanHT-12 V4.0 expression beadchip"
+    },
+    "GPL13497": {
+      "source": "bioconductor",
+      "package": "HsAgilentDesign026652.db",
+      "basis": "platform record: Agilent-026652 Whole Human Genome Microarray 4x44K v2"
+    },
+    "GPL13667": {
+      "source": "bioconductor",
+      "package": "hgu219.db",
+      "basis": "platform record: [HG-U219] Affymetrix Human Genome U219 Array"
+    },
+    "GPL15158": {
+      "source": "geo_platform_table",
+      "identifier": "ID",
+      "genes": {
+        "entrez": "Annotation_LocusLink",
+        "accession": "GB_ACC"
+      },
+      "basis": "Codelink 55K Human Array has no Bioconductor annotation package; its GEO platform table gives a GenBank accession and, for some probes, an Entrez gene"
+    },
+    "GPL16686": {
+      "source": "bioconductor",
+      "package": "hugene20sttranscriptcluster.db",
+      "basis": "platform record: [HuGene-2_0-st] Affymetrix Human Gene 2.0 ST Array, transcript (gene) version"
+    },
+    "GPL17077": {
+      "source": "geo_platform_table",
+      "identifier": "ID",
+      "genes": {
+        "entrez": "LOCUSLINK_ID",
+        "symbol": "GENE_SYMBOL"
+      },
+      "basis": "Agilent-039494 SurePrint G3 Human GE v2 8x60K has no Bioconductor annotation package; its GEO platform table gives the manufacturer's Entrez gene and symbol (its Ensembl column holds transcripts, not genes)"
+    },
+    "GPL17586": {
+      "source": "bioconductor",
+      "package": "hta20transcriptcluster.db",
+      "basis": "platform record: [HTA-2_0] Affymetrix Human Transcriptome Array 2.0, transcript (gene) version"
+    },
+    "GPL17692": {
+      "source": "bioconductor",
+      "package": "hugene21sttranscriptcluster.db",
+      "basis": "platform record: [HuGene-2_1-st] Affymetrix Human Gene 2.1 ST Array, transcript (gene) version"
+    },
+    "GPL19983": {
+      "source": "bioconductor",
+      "package": "hugene21sttranscriptcluster.db",
+      "basis": "platform record: [HuGene-2_1-st] Affymetrix Human Gene 2.1 ST Array; the matrix was summarised with the standard design package, so it carries the standard transcript clusters, not the custom definition of the platform record"
+    },
+    "GPL20292": {
+      "source": "geo_platform_table",
+      "identifier": "ID",
+      "genes": {
+        "entrez": "ORF",
+        "symbol": "symbol"
+      },
+      "basis": "the custom Affymetrix chip hGlue_3_0 has no Bioconductor annotation package; its GEO platform table gives an Entrez gene and a symbol for each transcript cluster"
+    },
+    "GPL23178": {
+      "source": "geo_platform_table",
+      "identifier": "ID",
+      "genes": {
+        "accession": "GB_ACC"
+      },
+      "basis": "the custom Affymetrix chip OElncRNAs520855F has no Bioconductor annotation package; its GEO platform table gives a RefSeq or GenBank accession for the transcript clusters of known genes (its Ensembl column holds transcripts, not genes, and most clusters are long non-coding RNAs without a gene record)"
+    },
+    "GPL33140": {
+      "source": "geo_platform_table",
+      "identifier": "ID",
+      "genes": {
+        "entrez": "EntrezGeneID",
+        "symbol": "GeneSymbol"
+      },
+      "basis": "Agilent-086188 Human lncRNA Microarray 2019 has no Bioconductor annotation package; its GEO platform table gives an Entrez gene and a symbol where the probe has one"
+    },
+    "GPL4133": {
+      "source": "bioconductor",
+      "package": "hgug4112a.db",
+      "basis": "platform record: Agilent-014850 Whole Human Genome Microarray 4x44K G4112F"
+    },
+    "GPL4204": {
+      "source": "geo_platform_table",
+      "identifier": "Probe",
+      "genes": {
+        "accession": "GB_ACC"
+      },
+      "basis": "CodeLink UniSet Human I Bioarray has no Bioconductor annotation package; its GEO platform table gives a GenBank accession for each probe name, the identifier that the scanner files carry"
+    },
+    "GPL5175": {
+      "source": "bioconductor",
+      "package": "huex10sttranscriptcluster.db",
+      "basis": "platform record: [HuEx-1_0-st] Affymetrix Human Exon 1.0 ST Array, transcript (gene) version"
+    },
+    "GPL570": {
+      "source": "bioconductor",
+      "package": "hgu133plus2.db",
+      "basis": "platform record: [HG-U133_Plus_2] Affymetrix Human Genome U133 Plus 2.0 Array"
+    },
+    "GPL571": {
+      "source": "bioconductor",
+      "package": "hgu133a2.db",
+      "basis": "platform record: [HG-U133A_2] Affymetrix Human Genome U133A 2.0 Array"
+    },
+    "GPL6102": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv2.db",
+      "basis": "platform record: Illumina human-6 v2.0 expression beadchip"
+    },
+    "GPL6106": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv2.db",
+      "basis": "platform record: Sentrix Human-6 v2 Expression BeadChip; its rows are array addresses"
+    },
+    "GPL6244": {
+      "source": "bioconductor",
+      "package": "hugene10sttranscriptcluster.db",
+      "basis": "platform record: [HuGene-1_0-st] Affymetrix Human Gene 1.0 ST Array, transcript (gene) version"
+    },
+    "GPL6883": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv3.db",
+      "basis": "platform record: Illumina HumanRef-8 v3.0 expression beadchip, a subset of the version 3 probe content"
+    },
+    "GPL6884": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv3.db",
+      "basis": "platform record: Illumina HumanWG-6 v3.0 expression beadchip, the probe content that HumanHT-12 V3.0 carries"
+    },
+    "GPL6947": {
+      "source": "bioconductor",
+      "package": "illuminaHumanv3.db",
+      "basis": "platform record: Illumina HumanHT-12 V3.0 expression beadchip"
+    }
+  },
+  "identifier_replace": {
+    "GSE163151|GPL24676": {
+      "replace": [
+        [
+          "_",
+          "-"
+        ]
+      ],
+      "basis": "the count files of this study write gene symbols with an underscore where the approved symbol has a hyphen (A1BG_AS1 for A1BG-AS1)"
+    }
+  },
+  "ncbi_check_exceptions": {}
+}
