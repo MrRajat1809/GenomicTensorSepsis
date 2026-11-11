@@ -20,7 +20,7 @@ The distinct samples are curated from their records as sepsis (5,975), healthy c
 
 ## Using the data
 
-The data package is deposited in GigaDB (DOI to be assigned) under CC0 1.0. It holds the tables as gzip-compressed CSV files in tar archives, a data dictionary that defines every column, and a readme.
+The data package is deposited in GigaDB (DOI to be assigned) under CC0 1.0. It holds the tables as gzip-compressed CSV files in tar archives, a data dictionary that defines every column, and a readme. Check a download with `md5sum -c md5sum.txt`; on macOS, which has no `md5sum`, run `while read -r sum file; do [ "$(md5 -q "$file")" = "$sum" ] && echo "$file: OK" || echo "$file: FAILED"; done < md5sum.txt`.
 
 | Question | Where to look |
 | --- | --- |
@@ -94,6 +94,8 @@ docker build -t genomictensorsepsis:1.0.0 docker
 docker run --rm -it -v "$PWD":/workspace -w /workspace genomictensorsepsis:1.0.0 bash
 ```
 
+The image is built for x86-64 Linux. On a Mac with Apple silicon (M1 or later), add `--platform linux/amd64` to both commands (`docker build --platform linux/amd64 ...` and `docker run --platform linux/amd64 ...`); Docker Desktop then runs the image through Rosetta. Give Docker at least 8 GB of memory (Docker Desktop: Settings, Resources).
+
 The search is frozen: the data package stores the answers the repositories gave on the census date (11 October 2026), and the build reads them instead of searching again. Unpack `snapshots.tar.gz` from the package into `data/raw/`, then, inside the container:
 
 ```bash
@@ -108,6 +110,7 @@ The build downloads the listed expression files (about 46 GB), checks each again
 | Resume at a stage or script | `bash pipeline/01_build_dataset.sh --from 02:04` |
 | Redraw the figures from completed stages | `bash pipeline/01_build_dataset.sh --from 07 --no-export` |
 | Package completed stages | `bash pipeline/01_build_dataset.sh --export-only` |
+| List the steps without running anything (any bash, including the macOS terminal) | `bash pipeline/01_build_dataset.sh --dry-run` |
 | List all options | `bash pipeline/01_build_dataset.sh --help` |
 
 ## Study Design and Interpretation

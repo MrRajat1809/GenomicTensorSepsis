@@ -25,6 +25,8 @@ Run inside the project image, from any directory:
       bash pipeline/01_build_dataset.sh --check-only
   docker run --rm -v "$PWD":/workspace -w /workspace genomictensorsepsis:1.0.0 \
       bash pipeline/01_build_dataset.sh
+On a Mac with Apple silicon, add --platform linux/amd64 to docker build and docker run. --help and --dry-run need
+no image and run in any bash, including the bash 3.2 of macOS.
 
 The build reads the stored answers of the repositories under data/raw/: the census up to search.census_date
 of the acquisition configuration, the study and sample records, the platform records, the annotation
@@ -92,14 +94,19 @@ STAGES=(01_data_acquisition 02_expression_processing 03_gene_annotation 04_cohor
 # The number of scripts of each stage, the last one its master quality control; a stray or missing script stops the build before anything runs.
 SCRIPTS=(5 9 5 7 5 8 7)
 # The scripts that can ask a repository, each with the stored answers it reads unless --update-search is given; the download script fetches the
-# files of data/raw/download_lock.csv only with --download, and lists the repositories again only with --update-search.
-declare -A ANSWERS=(
-  [01_data_acquisition/01_search_repositories.py]="data/raw/census/search.json data/raw/census/SHA256SUMS.txt"
-  [01_data_acquisition/02_harvest_study_metadata.py]="data/raw/metadata/SHA256SUMS.txt"
-  [01_data_acquisition/04_download_raw_data.py]="data/raw/download_lock.csv"
-  [02_expression_processing/01_inventory_expression_files.py]="data/raw/platforms/SHA256SUMS.txt"
-  [03_gene_annotation/02_collect_annotation_sources.py]="data/raw/annotation/SHA256SUMS.txt"
-)
+# files of data/raw/download_lock.csv only with --download, and lists the repositories again only with --update-search. A case statement rather
+# than an associative array, so that --help and --dry-run also work under the bash 3.2 of macOS.
+ANSWER_SCRIPTS="01_data_acquisition/01_search_repositories.py 01_data_acquisition/02_harvest_study_metadata.py 01_data_acquisition/04_download_raw_data.py
+02_expression_processing/01_inventory_expression_files.py 03_gene_annotation/02_collect_annotation_sources.py"
+answers() {
+  case "$1" in
+    01_data_acquisition/01_search_repositories.py) echo "data/raw/census/search.json data/raw/census/SHA256SUMS.txt" ;;
+    01_data_acquisition/02_harvest_study_metadata.py) echo "data/raw/metadata/SHA256SUMS.txt" ;;
+    01_data_acquisition/04_download_raw_data.py) echo "data/raw/download_lock.csv" ;;
+    02_expression_processing/01_inventory_expression_files.py) echo "data/raw/platforms/SHA256SUMS.txt" ;;
+    03_gene_annotation/02_collect_annotation_sources.py) echo "data/raw/annotation/SHA256SUMS.txt" ;;
+  esac
+}
 
 for index in "${!STAGES[@]}"; do
   stage="${STAGES[$index]}"
@@ -145,7 +152,7 @@ failed() {
 trap failed ERR
 
 if (( ! DRY_RUN )); then
-  command -v "$PY" >/dev/null 2>&1 || { echo "Python interpreter not found: $PY" >&2; exit 2; }
+  command -v "$PY" >/dev/null 2>&1 || { echo "Python interpreter not found: $PY. Run the build inside the project image (see README.md); --dry-run shows the steps without it." >&2; exit 2; }
   "$PY" - "$EXPORT_ONLY" "$OUTDIR" <<'PY'
 import importlib
 import json
@@ -186,9 +193,9 @@ PY
 fi
 if (( ! DRY_RUN && ! UPDATE && ! EXPORT_ONLY )); then
   missing=()
-  for key in $(printf '%s\n' "${!ANSWERS[@]}" | sort); do
+  for key in $ANSWER_SCRIPTS; do
     if selected "${key%%/*}" "${key##*/}"; then
-      for path in ${ANSWERS[$key]}; do [[ -f "$path" ]] || missing+=("$path"); done
+      for path in $(answers "$key"); do [[ -f "$path" ]] || missing+=("$path"); done
     fi
   done
   if (( ${#missing[@]} )); then
@@ -222,7 +229,7 @@ if (( ! EXPORT_ONLY )); then
       name="$(basename "$script")"
       if ! selected "$stage" "$name"; then continue; fi
       options=()
-      if (( UPDATE )) && [[ -v "ANSWERS[$stage/$name]" ]]; then options+=(--update-search); fi
+      if (( UPDATE )) && [[ -n "$(answers "$stage/$name")" ]]; then options+=(--update-search); fi
       if [[ "$stage/$name" == 01_data_acquisition/04_download_raw_data.py ]]; then options+=(--download); fi
       run "$PY" "$script" ${options[@]+"${options[@]}"}
     done
