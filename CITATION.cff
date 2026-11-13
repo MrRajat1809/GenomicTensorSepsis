@@ -17,7 +17,14 @@ abstract: >-
 license: MIT
 repository-code: "https://github.com/MrRajat1809/GenomicTensorSepsis"
 url: "https://mrrajat1809.github.io/GenomicTensorSepsis/"
+doi: 10.5281/zenodo.24206598
 identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24206598
+    description: "The code of release v1.0.0, archived in Zenodo"
+  - type: doi
+    value: 10.5281/zenodo.24206597
+    description: "The code, all versions"
   - type: doi
     value: 10.5281/zenodo.24205193
     description: "The data package of version 1.0.0 (CC0 1.0)"

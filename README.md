@@ -22,7 +22,7 @@ The [results page](https://mrrajat1809.github.io/GenomicTensorSepsis/) explains 
 
 ## Using the data
 
-The data package is deposited in Zenodo under CC0 1.0: [doi:10.5281/zenodo.24205193](https://doi.org/10.5281/zenodo.24205193). It holds the tables as gzip-compressed CSV files in tar archives, a data dictionary that defines every column, and a readme. Check a download with `md5sum -c md5sum.txt`; on macOS, which has no `md5sum`, run `while read -r sum file; do [ "$(md5 -q "$file")" = "$sum" ] && echo "$file: OK" || echo "$file: FAILED"; done < md5sum.txt`.
+The data package is deposited in Zenodo under CC0 1.0: [doi:10.5281/zenodo.24205193](https://doi.org/10.5281/zenodo.24205193). It holds the tables as gzip-compressed CSV files in tar archives, a data dictionary that defines every column, and a readme. Download every file with the Download all button of the record or with `zenodo_get 10.5281/zenodo.24205193` (`pip install zenodo-get`), or only the archives you need. Check a download with `md5sum -c md5sum.txt`; on macOS, which has no `md5sum`, run `while read -r sum file; do [ "$(md5 -q "$file")" = "$sum" ] && echo "$file: OK" || echo "$file: FAILED"; done < md5sum.txt`.
 
 | Question | Where to look |
 | --- | --- |
@@ -134,13 +134,15 @@ The build downloads the listed expression files (about 46 GB), checks each again
 
 ## Data Availability
 
-The data package is available in Zenodo: [doi:10.5281/zenodo.24205193](https://doi.org/10.5281/zenodo.24205193). Downloaded and generated data are not stored in this repository. The source studies remain the work of their investigators: please cite them (`cohort_studies.csv.gz` lists their accessions and addresses) together with this resource.
+The data package is available in Zenodo: [doi:10.5281/zenodo.24205193](https://doi.org/10.5281/zenodo.24205193). The code of release v1.0.0, which built it, is archived in Zenodo: [doi:10.5281/zenodo.24206598](https://doi.org/10.5281/zenodo.24206598). Downloaded and generated data are not stored in this repository. The source studies remain the work of their investigators: please cite them (`cohort_studies.csv.gz` lists their accessions and addresses) together with this resource.
 
 ## How to Cite
 
 Please cite the dataset, and the source studies whose samples you use:
 
-Kumar P. GenomicTensorSepsis 1.0.0: processed and curated public blood transcriptomes of sepsis and control samples [Data set]. Zenodo; 2026. https://doi.org/10.5281/zenodo.24205193
+Kumar P. GenomicTensorSepsis: a harmonized multi-cohort blood transcriptomic resource for sepsis research [Data set]. Version 1.0.0. Zenodo; 2026. https://doi.org/10.5281/zenodo.24205193
+
+To cite the code: Kumar P. GenomicTensorSepsis [Software]. Version 1.0.0. Zenodo; 2026. https://doi.org/10.5281/zenodo.24206598
 
 The article describing the resource is in preparation; its citation will be added here. `CITATION.cff` gives the citation in machine-readable form.
 
