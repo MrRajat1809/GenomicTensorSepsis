@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the resource in dependency order: acquisition, expression, annotation, cohort, validation, correction, figures, then the export of the data package.
+# Build the resource in dependency order: acquisition, expression, annotation, cohort, validation, correction, benchmark, figures, then the export of the data package.
 # -E lets the ERR trap fire inside functions too, so a failed step is always reported.
 set -Eeuo pipefail
 
@@ -46,8 +46,8 @@ resource; missing expression files are downloaded as the lock lists them and acc
   --dry-run           Print the commands without running or writing anything
   -h, --help          Show this help
 Order: 01 data acquisition (01-05), 02 expression processing (01-09), 03 gene annotation (01-05),
-       04 cohort curation (01-07), 05 technical validation (01-05), 06 batch correction (01-08), 07 visualization (01-07),
-       then the export of the data package and of the results page data (release/build_data.py).
+       04 cohort curation (01-07), 05 technical validation (01-05), 06 batch correction (01-08), 07 benchmark (01-05),
+       08 visualization (01-08), then the export of the data package and of the results page data (release/build_data.py).
 A copy without release/ runs every stage and skips the page data.
 Each stage ends with its master quality control, which must pass before the next stage starts.
 Exactly these scripts run: a stage folder whose numbered scripts are not 01 to its last number, each once, stops the build.
@@ -55,8 +55,8 @@ Exactly these scripts run: a stage folder whose numbered scripts are not 01 to i
 current code and configuration.
 
 Outputs: data/raw/ (downloaded files with SHA256SUMS.txt), data/processed/{acquisition,expression,
-annotation,cohort,validation,correction}/, outputs/<stage>/ with receipts and QC reports, outputs/visualization/ with the figures, and
-data_release/ with the data package for GigaDB: nine tar archives of CSV.gz tables, data_dictionary.csv, cohort_flow.csv, readme.txt,
+annotation,cohort,validation,correction,benchmark}/, outputs/<stage>/ with receipts and QC reports, outputs/visualization/ with the figures, and
+data_release/ with the data package for Zenodo: ten tar archives of CSV.gz tables, data_dictionary.csv, cohort_flow.csv, readme.txt,
 md5sum.txt and release_manifest.json; release/data.js and release/data/ for the results page, when release/ is present.
 Execution logs append to outputs/logs/build_dataset.log.
 
@@ -81,7 +81,7 @@ while (($#)); do
     *) echo "Unknown option: $1" >&2; usage >&2; exit 2 ;;
   esac
 done
-[[ "$FROM" =~ ^0[1-7](:[0-9]{2})?$ ]] || { echo "Invalid --from: $FROM" >&2; exit 2; }
+[[ "$FROM" =~ ^0[1-8](:[0-9]{2})?$ ]] || { echo "Invalid --from: $FROM" >&2; exit 2; }
 [[ "$WORKERS" =~ ^[1-9][0-9]*$ ]] || { echo "Invalid --workers: $WORKERS" >&2; exit 2; }
 if (( EXPORT_ONLY && NO_EXPORT )); then echo 'Choose either --export-only or --no-export.' >&2; exit 2; fi
 if (( CHECK_ONLY && DRY_RUN )); then echo 'Choose either --check-only or --dry-run.' >&2; exit 2; fi
@@ -90,9 +90,10 @@ FROM_STAGE="${FROM%%:*}"
 FROM_SCRIPT="01"
 [[ "$FROM" == *:* ]] && FROM_SCRIPT="${FROM##*:}"
 
-STAGES=(01_data_acquisition 02_expression_processing 03_gene_annotation 04_cohort_curation 05_technical_validation 06_batch_correction 07_visualization)
+STAGES=(01_data_acquisition 02_expression_processing 03_gene_annotation 04_cohort_curation 05_technical_validation 06_batch_correction 07_benchmark
+        08_visualization)
 # The number of scripts of each stage, the last one its master quality control; a stray or missing script stops the build before anything runs.
-SCRIPTS=(5 9 5 7 5 8 7)
+SCRIPTS=(5 9 5 7 5 8 5 8)
 # The scripts that can ask a repository, each with the stored answers it reads unless --update-search is given; the download script fetches the
 # files of data/raw/download_lock.csv only with --download, and lists the repositories again only with --update-search. A case statement rather
 # than an associative array, so that --help and --dry-run also work under the bash 3.2 of macOS.
@@ -142,7 +143,7 @@ run() {
 }
 failed() {
   local resume="rerun the same command"
-  if [[ "$CURRENT" =~ src/0([1-7])_[a-z_]+/([0-9][0-9])_ ]]; then
+  if [[ "$CURRENT" =~ src/0([1-8])_[a-z_]+/([0-9][0-9])_ ]]; then
     resume="resume with --from 0${BASH_REMATCH[1]}:${BASH_REMATCH[2]}"
   elif [[ "$CURRENT" == *pipeline/export_release.py* || "$CURRENT" == *release/build_data.py* ]]; then
     resume="resume with --export-only"
@@ -164,7 +165,7 @@ if sys.version_info < (3, 10):
     raise SystemExit('Python 3.10 or newer is required.')
 export_only, release = sys.argv[1:]
 root, errors = Path.cwd().resolve(), []
-for folder in sorted(root.glob('src/0[1-7]_*')):
+for folder in sorted(root.glob('src/0[1-8]_*')):
     configs = sorted(folder.glob('*_config.json'))
     if len(configs) != 1:
         errors.append(f'{folder.name}: exactly one stage configuration is required')
@@ -175,7 +176,7 @@ for folder in sorted(root.glob('src/0[1-7]_*')):
             errors.append(f'Required configuration {path.relative_to(root)}: {error}')
 if not (root / 'pipeline/export_release.py').is_file():
     errors.append('Missing pipeline/export_release.py.')
-for name in ('numpy', 'pandas', 'pyarrow') + (() if export_only == '1' else ('requests', 'lxml', 'openpyxl', 'xlrd', 'matplotlib', 'PIL')):
+for name in ('numpy', 'pandas', 'pyarrow') + (() if export_only == '1' else ('requests', 'lxml', 'openpyxl', 'xlrd', 'matplotlib', 'PIL', 'sklearn')):
     try:
         importlib.import_module(name)
     except ImportError as error:
@@ -201,7 +202,7 @@ if (( ! DRY_RUN && ! UPDATE && ! EXPORT_ONLY )); then
   if (( ${#missing[@]} )); then
     echo '[PREFLIGHT FAILED] Stored answers of the repositories are missing:' >&2
     printf -- '- %s\n' "${missing[@]}" >&2
-    echo 'Unpack snapshots.tar.gz from the GigaDB package into data/raw/, or run with --update-search to ask the repositories again (new studies then need screening decisions).' >&2
+    echo 'Unpack snapshots.tar.gz from the Zenodo package into data/raw/, or run with --update-search to ask the repositories again (new studies then need screening decisions).' >&2
     exit 2
   fi
   echo '[PREFLIGHT PASS] The stored answers of the repositories are present; the build reads them instead of asking again.'

@@ -16,15 +16,20 @@ openpyxl==3.1.5
 xlrd==2.0.2
 matplotlib==3.10.9
 Pillow==10.2.0
+# Added on 2026-11-12, for the baseline models of the benchmark stage; no earlier stage imports it.
+scikit-learn==1.5.2
 
-# Dependencies of the packages above, at the versions of the same environment. They are
-# installed without dependency resolution, so pip installs nothing that is not listed.
+# Dependencies of the packages above, at the versions of the same environment; joblib and threadpoolctl, of
+# scikit-learn, were added with it. They are installed without dependency resolution, so pip installs nothing
+# that is not listed.
 contourpy==1.3.2
 cycler==0.12.1
 et_xmlfile==2.0.0
 fonttools==4.65.0
+joblib==1.4.2
 kiwisolver==1.5.1
 packaging==26.3
 pyparsing==3.3.3
 python-dateutil==3.0.0
+threadpoolctl==3.5.0
 tzdata==2026.5

@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GenomicTensorSepsis</title>
+<meta name="description" content="Public blood transcriptome studies of sepsis, reprocessed, curated and explained with worked examples on the real data.">
+<script>
+  // Apply the theme before the page paints, so that it does not flash: ?theme=dark|light (not remembered), else the saved choice.
+  try {
+    const q = new URLSearchParams(location.search).get('theme'), t = q === 'light' || q === 'dark' ? q : localStorage.getItem('gts-theme');
+    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+  } catch (e) { }
+</script>
+<style>
+/* Colors: the warm paper tone and warm greys of the author's other results page, with a soft green
+   (#7ABF81) as the accent and a darker shade of it for text and links. Data colors are those of the paper's figures
+   (src/08_visualization/visualization_config.json), named after their keys: --cls-<class>, --fam-<technology>,
+   --tier-<anchored|unanchored>. Two are adjusted for the page: "not recorded" (#E0E0E0 in the figures) is a step darker on
+   the paper background, where the figure grey would vanish; in the dark theme the darkest colors (RNA-seq, healthy
+   control, anchored) are lightened only as far as they need to stand out from the background, and "not recorded" is dimmed. */
+:root {
+  --bg: #ebe5da; --surface: #e2dbce; --raised: #efeae1; --ink: #29241f; --ink2: #48413a; --muted: #645c52; --line: #d4cbbd; --line-strong: #b2a897;
+  --grid: #dcd4c6; --band: #e4ddd1; --accent: #7abf81; --accent-ink: #2f6a37; --mark: rgba(122, 191, 129, .34); --hilite: #2f6a37;
+  --cls-sepsis: #db4325; --cls-healthy_control: #4a6fe3; --cls-non_septic_control: #55a868; --cls-other_condition: #b9a0cd; --cls-not_recorded: #bdb6aa;
+  --fam-affymetrix: #2a9d8f; --fam-illumina_beadchip: #e9c46a; --fam-agilent: #f4a261; --fam-other_array: #a68a64; --fam-rna_seq: #264653;
+  --tier-anchored: #457b9d; --tier-unanchored: #e76f51;
+  --serif: "Source Serif 4", "Source Serif Pro", Georgia, Cambria, serif;
+  --sans: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --math: "Cambria Math", Cambria, "Times New Roman", serif;
+  --head: 60px;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #131210; --surface: #1c1a17; --raised: #181614; --ink: #ebe6dd; --ink2: #d1cbc1; --muted: #a49d92; --line: #2f2b27; --line-strong: #4b463f;
+  --grid: #25221f; --band: #181614; --accent: #7abf81; --accent-ink: #8fcf95; --mark: rgba(122, 191, 129, .22); --hilite: #8fcf95;
+  --cls-sepsis: #db4325; --cls-healthy_control: #5f82ec; --cls-non_septic_control: #55a868; --cls-other_condition: #b9a0cd; --cls-not_recorded: #8a857d;
+  --fam-affymetrix: #2a9d8f; --fam-illumina_beadchip: #e9c46a; --fam-agilent: #f4a261; --fam-other_array: #a68a64; --fam-rna_seq: #5f8fa8;
+  --tier-anchored: #5b93b8; --tier-unanchored: #e76f51;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131210; --surface: #1c1a17; --raised: #181614; --ink: #ebe6dd; --ink2: #d1cbc1; --muted: #a49d92; --line: #2f2b27; --line-strong: #4b463f;
+    --grid: #25221f; --band: #181614; --accent: #7abf81; --accent-ink: #8fcf95; --mark: rgba(122, 191, 129, .22); --hilite: #8fcf95;
+    --cls-sepsis: #db4325; --cls-healthy_control: #5f82ec; --cls-non_septic_control: #55a868; --cls-other_condition: #b9a0cd; --cls-not_recorded: #8a857d;
+    --fam-affymetrix: #2a9d8f; --fam-illumina_beadchip: #e9c46a; --fam-agilent: #f4a261; --fam-other_array: #a68a64; --fam-rna_seq: #5f8fa8;
+    --tier-anchored: #5b93b8; --tier-unanchored: #e76f51;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: calc(var(--head) + 12px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15.5px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+a:hover { color: var(--accent-ink); text-decoration-color: var(--accent-ink); }
+::selection { background: var(--mark); color: var(--ink); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code { font-size: 13px; background: var(--surface); border-radius: 4px; padding: 1px 5px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+.eyebrow { font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.h2 { font-family: var(--serif); font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 18px; }
+.small { font-size: 13px; color: var(--muted); }
+main[hidden], [hidden] { display: none !important; }
+/* a view whose data are still loading */
+main.view.busy::before { content: "Loading the data of this view\2026"; display: block; max-width: 1240px; margin: 0 auto; padding: 26px 28px 0; font-size: 13.5px; color: var(--muted); }
+
+/* ---------- top bar ---------- */
+header.top { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1240px; margin: 0 auto; padding: 0 28px; min-height: var(--head); display: flex; align-items: center; gap: 12px 16px; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-weight: 600; font-size: 17px; text-decoration: none; white-space: nowrap; color: var(--ink); }
+.brand:hover { color: var(--ink); }
+.brand i { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent); }
+.tabs { display: flex; gap: 2px; margin: 0 auto 0 14px; padding: 3px; background: var(--surface); border-radius: 999px; min-width: 0; }
+.tabs button { border: 0; background: transparent; font: 500 14px/1 var(--sans); color: var(--muted); padding: 9px 15px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { background: var(--bg); color: var(--ink); box-shadow: 0 0 0 1px var(--line), 0 1px 3px rgba(0, 0, 0, .08); }
+.iconbtn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 999px; padding: 6px 12px; cursor: pointer; font: 13px var(--sans); white-space: nowrap; }
+.iconbtn:hover { color: var(--ink); background: var(--surface); }
+.iconbtn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.75; }
+select, button { font: inherit; font-size: 13px; }
+select, input[type=search] { padding: 4px 8px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--raised); color: var(--ink); max-width: 100%; }
+
+/* ---------- glossary (pop-up and start page) ---------- */
+.gloss { position: fixed; z-index: 60; top: calc(var(--head) + 8px); right: max(16px, calc((100vw - 1240px) / 2 + 28px)); width: min(540px, calc(100vw - 32px)); max-height: calc(100vh - var(--head) - 24px); overflow: auto;
+  background: var(--raised); border: 1px solid var(--line-strong); border-radius: 14px; box-shadow: 0 22px 60px -24px rgba(0, 0, 0, .45); padding: 16px 22px 20px; }
+.gloss-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.gloss-h h2 { font-family: var(--serif); font-size: 21px; font-weight: 600; margin: 0; }
+dl.gl { margin: 0; }
+dl.gl .gi { break-inside: avoid; padding: 10px 0; border-bottom: 1px solid var(--line); }
+dl.gl dt { font-weight: 600; color: var(--ink); }
+dl.gl dd { margin: 2px 0 0; color: var(--ink2); font-size: 14.5px; }
+
+/* ---------- books: one chapter at a time, with a rail of chapters on the left ---------- */
+.book { max-width: 1240px; margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 52px; }
+.rail { position: sticky; top: var(--head); align-self: start; max-height: calc(100vh - var(--head)); overflow-y: auto; padding: 26px 4px 26px 0; }
+.rail-h { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px 10px; }
+.rail ol { list-style: none; margin: 0; padding: 0; }
+.rail button { width: 100%; display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: baseline; text-align: left; border: 0; background: none; padding: 7px 10px; border-radius: 10px; cursor: pointer; font: inherit; color: var(--ink2); }
+.rail button:hover { background: var(--surface); }
+.rail .n { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rail .t { font-size: 14px; font-weight: 500; line-height: 1.35; }
+.rail .s { grid-column: 2; font-size: 12px; color: var(--muted); line-height: 1.35; }
+.rail button[aria-current="true"] { background: var(--surface); color: var(--ink); }
+.rail button[aria-current="true"] .n { color: var(--accent-ink); font-weight: 600; }
+/* groups of chapters in a rail (Studies: choosing a study, then the chapters of the chosen one) */
+.rail li.grp { font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 16px 0 4px 10px; }
+.rail li.grp b { color: var(--accent-ink); font-weight: 600; }
+.pages { min-width: 0; padding-bottom: 30px; }
+.pages > section.sec { display: none; padding: 30px 0 6px; }
+.pages > section.sec.on { display: block; animation: rise .25s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.chap-pos { margin: 0 0 8px; }
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 40px 0 10px; padding-top: 22px; border-top: 1px solid var(--line); }
+.pager button { font: inherit; text-align: left; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 12px; padding: 12px 16px; cursor: pointer; }
+.pager button:hover { background: var(--surface); border-color: var(--line-strong); }
+.pager button.next { text-align: right; grid-column: 2; }
+.pager small { display: block; font-size: 12px; color: var(--muted); }
+.pager b { font-family: var(--serif); font-size: 18px; font-weight: 600; }
+
+/* ---------- chapter content ---------- */
+.sec-h { display: flex; align-items: baseline; gap: 12px; margin: 0 0 12px; flex-wrap: wrap; }
+.sec-h .n { font-family: var(--sans); font-size: 15px; color: var(--muted); min-width: 22px; }
+.sec-h h2 { font-family: var(--serif); font-size: 32px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+.sec-h .ctx { font-family: var(--sans); font-size: 14px; color: var(--muted); font-weight: 400; }
+section.sec h3 { font-family: var(--sans); font-size: 15.5px; font-weight: 600; margin: 30px 0 8px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.lead { max-width: 860px; margin: 0 0 12px; font-size: 16.5px; }
+.body p { max-width: 820px; }
+.howto { display: flex; gap: 12px; align-items: baseline; background: var(--surface); border-radius: 10px; padding: 10px 14px; margin: 12px 0 14px; font-size: 14px; color: var(--ink2); max-width: 880px; }
+.howto > span:first-child { flex: none; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.exblock { margin: 22px 0 6px; }
+.exblock > h4, .exhead { font-family: var(--serif); font-size: 19px; font-weight: 600; margin: 0 0 6px; }
+.exhead .m, .exblock > h4 .m { font-family: var(--sans); font-size: 13.5px; font-weight: 400; color: var(--muted); }
+/* the parts of a method chapter: Equation, Simulation, Worked example, Result */
+.tag { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+.tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); }
+.tag.t-eq::before { background: #d9a93a; } .tag.t-sim::before { background: var(--ink2); } .tag.t-ex::before { background: var(--cls-sepsis); } .tag.t-res::before { background: var(--accent); }
+.eq { font-family: var(--math); font-size: 18px; background: var(--surface); border-radius: 8px; padding: 14px 18px; margin: 10px 0; overflow-x: auto; line-height: 1.85; }
+.eq .v { font-style: italic; }
+.eq .n { font-family: var(--sans); font-size: 14px; font-style: normal; font-variant-numeric: tabular-nums; background: var(--mark); border-radius: 4px; padding: 0 4px; white-space: nowrap; }
+.eq .c { font-family: var(--sans); font-size: 13px; color: var(--muted); font-style: normal; display: block; margin-top: 6px; white-space: normal; line-height: 1.55; }
+.eq .row { display: block; }
+.frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 3px; line-height: 1.25; }
+.frac > span:first-child { border-bottom: 1px solid currentColor; padding: 0 4px 1px; }
+.frac > span:last-child { padding: 1px 4px 0; }
+.ss { display: inline-flex; flex-direction: column; vertical-align: middle; font-size: .68em; line-height: 1.05; margin: 0 1px; }
+.result { border-left: 2px solid var(--accent); padding: 4px 0 4px 16px; margin: 10px 0; max-width: 860px; }
+.result b { font-variant-numeric: tabular-nums; }
+.note { font-size: 13.5px; color: var(--muted); max-width: 860px; margin: 8px 0 0; }
+.readout { font-size: 14.5px; margin: 10px 0; max-width: 860px; }
+.readout b { font-variant-numeric: tabular-nums; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 10px 0 8px; font-size: 13px; color: var(--muted); }
+.controls label > b { font-variant-numeric: tabular-nums; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line-strong); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: transparent; padding: 5px 12px; cursor: pointer; color: var(--muted); }
+.seg button:hover { color: var(--ink); }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button.on { background: var(--ink); color: var(--bg); }
+.btn { border: 1px solid var(--ink); background: transparent; color: var(--ink); border-radius: 8px; padding: 6px 14px; cursor: pointer; }
+.btn:hover, .btn.primary { background: var(--ink); color: var(--bg); }
+.btn.primary:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
+.btn.ghost { border-color: var(--line-strong); color: var(--muted); }
+.btn.ghost:hover { background: var(--surface); color: var(--ink); }
+.btn[disabled] { opacity: .35; cursor: default; background: transparent; color: var(--ink); }
+.btn.big { display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; padding: 10px 17px; border-radius: 999px; }
+.btn.big svg { width: 16px; height: 16px; fill: currentColor; }
+/* round transport buttons (play, previous, next) */
+.tbtn { width: 40px; height: 40px; flex: none; border-radius: 50%; border: 1px solid var(--line-strong); background: transparent; color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+.tbtn:hover { background: var(--surface); }
+.tbtn.play { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tbtn.play:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
+.tbtn svg { width: 16px; height: 16px; fill: currentColor; }
+.tbtn[disabled] { opacity: .3; cursor: default; background: transparent; }
+/* sliders: a thin track and a round handle, in the page's own colors */
+input[type=range] { -webkit-appearance: none; appearance: none; width: 200px; height: 22px; margin: 0; background: transparent; cursor: pointer; vertical-align: middle; }
+input[type=range]::-webkit-slider-runnable-track { height: 3px; border-radius: 2px; background: var(--line-strong); }
+input[type=range]::-moz-range-track { height: 3px; border-radius: 2px; background: var(--line-strong); }
+input[type=range]::-moz-range-progress { height: 3px; border-radius: 2px; background: var(--ink2); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; margin-top: -6px; border: 0; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--bg), 0 1px 4px 2px rgba(0, 0, 0, .16); transition: background .15s; }
+input[type=range]::-moz-range-thumb { width: 15px; height: 15px; border: 0; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--bg), 0 1px 4px 2px rgba(0, 0, 0, .16); }
+input[type=range]:hover::-webkit-slider-thumb, input[type=range]:active::-webkit-slider-thumb { background: var(--accent-ink); }
+input[type=range]:hover::-moz-range-thumb { background: var(--accent-ink); }
+input[type=range]:focus-visible { outline: none; }
+input[type=range]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px color-mix(in srgb, var(--accent) 70%, transparent); }
+/* charts, tables, keys and cards */
+.chart { width: 100%; margin: 8px 0; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; fill: var(--muted); }
+.chart canvas { display: block; width: 100%; }
+svg text { font-family: var(--sans); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.tablewrap { overflow-x: auto; }
+table.t { border-collapse: collapse; width: 100%; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+table.t th { text-align: left; font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--line-strong); padding: 6px 7px; font-size: 12.5px; vertical-align: bottom; }
+table.t td { padding: 5px 7px; border-bottom: 1px solid var(--line); }
+table.t td.r, table.t th.r { text-align: right; }
+table.t tr.total td { border-top: 1px solid var(--ink); font-weight: 600; border-bottom: 0; }
+table.t tr.sel td { background: color-mix(in srgb, var(--hilite) 12%, transparent); }
+table.t .ui { color: var(--muted); font-size: 12px; }
+.chip { display: inline-block; font-size: 11.5px; padding: 0 8px; border-radius: 999px; line-height: 19px; white-space: nowrap; border: 1px solid var(--line-strong); color: var(--muted); }
+.key { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin-right: 16px; }
+.key i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; flex: none; }
+.key i.dot { border-radius: 50%; }
+.key i.line { height: 0; width: 16px; border-top: 2px solid; border-radius: 0; }
+.key i.ring { background: transparent; border: 2px solid; border-radius: 50%; }
+.key b { color: var(--ink2); font-weight: 500; font-variant-numeric: tabular-nums; }
+/* keys that are also buttons: hovering one picks out its category in the chart */
+.keys { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 8px 0 0; }
+.keys .key { margin: 0; border: 0; background: none; padding: 3px 8px 3px 6px; border-radius: 7px; cursor: default; font: 13px var(--sans); }
+.keys .key:hover, .keys .key:focus-visible { background: var(--surface); color: var(--ink); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0 26px; margin: 18px 0; }
+.card { border-top: 1px solid var(--line-strong); padding: 12px 0 8px; }
+.card .big { font-family: var(--serif); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; line-height: 1.25; }
+.card .lab { font-size: 13px; color: var(--muted); }
+ul.find { max-width: 860px; padding-left: 20px; margin: 10px 0; }
+ul.find li { margin: 7px 0; }
+ul.find li::marker { color: var(--muted); }
+/* boxes and arrows of a diagram */
+.flowgrid { display: grid; grid-template-columns: 1fr 28px 1.2fr 28px 1fr; margin: 12px 0 4px; }
+.flowcol { display: flex; flex-direction: column; gap: 6px; }
+.flowcol h4 { margin: 0 0 4px; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.fbox { border: 1px solid var(--line); border-radius: 8px; padding: 7px 11px; font-size: 13px; line-height: 1.4; }
+.fbox b { font-weight: 600; }
+.fbox.core { background: var(--surface); border-color: transparent; }
+.fbox a { text-decoration: none; display: block; }
+.flowarrow { display: flex; align-items: center; justify-content: center; color: var(--line-strong); font-size: 20px; }
+
+/* ---------- tooltip, errors, self-test, footer ---------- */
+#tip { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 70; background: color-mix(in srgb, var(--bg) 96%, transparent); color: var(--ink); border: 1px solid var(--line-strong); font-size: 12.5px; line-height: 1.5; padding: 7px 10px; border-radius: 6px; max-width: 340px; opacity: 0; transition: opacity .1s; box-shadow: 0 6px 22px -10px rgba(0, 0, 0, .35); }
+#tip .m { color: var(--muted); }
+#tip i.sw { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: 0; }
+.err { display: none; background: color-mix(in srgb, var(--cls-sepsis) 13%, transparent); border: 1px solid var(--cls-sepsis); padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; white-space: pre-wrap; }
+.selftest { margin: 14px 0; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--raised); padding: 12px 16px; font-size: 13px; }
+.selftest h2 { font: 600 17px var(--sans); margin: 0 0 6px; }
+.selftest.pass h2 { color: var(--accent-ink); } .selftest.fail h2 { color: var(--cls-sepsis); }
+.selftest ol { margin: 6px 0 0; padding-left: 22px; max-height: 340px; overflow: auto; font-variant-numeric: tabular-nums; }
+.selftest li.f { color: var(--cls-sepsis); font-weight: 600; }
+.selftest li .m { color: var(--muted); font-weight: 400; }
+footer { border-top: 1px solid var(--line); padding: 22px 0 46px; font-size: 13px; color: var(--muted); }
+
+/* ==== view: start ==== */
+.hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; padding: 46px 0 30px; }
+.hero-text { padding-top: 6px; }
+.hero h1 { font-family: var(--serif); font-size: 46px; line-height: 1.08; letter-spacing: -0.02em; margin: 14px 0 22px; font-weight: 600; }
+.hero-lead { font-size: 18.5px; line-height: 1.55; color: var(--ink); margin: 0 0 14px; max-width: 620px; }
+.hero-text p { max-width: 620px; color: var(--ink2); }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 14px; }
+.hero-fig { margin: 0; min-width: 0; }
+.hero-stage { position: relative; background: var(--raised); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.hero-stage canvas { display: block; width: 100%; cursor: crosshair; touch-action: pan-y; }
+.hero-state { position: absolute; left: 16px; top: 12px; pointer-events: none; padding: 6px 10px 7px; border-radius: 10px; background: color-mix(in srgb, var(--raised) 84%, transparent); }
+.hero-state b { display: block; font: 600 19px/1.2 var(--serif); color: var(--ink); }
+.hero-state span { display: block; font-size: 12.5px; color: var(--muted); }
+.hero-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 12px; }
+.morph { display: flex; align-items: center; gap: 10px; flex: 1 1 280px; min-width: 0; font-size: 13px; color: var(--muted); }
+.morph input[type=range] { flex: 1 1 auto; width: auto; min-width: 90px; }
+.morph .end { font-weight: 500; white-space: nowrap; }
+.morph .end.on { color: var(--ink); }
+.hero-ctl .controls { margin: 0; }
+.hero-fig figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; }
+.hero-fig .howto { margin: 10px 0 0; }
+.hero-full { position: absolute; right: 10px; top: 10px; width: 34px; height: 34px; background: color-mix(in srgb, var(--raised) 84%, transparent); }
+.hero-full:hover { background: var(--surface); }
+/* full screen: the plot as tall as the screen allows (main.js sets the width that height needs); the text below scrolls */
+.hero-fig:fullscreen { background: var(--bg); padding: 20px 28px; overflow: auto; }
+.hero-fig:fullscreen > * { width: min(100%, var(--hero-full-w, 100%)); max-width: none; margin-left: auto; margin-right: auto; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; padding: 10px 0 46px; }
+.fact { background: var(--surface); border-radius: 16px; padding: 20px 22px; }
+.fact .big { font-family: var(--serif); font-size: 36px; font-weight: 600; line-height: 1.12; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.fact .lab { color: var(--ink2); font-size: 14.5px; margin-top: 8px; }
+.fact .src { color: var(--muted); font-size: 12.5px; margin-top: 8px; }
+.paths, .glossary-sec { padding: 36px 0 44px; border-top: 1px solid var(--line); }
+.pathgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.path { text-align: left; border: 1px solid var(--line); background: transparent; border-radius: 16px; padding: 20px 22px 18px; cursor: pointer; color: var(--ink2); font: 14.5px/1.55 var(--sans); display: flex; flex-direction: column; gap: 8px; transition: background .15s, border-color .15s; }
+.path:hover { background: var(--surface); border-color: var(--line-strong); }
+.path .pn { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.path b { font-family: var(--serif); font-size: 22px; color: var(--ink); font-weight: 600; }
+.path .go { margin-top: auto; padding-top: 6px; color: var(--accent-ink); font-weight: 600; font-size: 14px; }
+.glossary-sec dl.gl { columns: 2; column-gap: 48px; }
+
+/* ==== view: story ==== */
+/* The seven studies of the cohort group take the first slots of a categorical palette checked for color-blind
+   separation (the columns are also labeled); the sex colors are those of Figure 5A, as in the Studies view. The three
+   kinds of twin (same array, same patient, both) and a test record with a twin in training take slots of the same
+   palette, checked together in both themes; the resource view uses the same four. */
+#story { --sy-study-1: #2a78d6; --sy-study-2: #eb6834; --sy-study-3: #1baf7a; --sy-study-4: #eda100; --sy-study-5: #e87ba4; --sy-study-6: #008300; --sy-study-7: #6250d6; --sy-study-8: #e34948;
+  --sy-sex-female: #8e5ba8; --sy-sex-male: #118ab2; --sy-sex-not_recorded: #a0a0a0; --sy-sex-ambiguous: #f3b032; --sy-ghost: #cfc6b8; }
+:root[data-theme="dark"] #story { --sy-study-1: #3987e5; --sy-study-2: #d95926; --sy-study-3: #199e70; --sy-study-4: #c98500; --sy-study-5: #d55181; --sy-study-6: #1a9a1a; --sy-study-7: #9085e9; --sy-study-8: #e66767;
+  --sy-sex-female: #b07fcb; --sy-sex-male: #2fa6cf; --sy-sex-not_recorded: #8a857d; --sy-ghost: #3a3631; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #story { --sy-study-1: #3987e5; --sy-study-2: #d95926; --sy-study-3: #199e70; --sy-study-4: #c98500; --sy-study-5: #d55181; --sy-study-6: #1a9a1a; --sy-study-7: #9085e9; --sy-study-8: #e66767;
+  --sy-sex-female: #b07fcb; --sy-sex-male: #2fa6cf; --sy-sex-not_recorded: #8a857d; --sy-ghost: #3a3631; } }
+#story, #resource { --twin-array: #2a78d6; --twin-patient: #eda100; --twin-both: #e87ba4; --twin-exposed: #e34948; }
+:root[data-theme="dark"] #story, :root[data-theme="dark"] #resource { --twin-array: #3987e5; --twin-patient: #c98500; --twin-both: #d55181; --twin-exposed: #e66767; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #story, :root:not([data-theme="light"]) #resource { --twin-array: #3987e5; --twin-patient: #c98500; --twin-both: #d55181; --twin-exposed: #e66767; } }
+.story { padding-top: 26px; padding-bottom: 30px; }
+.story .h2 { margin: 6px 0 10px; }
+.story .lead { margin-bottom: 18px; }
+.story-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 30px; align-items: start; }
+.story-col { min-width: 0; }
+.story-switch { margin: 0 0 12px; }
+.story-switch .seg button { padding: 7px 14px; font-size: 13.5px; }
+@media (max-width: 760px) { .story-long { display: none; } }
+.story-stage { position: relative; background: var(--raised); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.story-stage canvas { display: block; width: 100%; touch-action: pan-y; }
+.story-bigplay { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: inline-flex; white-space: nowrap; align-items: center; gap: 10px; border: 0; background: var(--ink); color: var(--bg);
+  font: 600 16px var(--sans); padding: 15px 26px 15px 20px; border-radius: 999px; cursor: pointer; box-shadow: 0 12px 34px -12px rgba(0, 0, 0, .5); }
+.story-bigplay:hover { background: var(--accent-ink); }
+.story-bigplay svg { width: 20px; height: 20px; fill: currentColor; }
+.story-transport { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; }
+.story-scrub { flex: 1; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; margin-left: 10px; padding-top: 6px; min-width: 0; }
+.story-scrub button { border: 0; background: none; padding: 6px 0 4px; cursor: pointer; text-align: left; color: var(--muted); font: 12px/1.3 var(--sans); min-width: 0; }
+.story-scrub button span { display: block; margin-top: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.story-scrub button i { display: block; height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.story-scrub button i b { display: block; height: 100%; width: 0; background: var(--ink2); }
+.story-scrub button.on { color: var(--ink); font-weight: 600; }
+.story-scrub button.on i b { background: var(--accent); }
+.story-scrub button:hover { color: var(--ink); }
+.story .keys { margin-top: 10px; }
+.story .howto { margin: 10px 0 0; }
+.story-cap { position: sticky; top: calc(var(--head) + 20px); }
+.story-cap-k { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 2px 0 0; }
+.story-cap h3 { font-family: var(--serif); font-size: 25px; line-height: 1.2; font-weight: 600; margin: 6px 0 12px; }
+.story-cap p { margin: 0 0 14px; font-size: 15px; color: var(--ink2); }
+.story-cap-e { background: var(--surface); border-radius: 10px; padding: 11px 14px; font-size: 14px; line-height: 1.65; font-variant-numeric: tabular-nums; color: var(--ink2); }
+.story-cap-e b { color: var(--ink); }
+.story-cap-go { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+@media (max-width: 1080px) { .story-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; } .story-cap { position: static; max-width: 760px; } }
+@media (max-width: 760px) { .story-scrub button span { display: none; } .story-scrub { gap: 4px; margin-left: 4px; } .story-cap h3 { font-size: 21px; } }
+.story-transport #storyFull { margin-left: 4px; }
+/* full screen: the stage keeps its proportions (880 by 560 units) and fits the height of the screen, the caption beside it */
+.story-grid:fullscreen { background: var(--bg); padding: 20px 28px; overflow: auto; align-content: start; }
+.story-grid:fullscreen .story-col { width: min(100%, calc((100vh - 250px) * 880 / 560)); justify-self: center; }
+.story-grid:fullscreen .story-cap { position: static; padding-top: 46px; }
+.story-grid:fullscreen .story-hint { display: none; }
+kbd { display: inline-block; min-width: 1.6em; text-align: center; font: 600 11.5px/1.5 var(--sans); color: var(--ink2); background: var(--raised); border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; }
+
+/* ==== view: resource ==== */
+/* sex colors of Figure 5A (src/08_visualization/04_technical_validation.py), the same as in the Studies view; the two
+   baseline classifiers of the benchmark chapter take two further slots of the story palette, checked as a pair */
+#resource { --r-female: #8e5ba8; --r-male: #118ab2; --r-model-lr: #008300; --r-model-gb: #6250d6; }
+:root[data-theme="dark"] #resource { --r-female: #b07fcb; --r-male: #2fa6cf; --r-model-lr: #1a9a1a; --r-model-gb: #9085e9; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #resource { --r-female: #b07fcb; --r-male: #2fa6cf; --r-model-lr: #1a9a1a; --r-model-gb: #9085e9; } }
+#resource .r-grid { align-items: start; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); }
+#resource .controls label { display: inline-flex; align-items: center; gap: 8px; }
+#resource #rbFold { max-width: min(480px, 72vw); }
+#resource .result { max-width: 880px; font-size: 14.5px; color: var(--ink2); margin-top: 18px; }
+#resource .result b { color: var(--ink); }
+#resource .card .big a { text-decoration: none; color: var(--accent-ink); }
+#resource .card .big { font-variant-numeric: lining-nums tabular-nums; }
+#resource .r-qa td { vertical-align: top; }
+#resource .r-qa td:first-child { width: 28%; font-weight: 500; color: var(--ink); }
+#resource .r-qa td:nth-child(2) { width: 30%; }
+#resource .r-qa code { white-space: nowrap; }
+#resource .r-qa code.m { color: var(--muted); background: none; padding: 0; }
+#resource table.t td code { font-size: 12.5px; }
+#resource table.t i.sw { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+@media (max-width: 900px) { #resource .r-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) { #resource .r-qa code { white-space: normal; word-break: break-all; } #resource .r-qa td:first-child { width: auto; } }
+
+/* ==== view: studies ==== */
+/* sex colors of Figure 5A (src/08_visualization/04_technical_validation.py) */
+#studies { --sex-female: #8e5ba8; --sex-male: #118ab2; --sex-not_recorded: #a0a0a0; --sex-ambiguous: #f3b032; }
+:root[data-theme="dark"] #studies { --sex-female: #b07fcb; --sex-male: #2fa6cf; --sex-not_recorded: #8a857d; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #studies { --sex-female: #b07fcb; --sex-male: #2fa6cf; --sex-not_recorded: #8a857d; } }
+.st-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 18px 0 8px; }
+.st-tools input[type=search] { width: min(420px, 100%); padding: 7px 11px; font-size: 14px; border-radius: 9px; }
+.st-listwrap { max-width: 100%; }
+table.st-list { font-size: 13.5px; }
+table.st-list th { white-space: nowrap; padding: 0; }
+table.st-list th button { border: 0; background: none; font: inherit; color: inherit; padding: 6px 7px; cursor: pointer; width: 100%; text-align: inherit; }
+table.st-list th button:hover { color: var(--ink); }
+table.st-list th[aria-sort] button::after { content: " \2195"; opacity: .35; }
+table.st-list th[aria-sort="ascending"] button::after { content: " \2191"; opacity: 1; }
+table.st-list th[aria-sort="descending"] button::after { content: " \2193"; opacity: 1; }
+table.st-list th.r button { text-align: right; }
+table.st-list tbody tr { cursor: pointer; }
+table.st-list tbody tr:hover td, table.st-list tbody tr.hi td { background: var(--surface); }
+table.st-list td { vertical-align: top; }
+table.st-list td.acc { white-space: nowrap; font-weight: 600; }
+table.st-list td.acc a { text-decoration: none; }
+table.st-list .ttl { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--ink2); min-width: 180px; }
+table.st-list .tech { white-space: nowrap; color: var(--ink2); }
+table.st-list .tech i, .st-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+.st-cbar { display: flex; width: 120px; height: 11px; border-radius: 3px; overflow: hidden; background: var(--grid); margin-top: 4px; }
+.st-cbar i { display: block; height: 100%; }
+.st-cbar.wide { width: 100%; height: 14px; margin: 0; }
+table.st-list tr.none td { color: var(--muted); font-style: italic; cursor: default; }
+.st-excl { margin: 34px 0 0; border-top: 1px solid var(--line); padding-top: 14px; }
+.st-excl > summary { cursor: pointer; font: 600 19px/1.4 var(--serif); list-style-position: outside; padding: 4px 0; }
+.st-excl > summary small { font: 400 13.5px var(--sans); color: var(--muted); display: block; }
+.st-reasons { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2px 28px; margin: 12px 0 4px; }
+.st-reasons button { display: grid; grid-template-columns: minmax(0, 1fr) 92px 34px; align-items: center; gap: 10px; border: 0; background: none; text-align: left; padding: 4px 6px; border-radius: 6px; cursor: pointer; color: var(--ink2); font: 13px/1.35 var(--sans); }
+.st-reasons button:hover, .st-reasons button[aria-pressed="true"] { background: var(--surface); color: var(--ink); }
+.st-reasons button[aria-pressed="true"] { font-weight: 600; }
+.st-reasons .b { height: 9px; border-radius: 2px; background: var(--line-strong); }
+.st-reasons .b.av { background: var(--accent); }
+.st-reasons .v { text-align: right; font-variant-numeric: tabular-nums; }
+table.st-xlist td.basis { color: var(--muted); font-size: 12.5px; }
+/* the bar above the chapters of a study: choose another, previous and next */
+.st-switch { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+.st-switch select { font-size: 13.5px; padding: 5px 8px; max-width: 100%; }
+.st-switch .btn { padding: 4px 11px; font-size: 13px; }
+.st-title { font: 600 23px/1.3 var(--serif); margin: 4px 0 6px; max-width: 900px; }
+.st-meta { font-size: 13.5px; color: var(--muted); margin: 0 0 14px; }
+.st-meta a { color: var(--accent-ink); }
+.st-body h3 .m { font-weight: 400; color: var(--muted); font-size: 13.5px; }
+.st-body h4 { font: 600 14.5px var(--sans); margin: 16px 0 6px; }
+.st-grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px; align-items: start; }
+.st-quote { border-left: 2px solid var(--line-strong); padding: 2px 0 2px 14px; margin: 8px 0; color: var(--ink2); font-size: 14px; max-width: 860px; }
+.st-own { margin: 22px 0 0; max-width: 860px; }
+.st-own > summary { cursor: pointer; color: var(--accent-ink); font-size: 14px; }
+.st-own p { font-size: 14px; color: var(--ink2); }
+.st-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.st-chips .chip b { color: var(--ink); font-weight: 600; }
+.st-words td.w code { white-space: pre-wrap; word-break: break-word; }
+.st-words td { vertical-align: top; }
+.st-words .ev { color: var(--muted); font-size: 12.5px; }
+.st-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 26px; margin: 10px 0 4px; }
+.st-facts dl { margin: 0; border-top: 1px solid var(--line-strong); padding-top: 8px; }
+.st-facts dt { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.st-facts dd { margin: 0; display: flex; justify-content: space-between; gap: 10px; font-size: 13.5px; padding: 2px 0; border-bottom: 1px solid var(--line); }
+.st-facts dd b { font-weight: 500; font-variant-numeric: tabular-nums; }
+.st-plat { border-top: 1px solid var(--line); margin-top: 22px; padding-top: 4px; }
+.st-pass { color: var(--accent-ink); font-weight: 600; } .st-fail { color: var(--cls-sepsis); font-weight: 600; }
+.st-canvas { position: relative; }
+.st-canvas canvas { display: block; width: 100%; border-radius: 10px; background: var(--raised); border: 1px solid var(--line); }
+.st-canvas .st-cap { position: absolute; left: 10px; top: 8px; font: 600 14px var(--serif); color: var(--ink); pointer-events: none; }
+.st-empty { color: var(--muted); font-style: italic; }
+@media (max-width: 900px) { .st-grid2, .st-reasons { grid-template-columns: minmax(0, 1fr); } .st-facts { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  table.st-list .c-title, table.st-list .c-cls, table.st-xlist .c-basis, table.st-list .tech .tl { display: none; }
+  table.st-list th { white-space: normal; }
+  .st-cbar { width: 80px; }
+  .st-title { font-size: 19px; }
+}
+
+/* ==== view: methods ==== */
+#methods .mtop0 { margin-top: 0; }
+#methods .eq sup { font-size: .7em; }
+#methods .fbox .fsub { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+#methods .fbox.core a:hover b { color: var(--accent-ink); }
+#methods .mflow .flowcol .fbox.core b { display: inline-block; min-width: 18px; color: var(--accent-ink); }
+#methods .exhead { margin-top: 18px; }
+/* the ladder of screening reasons */
+.mladder { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; max-width: 760px; }
+.mladder .mlad-h { margin: 0 0 6px; font-weight: 600; }
+.mladder ol { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 24px; }
+.mladder li { break-inside: avoid; display: flex; gap: 8px; align-items: baseline; padding: 2px 0; font-size: 13.5px; color: var(--ink2); }
+.mladder li .mk { width: 14px; flex: none; text-align: center; font-weight: 700; }
+.mladder li.pass .mk { color: var(--accent-ink); }
+.mladder li.stop { color: var(--ink); font-weight: 600; }
+.mladder li.stop .mk { color: var(--cls-sepsis); }
+.mladder li.stop.incl .mk { color: var(--accent-ink); }
+.mladder li.after { color: var(--muted); }
+.mladder li.availability > span:not(.mk), .mladder li.availability label { font-style: italic; }
+.mladder label { cursor: pointer; }
+.mladder b { color: var(--cls-sepsis); font-weight: 600; }
+/* editable invented tables */
+table.mgrid { width: auto; }
+table.mgrid td, table.mgrid th { padding: 3px 8px; }
+input.mnum { width: 62px; padding: 3px 6px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--raised); color: var(--ink); font: 13.5px var(--sans); text-align: right; }
+.msteps { max-width: 860px; padding-left: 22px; margin: 8px 0; }
+.msteps li { margin: 6px 0; }
+/* the class rules of one study */
+.mrules { display: grid; gap: 6px; max-width: 900px; margin: 8px 0; }
+.mrule { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 2px 12px; border: 1px solid var(--line); border-radius: 10px; padding: 7px 12px; font-size: 13.5px; }
+.mrule .rn { grid-row: span 3; font-weight: 600; color: var(--muted); }
+.mrule .rf { color: var(--ink); }
+.mrule .rw, .mrule .rq { color: var(--muted); font-size: 12.5px; }
+.mrule.pass { opacity: .75; }
+.mrule.stop { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.mrule.stop .rn { color: var(--accent-ink); }
+.mrule.after { opacity: .45; }
+/* the days of one patient */
+.mdays { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 10px 0; max-width: 900px; }
+.mday { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px; font-size: 13px; }
+.mday b { font-size: 14px; }
+.mday.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.mday.gone { opacity: .55; }
+.mday .btn { padding: 2px 8px; font-size: 12px; }
+.mday .btn[aria-pressed="true"] { border-color: var(--cls-sepsis); color: var(--cls-sepsis); }
+/* two cohort groups joined by a patient */
+.mgroups { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 10px 0; }
+.mgroup { border: 1px solid var(--line-strong); border-radius: 12px; padding: 8px 12px; display: grid; gap: 4px; min-width: 260px; flex: 1 1 260px; }
+.mrec { font-size: 13px; border-left: 3px solid var(--line-strong); padding-left: 8px; }
+.mrec.p { border-left-color: var(--accent); }
+.mrec span { display: block; font-size: 12px; color: var(--muted); }
+.mjoin { font-size: 22px; color: var(--muted); }
+.mfull { flex-basis: 100%; }
+table.mshort { width: auto; }
+i.mdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+#methods .chart g.mrow { cursor: pointer; }
+#msxStrip, #maucDots { touch-action: pan-y; cursor: ew-resize; user-select: none; }
+#methods .grid2.msx, #methods .grid2.mauc { align-items: start; }
+@media (max-width: 760px) {
+  .mladder ol { columns: 1; }
+  .mdays { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mrule { grid-template-columns: 1fr; } .mrule .rn { grid-row: auto; }
+}
+
+/* ---------- narrower screens ---------- */
+@media (max-width: 1080px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .hero-fig { max-width: 780px; }
+  .facts, .pathgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 1120px) {
+  .iconbtn span { display: none; }
+  .tabs button { padding: 9px 12px; }
+}
+@media (max-width: 920px) {
+  :root { --head: 98px; }
+  .top-in { flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+  .brand { margin-right: auto; }
+  .tabs { order: 3; width: 100%; margin: 0; overflow-x: auto; scrollbar-width: none; }
+  .tabs button { flex: 1 0 auto; }
+}
+@media (max-width: 900px) {
+  .book { grid-template-columns: 1fr; gap: 0; }
+  .rail { position: static; max-height: none; overflow-x: auto; padding: 12px 0 10px; border-bottom: 1px solid var(--line); }
+  .rail-h { display: none; }
+  .rail ol { display: flex; gap: 6px; }
+  .rail button { display: flex; gap: 6px; white-space: nowrap; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; }
+  .rail .s { display: none; }
+  .rail li.grp { margin: 0 4px 0 10px; align-self: center; white-space: nowrap; }
+  .grid2 { grid-template-columns: 1fr; }
+  .flowgrid { grid-template-columns: 1fr; } .flowarrow { transform: rotate(90deg); padding: 4px 0; }
+  .glossary-sec dl.gl { columns: 1; }
+}
+@media (max-width: 760px) {
+  .wrap, .book, .top-in { padding-left: 16px; padding-right: 16px; }
+  main.view.busy::before { padding-left: 16px; padding-right: 16px; }
+  .tabs button { padding: 8px 11px; }
+  .hero { padding-top: 26px; }
+  .hero h1 { font-size: 32px; } .sec-h h2 { font-size: 25px; } .h2 { font-size: 24px; }
+  .hero-lead { font-size: 17px; }
+  .hero-state b { font-size: 16px; } .hero-state { left: 10px; top: 8px; }
+  .facts, .pathgrid { grid-template-columns: 1fr; }
+  .pager { grid-template-columns: 1fr; } .pager button.next { grid-column: 1; }
+  .howto { flex-direction: column; gap: 2px; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; } .card .big { font-size: 24px; }
+  .gloss { right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .pages > section.sec.on { animation: none; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#start"><i aria-hidden="true"></i><span>GenomicTensorSepsis</span></a>
+    <nav class="tabs" role="tablist" aria-label="Parts of the page">
+      <button role="tab" id="tab-start" aria-controls="start" aria-selected="true">Start</button>
+      <button role="tab" id="tab-story" aria-controls="story" aria-selected="false">How it works</button>
+      <button role="tab" id="tab-resource" aria-controls="resource" aria-selected="false">The resource</button>
+      <button role="tab" id="tab-studies" aria-controls="studies" aria-selected="false">Studies</button>
+      <button role="tab" id="tab-methods" aria-controls="methods" aria-selected="false">Method in detail</button>
+    </nav>
+    <button class="iconbtn" id="glossBtn" type="button" aria-expanded="false" aria-controls="gloss"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16"/></svg><span>Glossary</span></button>
+    <button class="iconbtn" id="theme" type="button"></button>
+  </div>
+</header>
+<div class="gloss" id="gloss" role="dialog" aria-label="Glossary" hidden>
+  <div class="gloss-h"><h2>Words used on this page</h2><button class="iconbtn" id="glossX" type="button" aria-label="Close the glossary">Close</button></div>
+  <dl class="gl" id="glossPop"></dl>
+</div>
+<div class="wrap"><div class="err" id="err" role="alert"></div><div id="selftestBox"></div></div>
+
+<!-- ======================================================================= START (main.js) -->
+<main id="start" class="view" role="tabpanel" aria-labelledby="tab-start">
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow" id="heroEyebrow"></p>
+      <h1>Public studies of blood RNA in sepsis, prepared to be used together</h1>
+      <p class="hero-lead">When a patient has sepsis, the white cells of the blood change what they do, and the change shows in their RNA, the working copies of genes that a cell makes when it uses them. Research groups have measured this RNA in blood samples of patients with sepsis and deposited their measurements in public repositories.</p>
+      <p>GenomicTensorSepsis gathers these studies and makes them usable together. It searched the repositories, chose the studies that measured blood RNA of patients with sepsis, reprocessed each one from the files its authors deposited, gave every row of every table a gene from one reference list, and described every sample from its records, keeping the record or sentence that each label came from. Nothing is removed: repeat deposits, repeated samples of one patient and samples of doubtful quality are marked, so that each user can choose.</p>
+      <p>This page shows how the resource was built and what it holds, with worked examples on its real samples.</p>
+      <div class="cta">
+        <button class="btn primary big" type="button" data-go="story"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>Watch how it is built</button>
+        <button class="btn big" type="button" data-go="resource">Explore the resource</button>
+        <button class="btn big" type="button" data-go="studies">Choose a study</button>
+      </div>
+    </div>
+    <figure class="hero-fig" id="heroFig">
+      <div class="hero-stage">
+        <canvas id="heroCanvas" role="img" aria-label=""></canvas>
+        <div class="hero-state" id="heroState" aria-live="polite"></div>
+        <button class="tbtn hero-full" id="heroFull" type="button"></button>
+      </div>
+      <div class="hero-ctl">
+        <button class="tbtn play" id="heroPlay" type="button"></button>
+        <div class="morph"><span class="end" id="heroEnd0">Before</span><input type="range" id="heroT" min="0" max="1000" step="1" value="0" aria-label="From before the correction to after it"><span class="end" id="heroEnd1">After correction</span></div>
+        <div class="controls"><span>Color by</span><div class="seg" id="heroBy"><button type="button" data-v="cls" class="on" aria-pressed="true">Class</button><button type="button" data-v="fam" aria-pressed="false">Technology</button></div></div>
+      </div>
+      <div class="keys" id="heroKeys"></div>
+      <figcaption id="heroCap"></figcaption>
+      <p class="howto" id="heroHow"><span>How to read it</span><span></span></p>
+      <p class="note" id="heroNote"></p>
+    </figure>
+  </section>
+  <section class="facts" id="facts" aria-label="Main numbers"></section>
+  <section class="paths">
+    <h2 class="h2">Four ways through this page</h2>
+    <div class="pathgrid">
+      <button class="path" type="button" data-go="story"><span class="pn">1</span><b>How it works</b><span>Animations of real samples, step by step: the studies screened, repeat deposits merged, labels read from the records, patients, sex read from the genes, the correction, and twins across a split.</span><span class="go">Watch →</span></button>
+      <button class="path" type="button" data-go="resource"><span class="pn">2</span><b>The resource</b><span>What the resource holds, chapter by chapter: studies and samples, repeats and patients, genes, the checks, the correction, the benchmark and how to get the data.</span><span class="go">Explore →</span></button>
+      <button class="path" type="button" data-go="studies"><span class="pn">3</span><b>Studies</b><span id="pathStudies"></span><span class="go">Choose →</span></button>
+      <button class="path" type="button" data-go="methods"><span class="pn">4</span><b>Method in detail</b><span>Every step with its equation, an interactive simulation and a worked example on real samples, for readers who want to check the work.</span><span class="go">Read →</span></button>
+    </div>
+  </section>
+  <section class="glossary-sec" id="glossary">
+    <h2 class="h2">Words used on this page</h2>
+    <dl class="gl" id="glossStart"></dl>
+  </section>
+</div>
+</main>
+
+<!-- ======================================================================= HOW IT WORKS (story.js) -->
+<main id="story" class="view" role="tabpanel" aria-labelledby="tab-story" hidden>
+<div class="wrap story">
+  <p class="eyebrow">How it works</p>
+  <h2 class="h2">From public deposits to one resource, step by step</h2>
+  <p class="lead">Three animations of real samples. The first follows the whole resource, one dot per record, from the searches to the final counts of samples by class. The second follows one group of studies close up, through every step of the method: repeat deposits, classes, patients, sex, the correction and a split into training and test data. The third shows the records of one benchmark task with their twins, other deposits of the same array and other samples of the same patient, under a random split, with one study held out at a time, and under the patient-safe split of the resource.</p>
+  <div class="story-grid" id="storyGrid">
+    <div class="story-col">
+      <div class="story-switch"><div class="seg" id="storyAnim" role="group" aria-label="Choose an animation"><button type="button" data-v="whole" class="on" aria-pressed="true">The whole resource<span class="story-long">: from the searches to the final counts</span></button><button type="button" data-v="group" aria-pressed="false">One group close up</button><button type="button" data-v="twins" aria-pressed="false">Twins and splits</button></div></div>
+      <div class="story-stage" id="storyStage">
+        <canvas id="storyCanvas" role="img" aria-label="Animation"></canvas>
+        <button class="story-bigplay" id="storyBigPlay" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg><span>Play the animation</span></button>
+      </div>
+      <div class="story-transport">
+        <button class="tbtn" id="storyBack" type="button" aria-label="Previous step" title="Previous step (←)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg></button>
+        <button class="tbtn play" id="storyPlay" type="button"></button>
+        <button class="tbtn" id="storyNext" type="button" aria-label="Next step" title="Next step (→)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 5.4 10 4l8 8-8 8-1.4-1.4 6.6-6.6z"/></svg></button>
+        <div class="story-scrub" id="storyScrub" role="tablist" aria-label="Steps"></div>
+        <button class="tbtn" id="storyFull" type="button"></button>
+      </div>
+      <div class="keys" id="storyKeys"></div>
+      <p class="howto" id="storyHow"><span>How to read it</span><span></span></p>
+      <p class="note story-hint"><kbd>←</kbd> <kbd>→</kbd> move between steps, <kbd>Space</kbd> plays or pauses and <kbd>F</kbd> fills the screen. Click a step to play it again, and hover over the dots to see the studies and samples.</p>
+    </div>
+    <aside class="story-cap" id="storyCap" aria-live="polite"></aside>
+  </div>
+</div>
+</main>
+
+<!-- ======================================================================= THE RESOURCE (resource.js) -->
+<!-- A book: resource.js writes its nine chapters (<section class="sec">) into .pages, before the pager, when the view is
+     first opened. A chapter's id is its address (#resource/r-studies ... #resource/r-data); data-nav and data-sub name it
+     in the rail; common.js adds the rail, the chapter position and the pager. -->
+<main id="resource" class="view" role="tabpanel" aria-labelledby="tab-resource" hidden>
+<div class="book">
+  <aside class="rail" aria-label="Chapters of the resource"><p class="rail-h">The resource</p><ol></ol></aside>
+  <div class="pages">
+<nav class="pager" aria-label="Previous and next chapter"></nav>
+  </div>
+</div>
+</main>
+
+<!-- ======================================================================= STUDIES (studies.js) -->
+<!-- Chapters with data-group="choose" choose a study; those with data-group="profile" show the chosen one, at addresses
+     such as #studies/GSE65682/checks (resolve and hashFor in studies.js). -->
+<main id="studies" class="view" role="tabpanel" aria-labelledby="tab-studies" hidden>
+<div class="book">
+  <aside class="rail" aria-label="Chapters for the studies"><p class="rail-h">Studies</p><ol></ol></aside>
+  <div class="pages">
+<section class="sec" id="st-choose" data-nav="Choose a study" data-sub="All included studies" data-group="choose">
+  <div class="sec-h"><h2>Choose a study</h2></div>
+  <p class="lead" id="stChooseLead"></p>
+  <p class="howto"><span>How to read it</span><span id="stChooseHow"></span></p>
+  <div class="chart" id="stMap"></div>
+  <div class="keys" id="stMapKeys"></div>
+  <div class="st-tools"><input type="search" id="stSearch" placeholder="Search by accession, title, platform or year" aria-label="Search the included studies" autocomplete="off"><span class="small" id="stCount" aria-live="polite"></span></div>
+  <div class="tablewrap st-listwrap"><table class="t st-list" id="stList"></table></div>
+  <details class="st-excl" id="stExcl">
+    <summary id="stExclSum"></summary>
+    <p class="note" id="stExclNote"></p>
+    <div class="st-reasons" id="stReasons"></div>
+    <div class="st-tools"><input type="search" id="stExclSearch" placeholder="Search the excluded candidates" aria-label="Search the excluded candidates" autocomplete="off"><span class="small" id="stExclCount" aria-live="polite"></span></div>
+    <div class="tablewrap st-listwrap"><table class="t st-list st-xlist" id="stExclList"></table></div>
+  </details>
+</section>
+<!-- The chapters of the chosen study: studies.js fills each .st-body from data/studies/<id>.js. -->
+<section class="sec" id="st-overview" data-nav="Overview" data-sub="The study at a glance" data-group="profile">
+  <div class="sec-h"><span class="n"></span><h2>Overview</h2><span class="ctx st-ctx"></span></div>
+  <div class="st-body"></div>
+</section>
+<section class="sec" id="st-samples" data-nav="Samples" data-sub="Classes, ages, time points, wording" data-group="profile">
+  <div class="sec-h"><span class="n"></span><h2>Samples</h2><span class="ctx st-ctx"></span></div>
+  <div class="st-body"></div>
+</section>
+<section class="sec" id="st-platform" data-nav="Platform and processing" data-sub="From deposited files to values" data-group="profile">
+  <div class="sec-h"><span class="n"></span><h2>Platform and processing</h2><span class="ctx st-ctx"></span></div>
+  <div class="st-body"></div>
+</section>
+<section class="sec" id="st-genes" data-nav="Genes" data-sub="Rows mapped to genes" data-group="profile">
+  <div class="sec-h"><span class="n"></span><h2>Genes</h2><span class="ctx st-ctx"></span></div>
+  <div class="st-body"></div>
+</section>
+<section class="sec" id="st-checks" data-nav="Checks" data-sub="Sex, repeat deposits, sepsis score" data-group="profile">
+  <div class="sec-h"><span class="n"></span><h2>Checks</h2><span class="ctx st-ctx"></span></div>
+  <div class="st-body"></div>
+</section>
+<section class="sec" id="st-correction" data-nav="Correction" data-sub="Method, outcome, before and after" data-group="profile">
+  <div class="sec-h"><span class="n"></span><h2>Correction</h2><span class="ctx st-ctx"></span></div>
+  <div class="st-body"></div>
+</section>
+<section class="sec" id="st-benchmark" data-nav="Benchmark" data-sub="Patient-safe group and folds" data-group="profile">
+  <div class="sec-h"><span class="n"></span><h2>Benchmark</h2><span class="ctx st-ctx"></span></div>
+  <div class="st-body"></div>
+</section>
+<nav class="pager" aria-label="Previous and next chapter"></nav>
+  </div>
+</div>
+</main>
+
+<!-- ======================================================================= METHOD IN DETAIL (methods.js) -->
+<main id="methods" class="view" role="tabpanel" aria-labelledby="tab-methods" hidden>
+<div class="book">
+  <aside class="rail" aria-label="Chapters of the method"><p class="rail-h">Method in detail</p><ol></ol></aside>
+  <div class="pages">
+<section class="sec" id="m-over" data-nav="Overview" data-sub="The steps and their order">
+  <div class="sec-h"><span class="n">0.</span><h2>What the method does</h2></div>
+  <p class="lead">The resource was built in steps, each working on the output of the one before: the studies were found and screened, every study platform was turned into one table of numbers from its own files, the rows were related to genes, every sample was described from its records, repeat deposits and patients were recognized, the data were checked against facts the curation did not decide, and the differences between studies were removed in tables of their own. One chapter per step follows.</p>
+  <p class="note">Each chapter has four parts: the <span class="tag t-eq">Equation</span>, an interactive <span class="tag t-sim">Simulation</span>, a <span class="tag t-ex">Worked example</span> on named real samples, and the <span class="tag t-res">Result</span> of the step for the whole resource. For a gentler introduction, see <a href="#story">How it works</a>.</p>
+  <div id="mbOver"></div>
+</section>
+<section class="sec" id="m-search" data-nav="Search and screening" data-sub="Searches, duplicates, reasons">
+  <div class="sec-h"><span class="n">1.</span><h2>Finding and choosing the studies</h2></div>
+  <p class="lead">Every search term was run separately in every repository, a study held in several repositories was counted once, and every candidate study received one decision: included, or excluded for the first reason, in a fixed order, that applies to it. The searches were broad on purpose; the rules then decide on what the records say.</p>
+  <div id="mbSearch"></div>
+</section>
+<section class="sec" id="m-arrays" data-nav="Arrays to numbers" data-sub="Background, quantiles, median polish">
+  <div class="sec-h"><span class="n">2.</span><h2>From array files to numbers</h2></div>
+  <p class="lead">An Affymetrix array is read from the file its scanner wrote and processed by RMA: the background light is removed from every probe, the arrays of a study platform are given one distribution of intensities, and the probes of each probe set are combined into one log₂ value. Each study platform is processed on its own, so that adding or removing a study never changes the numbers of another.</p>
+  <div id="mbArrays"></div>
+</section>
+<section class="sec" id="m-rnaseq" data-nav="RNA-seq to numbers" data-sub="Library size, TMM, log₂ CPM">
+  <div class="sec-h"><span class="n">3.</span><h2>From RNA-seq counts to numbers</h2></div>
+  <p class="lead">RNA-seq counts the reads that fall on each gene. A count means something only relative to the size of its library, so it is divided by an effective library size and given on the log₂ scale as counts per million, after a small prior count is added so that a gene without reads still has a value.</p>
+  <div id="mbCounts"></div>
+</section>
+<section class="sec" id="m-genes" data-nav="Probes to genes" data-sub="One reference list of genes">
+  <div class="sec-h"><span class="n">4.</span><h2>From probes to genes</h2></div>
+  <p class="lead">The rows of a table are whatever the technology measures: probe sets, probes or genes. Every row is related to the genes of one reference list, that of the HUGO Gene Nomenclature Committee (HGNC), and beside every table a gene-level table holds one row per gene, built only from the rows that map to exactly one gene.</p>
+  <div id="mbGenes"></div>
+</section>
+<section class="sec" id="m-labels" data-nav="Labels from records" data-sub="Rules tried in order">
+  <div class="sec-h"><span class="n">5.</span><h2>Labels from the records</h2></div>
+  <p class="lead">What a sample is, sepsis or a healthy control, on which day and from which patient, is written by the investigators in free text that differs from study to study. Every study platform has its own written rules that turn these wordings into labels from fixed lists, and every label is stored with the field, the wording and the rule it came from.</p>
+  <div id="mbLabels"></div>
+</section>
+<section class="sec" id="m-repeats" data-nav="Repeat deposits and patients" data-sub="One array, one patient">
+  <div class="sec-h"><span class="n">6.</span><h2>Repeat deposits and patients</h2></div>
+  <p class="lead">The same array is often deposited again in a later study, and one patient often gives several samples. Counting either twice gives one person more weight and lets a test sample be seen in training, so the resource recognizes both and marks them, without deleting any record.</p>
+  <div id="mbRepeats"></div>
+</section>
+<section class="sec" id="m-sex" data-nav="Sex from expression" data-sub="Y genes, XIST, two-means">
+  <div class="sec-h"><span class="n">7.</span><h2>Sex read from the expression</h2></div>
+  <p class="lead">Genes of the Y chromosome are expressed in the blood of men and XIST in the blood of women. Reading sex from these genes without looking at the record, and only then comparing, tests whether each column of a table carries the record it is attached to.</p>
+  <div id="mbSex"></div>
+</section>
+<section class="sec" id="m-auroc" data-nav="Sepsis score and AUROC" data-sub="Published genes, ROC curve">
+  <div class="sec-h"><span class="n">8.</span><h2>The sepsis score and the AUROC</h2></div>
+  <p class="lead">A few genes are known to change in the blood in sepsis. A score built from them by other investigators, before this resource existed, should separate sepsis from healthy controls within every study; the area under the ROC curve (AUROC) measures how well it does, with labels and genes that the curation could not adjust.</p>
+  <div id="mbScore"></div>
+</section>
+<section class="sec" id="m-correct" data-nav="The correction" data-sub="Healthy controls, empirical Bayes">
+  <div class="sec-h"><span class="n">9.</span><h2>Removing the differences between studies</h2></div>
+  <p class="lead">The same blood measured in two laboratories gives numbers that differ for reasons that have nothing to do with the patient. The correction removes these differences gene by gene: on the healthy controls of each study that has enough of them, and by matched groups where it does not. The per-study tables are left as processed; the corrected values go into two new tables, for bulk blood and for PBMC.</p>
+  <div id="mbCorrect"></div>
+</section>
+<section class="sec" id="m-heldout" data-nav="The held-out test" data-sub="Hidden controls, errors, floor">
+  <div class="sec-h"><span class="n">10.</span><h2>The held-out test</h2></div>
+  <p class="lead">A correction cannot be checked on the studies it corrects, where the true values are unknown. It can be checked where the answer is known: hide the healthy controls of a study that has them, correct the study from its other samples, and measure how close the hidden controls land to the healthy controls of the other studies.</p>
+  <div id="mbHeldout"></div>
+</section>
+<section class="sec" id="m-bench" data-nav="Benchmark and leakage" data-sub="Patient-safe splits, scoring">
+  <div class="sec-h"><span class="n">11.</span><h2>Benchmark splits and leakage</h2></div>
+  <p class="lead">A benchmark fixes the tasks, the samples and how they are split into training and test, so that methods are judged by the same test. Its main danger is leakage: information about the test samples reaching the training, which makes a classifier look better than it is, often by a wide margin. Four common forms of leakage are ruled out by the splits.</p>
+  <div id="mbBench"></div>
+</section>
+<nav class="pager" aria-label="Previous and next chapter"></nav>
+  </div>
+</div>
+</main>
+
+<div class="wrap"><footer id="footer">GenomicTensorSepsis. The data are released under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> and the code, including this page, under the <a href="https://opensource.org/license/mit">MIT License</a>; the code is at <a href="https://github.com/MrRajat1809/GenomicTensorSepsis">github.com/MrRajat1809/GenomicTensorSepsis</a>. The measurements were deposited by the authors of the source studies in GEO and ArrayExpress; please cite the studies whose samples you use.</footer></div>
+<div id="tip" role="tooltip"></div>
+<script id="part-versions">window.PART_VERSIONS = {"data/methods.js":"33c7da5e0f","data/resource.js":"a4209cb469","data/story.js":"c41a212fa4","data/studies/E-MEXP-3621.js":"516f2e8970","data/studies/E-MTAB-15164.js":"5e51e9c87e","data/studies/E-MTAB-1548.js":"e6eb10d0ee","data/studies/E-MTAB-15687.js":"371319d11d","data/studies/E-MTAB-17576.js":"d909209fe5","data/studies/E-MTAB-4421.js":"4d36aa311b","data/studies/E-MTAB-4451.js":"76003a90ea","data/studies/E-MTAB-4785.js":"836149493a","data/studies/E-MTAB-5273.js":"f934ae4e3d","data/studies/E-MTAB-5274.js":"e7dc4b851e","data/studies/E-MTAB-7581.js":"1b42a899fc","data/studies/GSE100159.js":"8f09693fa8","data/studies/GSE10474.js":"f0a7d8fefa","data/studies/GSE106878.js":"ec1a3ac502","data/studies/GSE110487.js":"72d8ed0f53","data/studies/GSE11755.js":"02640226ef","data/studies/GSE119217.js":"b2407d0e61","data/studies/GSE12624.js":"22854f4504","data/studies/GSE13015.js":"e8b08d3fb2","data/studies/GSE131411.js":"29a4426e8a","data/studies/GSE131761.js":"afa54a3622","data/studies/GSE134347.js":"8533b77861","data/studies/GSE137340.js":"946ba499d4","data/studies/GSE137341.js":"9e3a825b2b","data/studies/GSE138712.js":"abb299edc4","data/studies/GSE13904.js":"a50db0c315","data/studies/GSE142255.js":"b4886b213b","data/studies/GSE145227.js":"c6bcd31246","data/studies/GSE154918.js":"4db3a51349","data/studies/GSE163151.js":"4f539f5181","data/studies/GSE163196.js":"4a4dd9c7c2","data/studies/GSE171741.js":"d19329c49b","data/studies/GSE182522.js":"88e807b399","data/studies/GSE185263.js":"33927fbd50","data/studies/GSE189400.js":"80dbeaba32","data/studies/GSE196117.js":"f7ebb0e216","data/studies/GSE199816.js":"f1fe772a8f","data/studies/GSE205672.js":"aa020b41bf","data/studies/GSE208587.js":"c6d9668ee7","data/studies/GSE211210.js":"f8d61ef3f6","data/studies/GSE216902.js":"bf9553fe26","data/studies/GSE217700.js":"33e1066c7c","data/studies/GSE222393.js":"e1f97f1352","data/studies/GSE228541.js":"ef10fdae1f","data/studies/GSE232404.js":"d104884c79","data/studies/GSE232753.js":"b2ab0f9bf9","data/studies/GSE236713.js":"51223776b6","data/studies/GSE236892.js":"ef9a09bd0f","data/studies/GSE241238.js":"9e5eb4125a","data/studies/GSE243217.js":"95cdd7f05d","data/studies/GSE25504.js":"34b5fad238","data/studies/GSE26378.js":"caf67ca06e","data/studies/GSE26440.js":"91f5ce609c","data/studies/GSE267399.js":"b52b095b37","data/studies/GSE270838.js":"d63bad5b28","data/studies/GSE272769.js":"5332198289","data/studies/GSE273700.js":"fc05fe0371","data/studies/GSE279448.js":"a92c05c041","data/studies/GSE282464.js":"89af4a5cd9","data/studies/GSE286082.js":"72e8d86643","data/studies/GSE28750.js":"f6f3ec4851","data/studies/GSE294059.js":"8515c1fb2d","data/studies/GSE294985.js":"92ece20384","data/studies/GSE29536.js":"3835c47941","data/studies/GSE296830.js":"f85ba12d88","data/studies/GSE310929.js":"9ba928c1b7","data/studies/GSE32707.js":"7c1cf386fa","data/studies/GSE33118.js":"46fd9d2531","data/studies/GSE33119.js":"11f74caca1","data/studies/GSE335824.js":"a498c995ba","data/studies/GSE341493.js":"1ebbadc92c","data/studies/GSE341837.js":"1e7e8a129e","data/studies/GSE341840.js":"c1aa687fa2","data/studies/GSE4607.js":"45db9b0bdd","data/studies/GSE48080.js":"b156c7aee0","data/studies/GSE54514.js":"69ac61f5e8","data/studies/GSE57065.js":"b62578bc4c","data/studies/GSE60424.js":"2f2148d112","data/studies/GSE63042.js":"c1e0326b9d","data/studies/GSE63311.js":"f2619f3000","data/studies/GSE65682.js":"befbd13ff9","data/studies/GSE66099.js":"009c033994","data/studies/GSE66890.js":"66a588fade","data/studies/GSE69063.js":"e8779daca1","data/studies/GSE69528.js":"3d1467eefc","data/studies/GSE69686.js":"198f994784","data/studies/GSE70311.js":"4b0b3566f2","data/studies/GSE70461.js":"1d5cea0d16","data/studies/GSE72326.js":"81ace23098","data/studies/GSE72829.js":"a68d15a818","data/studies/GSE74224.js":"85390a6683","data/studies/GSE8121.js":"9cb340c31f","data/studies/GSE84439.js":"5ccef855bb","data/studies/GSE95233.js":"7c637ea780","data/studies/GSE9692.js":"9c0691388f","data/studies/GSE9960.js":"6ee1b9fd55","data/studies/index.js":"619b563830"};</script>
+<script src="data.js?v=bfcc37c4a7"></script>
+<script src="common.js?v=ab73f7b7dc"></script>
+<script src="story.js?v=1047b38819"></script>
+<script src="resource.js?v=c8b5151dc4"></script>
+<script src="studies.js?v=730c7db593"></script>
+<script src="methods.js?v=61b46d43b0"></script>
+<script src="main.js?v=45bdc9f2a4"></script>
+</body>
+</html>

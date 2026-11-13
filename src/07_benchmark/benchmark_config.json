@@ -1,0 +1,544 @@
+{
+  "version": "1.0.0",
+  "protocol": "The benchmark stage measures what pooling public sepsis transcriptomes without the links of the resource gets wrong: how many test records have a deposit of the same array or a sample of the same patient in training, how much that and pooled scoring raise the scores of baseline models, and how far a study's class mix and its expression identify it. Naive splits are drawn over every record of a task's classes and tissues; the patient-safe splits of the cohort stage are used as defined there, with every model scored within each held-out group. Published sepsis signatures are scored by their published formulas within single study platforms, and no study is pooled with another for them.",
+  "splits": {
+    "method": "A naive random split puts the test_fraction of the records that come first, ordered by SHA-256 of seed, repeat and record, in test and the rest in training, repeats times; a naive leave-one-study-out split holds out every study accession once. A record is linked to the other deposits of its array and, where its patient is identified, to the other samples of that patient.",
+    "seed": 20261112,
+    "repeats": 5,
+    "test_fraction": 0.2,
+    "minimum_per_class": 5
+  },
+  "features": {
+    "method": "The models read the aligned values of the bulk-blood group of the correction stage: every sample given the group's reference distribution while the order of its genes is kept, with no use of class or healthy controls. The corrected tables are not used, because their correction used the healthy controls of every study. Inside every training set, the genes with values in at least minimum_present_share of its records are ranked by the absolute Welch t statistic between its classes, and the first genes are kept; a missing value is replaced by the training mean of its gene.",
+    "group": "bulk_blood",
+    "minimum_present_share": 0.9,
+    "genes": 500,
+    "chunk_genes": 1000
+  },
+  "models": {
+    "method": "Two baseline models with fixed settings and no tuning: L2-penalised logistic regression on standardised values, and histogram gradient boosting. The Sepsis MetaScore of the validation stage is scored beside them as a reference that needs no training, for the task of sepsis against healthy controls only.",
+    "logistic_regression": {
+      "C": 0.05,
+      "max_iter": 5000,
+      "tol": 0.0001
+    },
+    "gradient_boosting": {
+      "learning_rate": 0.1,
+      "max_iter": 200,
+      "max_leaf_nodes": 15,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "random_state": 20261112
+    }
+  },
+  "metrics": {
+    "method": "AUROC and AUPRC within every scored unit: the pooled test records of a random split, a held-out study of the leave-one-study-out split, and each held-out patient-safe group of the cohort stage's schemes. A unit is scored when it holds minimum_per_class records of each class. Intervals are percentiles of a bootstrap that resamples the test records of each class. Inflation is the mean over the units of a naive scheme minus that of inflation_reference.",
+    "bootstrap": {
+      "replicates": 1000,
+      "level": 0.95,
+      "seed": 20261112
+    },
+    "inflation_reference": "leave_one_group_out",
+    "inflation_effects": {
+      "method": "Beside the total inflation of the summary, three effects are each measured on the comparison that isolates it and are not added up: the study shortcut, the pooled AUROC of the random splits minus their within-study AUROC over every study of the test sets; twins, the within-study AUROC with minus without the test records that have a deposit of their array or a sample of their identified patient among the fold's training records, over the study repeats scorable both ways; and the seen study, the within-study AUROC without twins minus that of inflation_reference, over the studies scorable in both, with twins across studies taken the same way from leave-one-study-out. Every effect has a percentile interval from a bootstrap that resamples the studies of its set, and is not estimable over fewer than minimum_studies studies; an additive split over one set of studies matched for every part is kept as a sensitivity analysis.",
+      "minimum_studies": 5,
+      "bootstrap": {
+        "replicates": 2000,
+        "level": 0.95,
+        "seed": 20261113
+      }
+    }
+  },
+  "shortcuts": {
+    "method": "A predictor that knows only the study gives every test record the share of the positive class among the training records of its study, or of all training records for a study it has not seen. It is scored over the pooled test records of every random split, and within every held-out study of the leave-one-study-out split that holds minimum_per_class records of each class, where all of the study's records get one score and the AUROC is 0.5; the AUROC over all held-out records pooled is kept in the detailed table only. Study identification predicts the study platform of every sample of the corrected bulk-blood table from its aligned values and from its corrected values, by multinomial logistic regression over stratified folds, on the genes with values in every one of these samples; inside every training fold the genes with the largest variance are kept.",
+    "study_identification": {
+      "group": "bulk_blood",
+      "folds": 5,
+      "genes": 500,
+      "minimum_unit_samples": 10,
+      "C": 1.0,
+      "max_iter": 5000,
+      "tol": 0.0001,
+      "seed": 20261112
+    }
+  },
+  "signatures": {
+    "method": "Every published signature is scored by its published formula within every study platform and tissue that holds both classes of an intended comparison, on the per-study tables, each on its own log2 scale; a sepsis sample counts only in the phases of sepsis_phases. A geometric_mean_difference is the geometric mean of the genes higher in the case class minus that of the genes lower in it, times the down weight, on values raised as the validation stage raises them where a matrix holds a value below one; a gene not measured on a platform is left out of the geometric mean of its side, as MetaIntegrator does, and a down weight of n_down/n_up or n_up/n_down counts the genes measured. A sum_difference is the sum of the first minus the sum of the second. The AUROC, with the case class as positive, is computed over all samples of the stratum where both classes hold minimum_group samples, with a percentile interval from a bootstrap of patients where both hold minimum_group patients. A stratum is skipped, with its reason, where the definition is not verified, the scale is not comparable, a class is below the minimum, fewer than the signature's minimum_gene_coverage of its genes are measured on the platform, or a side has fewer than minimum_genes_per_side. As in the validation stage, a stratum is independent of a signature when its study is neither a discovery nor a validation study of it, it shares no sample with such a study, and it holds no repeat deposit; every summary is given over all strata and over the independent ones, for every tissue and for the tissues of the scope_group of the correction stage.",
+    "minimum_group": 5,
+    "sepsis_phases": [
+      "during_sepsis"
+    ],
+    "bootstrap": {
+      "replicates": 2000,
+      "seed": 20261024,
+      "level": 0.95
+    },
+    "minimum_gene_coverage": 0.8,
+    "auroc_report_limit": 0.7,
+    "scope_group": "bulk_blood",
+    "stage_05_score": "sepsis_metascore",
+    "comparisons": {
+      "sepsis_vs_healthy_control": {
+        "variable": "sample_class",
+        "positive": "sepsis",
+        "negative": "healthy_control"
+      },
+      "sepsis_vs_non_septic_control": {
+        "variable": "sample_class",
+        "positive": "sepsis",
+        "negative": "non_septic_control"
+      },
+      "mortality_in_sepsis": {
+        "variable": "outcome",
+        "positive": "non_survivor",
+        "negative": "survivor",
+        "within_class": "sepsis"
+      }
+    },
+    "definitions": [
+      {
+        "name": "sepsis_metascore",
+        "label": "Sepsis MetaScore (11-gene set)",
+        "type": "signature",
+        "citation": "Sweeney TE, Shidham A, Wong HR, Khatri P. A comprehensive time-course-based multicohort analysis of sepsis and sterile inflammation reveals a robust diagnostic gene set. Sci Transl Med 7(287):287ra71. 2015.",
+        "doi": "10.1126/scitranslmed.aaa5993",
+        "pmid": "25972003",
+        "source": [
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC4734362/ (Table 3 gene directions; main text: score 'using the difference of geometric means between positive and negative genes' standardised within each data set)",
+          "https://github.com/cran/MetaIntegrator/blob/master/R/calculateScore.R (Khatri-lab reference code, identical in versions 1.0.3 and 2.1.3)",
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC5518756/ (Sweeney and Khatri 2017 benchmark, MathML of the score; computed on log2 data)"
+        ],
+        "intended_comparison": [
+          "sepsis_vs_non_septic_control",
+          "sepsis_vs_healthy_control"
+        ],
+        "direction": "higher_in_positive",
+        "genes_up": [
+          "CEACAM1",
+          "ZDHHC19",
+          "NMRK1",
+          "GNA15",
+          "BATF",
+          "C3AR1"
+        ],
+        "genes_down": [
+          "ATOSA",
+          "TGFBI",
+          "MTCH1",
+          "RPGRIP1",
+          "HLA-DPB1"
+        ],
+        "symbol_map": [
+          {
+            "published": "CEACAM1",
+            "hgnc_symbol": "CEACAM1",
+            "hgnc_id": "HGNC:1814"
+          },
+          {
+            "published": "ZDHHC19",
+            "hgnc_symbol": "ZDHHC19",
+            "hgnc_id": "HGNC:20713"
+          },
+          {
+            "published": "C9orf95",
+            "hgnc_symbol": "NMRK1",
+            "hgnc_id": "HGNC:26057"
+          },
+          {
+            "published": "GNA15",
+            "hgnc_symbol": "GNA15",
+            "hgnc_id": "HGNC:4383"
+          },
+          {
+            "published": "BATF",
+            "hgnc_symbol": "BATF",
+            "hgnc_id": "HGNC:958"
+          },
+          {
+            "published": "C3AR1",
+            "hgnc_symbol": "C3AR1",
+            "hgnc_id": "HGNC:1319"
+          },
+          {
+            "published": "KIAA1370",
+            "hgnc_symbol": "ATOSA",
+            "hgnc_id": "HGNC:25609"
+          },
+          {
+            "published": "TGFBI",
+            "hgnc_symbol": "TGFBI",
+            "hgnc_id": "HGNC:11771"
+          },
+          {
+            "published": "MTCH1",
+            "hgnc_symbol": "MTCH1",
+            "hgnc_id": "HGNC:17586"
+          },
+          {
+            "published": "RPGRIP1",
+            "hgnc_symbol": "RPGRIP1",
+            "hgnc_id": "HGNC:13436"
+          },
+          {
+            "published": "HLA-DPB1",
+            "hgnc_symbol": "HLA-DPB1",
+            "hgnc_id": "HGNC:4940"
+          }
+        ],
+        "formula": "geometric_mean_difference",
+        "down_weight": "one",
+        "sensitivity": [],
+        "minimum_genes_per_side": 3,
+        "derivation_studies": {
+          "discovery": [
+            "GSE28750",
+            "GSE32707",
+            "GSE40012",
+            "GSE66099"
+          ],
+          "validation": [
+            "GSE6377",
+            "GSE12838",
+            "E-MEXP-3001",
+            "GSE11755",
+            "GSE13015",
+            "GSE20346",
+            "GSE21802",
+            "GSE25504",
+            "GSE27131",
+            "GSE33341",
+            "GSE40396",
+            "E-MTAB-1548",
+            "GSE5772",
+            "GSE9960",
+            "E-MEXP-3621",
+            "GSE22098"
+          ],
+          "note": "Glue Grant buffy coat (trauma); Same derivation list as stage 05 validation_config.json biology.score_derivation; flag these studies as non-independent."
+        },
+        "published_formula": "score = geometric mean over the up genes minus geometric mean over the down genes, per sample, computed on the log2 expression values (not on linear values), then z-scaled within the data set. MetaIntegrator code: posScore <- apply(posGenes, 2, .geomMean); negScore likewise; totalScore <- scale(posScore - negScore); .geomMean(x) = exp(sum(log(x))/length(x)); if the data set minimum is below 0, every value is first raised by abs(min) + 1.",
+        "verified": true
+      },
+      {
+        "name": "septicyte_lab",
+        "label": "SeptiCyte LAB (SeptiScore)",
+        "type": "signature",
+        "citation": "McHugh L, Seldon TA, Brandon RA, Kirk JT, Rapisarda A, Sutherland AJ, Presneill JJ, Venter DJ, Lipman J, Thomas MR, Klein Klouwenberg PMC, van Vught L, Scicluna B, Bonten M, Cremer OL, Schultz MJ, van der Poll T, Yager TD, Brandon RB. A Molecular Host Response Assay to Discriminate Between Sepsis and Infection-Negative Systemic Inflammation in Critically Ill Patients: Discovery and Validation in Independent Cohorts. PLoS Med 12(12):e1001916. 2015.",
+        "doi": "10.1371/journal.pmed.1001916",
+        "pmid": "26645559",
+        "source": [
+          "https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1001916 (Eq 3, Eq 4, Fig 2)",
+          "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4672921/fullTextXML (MathML of Eq 3 and Eq 4)"
+        ],
+        "intended_comparison": [
+          "sepsis_vs_non_septic_control"
+        ],
+        "direction": "higher_in_positive",
+        "genes_up": [
+          "PLAC8",
+          "LAMP1"
+        ],
+        "genes_down": [
+          "PLA2G7",
+          "CEACAM4"
+        ],
+        "symbol_map": [
+          {
+            "published": "PLAC8",
+            "hgnc_symbol": "PLAC8",
+            "hgnc_id": "HGNC:19254"
+          },
+          {
+            "published": "LAMP1",
+            "hgnc_symbol": "LAMP1",
+            "hgnc_id": "HGNC:6499"
+          },
+          {
+            "published": "PLA2G7",
+            "hgnc_symbol": "PLA2G7",
+            "hgnc_id": "HGNC:9040"
+          },
+          {
+            "published": "CEACAM4",
+            "hgnc_symbol": "CEACAM4",
+            "hgnc_id": "HGNC:1816"
+          }
+        ],
+        "formula": "sum_difference",
+        "down_weight": "one",
+        "sensitivity": [],
+        "minimum_genes_per_side": 1,
+        "minimum_gene_coverage": 1.0,
+        "derivation_studies": {
+          "discovery": [
+            "GSE74224",
+            "GSE28750"
+          ],
+          "validation": [
+            "E-MTAB-1548"
+          ],
+          "note": "GSE28750 (the same 21 patients were re-assayed in GSE74224 on a different Affymetrix array, per Sweeney and Khatri 2017)"
+        },
+        "published_formula": "Eq 3 (microarray): SeptiCyte Lab = log(I[PLAC8]/I[PLA2G7]) + log(I[LAMP1]/I[CEACAM4]) = log I[PLAC8] - log I[PLA2G7] + log I[LAMP1] - log I[CEACAM4]. Eq 4 (RT-qPCR): SeptiScore = -Ct(PLAC8) + Ct(PLA2G7) - Ct(LAMP1) + Ct(CEACAM4); signs are inverted because Ct falls as expression rises. Coefficients are restricted to +1 and -1.",
+        "verified": true
+      },
+      {
+        "name": "faim3_plac8_ratio",
+        "label": "FAIM3:PLAC8 ratio",
+        "type": "signature",
+        "citation": "Scicluna BP, Klein Klouwenberg PM, van Vught LA, Wiewel MA, Ong DS, Zwinderman AH, Franitza M, Toliat MR, Nurnberg P, Hoogendijk AJ, Horn J, Cremer OL, Schultz MJ, Bonten MJ, van der Poll T. A molecular biomarker to diagnose community-acquired pneumonia on intensive care unit admission. Am J Respir Crit Care Med 192(7):826-835. 2015.",
+        "doi": "10.1164/rccm.201502-0355OC",
+        "pmid": "26121490",
+        "source": [
+          "https://europepmc.org/article/MED/26121490 (original abstract: the FAIM3:PLAC8 gene expression ratio, AUC 0.845 CAP vs no-CAP)",
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC5518756/ (Sweeney and Khatri 2017: 'calculated as FAIM3/PLAC8 (we also added a negative coefficient ... so that it would be increasing in the presence of infection)'; log2 data)",
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC4731623/ (Sweeney and Khatri 2015 letter, AJRCCM 192:1260, doi 10.1164/rccm.201507-1321LE, PMID 26568247)",
+          "Reply by Scicluna et al., AJRCCM 2015;192:1261-1262, doi 10.1164/rccm.201508-1552LE, PMID 26568248 (accepts that re-test)"
+        ],
+        "intended_comparison": [
+          "sepsis_vs_non_septic_control"
+        ],
+        "direction": "higher_in_positive",
+        "genes_up": [
+          "PLAC8"
+        ],
+        "genes_down": [
+          "FCMR"
+        ],
+        "symbol_map": [
+          {
+            "published": "FAIM3",
+            "hgnc_symbol": "FCMR",
+            "hgnc_id": "HGNC:14315"
+          },
+          {
+            "published": "PLAC8",
+            "hgnc_symbol": "PLAC8",
+            "hgnc_id": "HGNC:19254"
+          }
+        ],
+        "formula": "sum_difference",
+        "down_weight": "one",
+        "sensitivity": [],
+        "minimum_genes_per_side": 1,
+        "minimum_gene_coverage": 1.0,
+        "derivation_studies": {
+          "discovery": [
+            "GSE65682"
+          ],
+          "validation": [],
+          "note": "GSE65682 (MARS; the 134 discovery samples of the CAP study, per Sweeney and Khatri 2015)"
+        },
+        "published_formula": "ratio = FAIM3 / PLAC8 expression; benchmark orientation score = -(log2 FCMR - log2 PLAC8) = log2 PLAC8 - log2 FCMR.",
+        "verified": true
+      },
+      {
+        "name": "sweeney2018_mortality_12gene",
+        "label": "Stanford 12-gene sepsis mortality score",
+        "type": "signature",
+        "citation": "Sweeney TE, Perumal TM, Henao R, Nichols M, Howrylak JA, Choi AM, Bermejo-Martin JF, Almansa R, Tamayo E, Davenport EE, et al.; Khatri P, Tsalik EL, Mangravite LM, Langley RJ. A community approach to mortality prediction in sepsis via gene expression analysis. Nat Commun 9(1):694. 2018.",
+        "doi": "10.1038/s41467-018-03078-2",
+        "pmid": "29449546",
+        "source": [
+          "https://pmc.ncbi.nlm.nih.gov/articles/PMC5814463/ (Table 4, 'Stanford' row; main text: 'parameter-free difference-of-means formula')",
+          "Supplementary Information 41467_2018_3078_MOESM1_ESM.pdf, Supplementary Methods 'Stanford University' (via https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5814463/supplementaryFiles)"
+        ],
+        "intended_comparison": [
+          "mortality_in_sepsis"
+        ],
+        "direction": "higher_in_positive",
+        "genes_up": [
+          "DEFA4",
+          "CD163",
+          "PER1",
+          "RGS1",
+          "HIF1A",
+          "SELENOP",
+          "IFTAP",
+          "CIT"
+        ],
+        "genes_down": [
+          "LY86",
+          "TST",
+          "OR52R1",
+          "KCNJ2"
+        ],
+        "symbol_map": [
+          {
+            "published": "DEFA4",
+            "hgnc_symbol": "DEFA4",
+            "hgnc_id": "HGNC:2763"
+          },
+          {
+            "published": "CD163",
+            "hgnc_symbol": "CD163",
+            "hgnc_id": "HGNC:1631"
+          },
+          {
+            "published": "PER1",
+            "hgnc_symbol": "PER1",
+            "hgnc_id": "HGNC:8845"
+          },
+          {
+            "published": "RGS1",
+            "hgnc_symbol": "RGS1",
+            "hgnc_id": "HGNC:9991"
+          },
+          {
+            "published": "HIF1A",
+            "hgnc_symbol": "HIF1A",
+            "hgnc_id": "HGNC:4910"
+          },
+          {
+            "published": "SEPP1",
+            "hgnc_symbol": "SELENOP",
+            "hgnc_id": "HGNC:10751"
+          },
+          {
+            "published": "C11orf74",
+            "hgnc_symbol": "IFTAP",
+            "hgnc_id": "HGNC:25142"
+          },
+          {
+            "published": "CIT",
+            "hgnc_symbol": "CIT",
+            "hgnc_id": "HGNC:1985"
+          },
+          {
+            "published": "LY86",
+            "hgnc_symbol": "LY86",
+            "hgnc_id": "HGNC:16837"
+          },
+          {
+            "published": "TST",
+            "hgnc_symbol": "TST",
+            "hgnc_id": "HGNC:12388"
+          },
+          {
+            "published": "OR52R1",
+            "hgnc_symbol": "OR52R1",
+            "hgnc_id": "HGNC:15235"
+          },
+          {
+            "published": "KCNJ2",
+            "hgnc_symbol": "KCNJ2",
+            "hgnc_id": "HGNC:6263"
+          }
+        ],
+        "formula": "geometric_mean_difference",
+        "down_weight": "down_over_up",
+        "sensitivity": [
+          {
+            "variant": "up_over_down",
+            "down_weight": "up_over_down"
+          },
+          {
+            "variant": "unweighted",
+            "down_weight": "one"
+          }
+        ],
+        "minimum_genes_per_side": 1,
+        "derivation_studies": {
+          "discovery": [
+            "E-MEXP-3567",
+            "E-MEXP-3850",
+            "E-MTAB-1548",
+            "GSE10474",
+            "GSE13015",
+            "GSE27131",
+            "GSE32707",
+            "GSE40586",
+            "GSE63042",
+            "GSE66099",
+            "GSE66890"
+          ],
+          "validation": [
+            "GSE21802",
+            "GSE33341",
+            "GSE54514",
+            "GSE63990",
+            "E-MTAB-4421"
+          ],
+          "note": "E-MTAB-4421 (GAinS, Davenport subset .51); Glue Grant burns; Glue Grant trauma; Duke HAI (unpublished); UF P50 (unpublished)"
+        },
+        "published_formula": "Supplementary Methods, verbatim: 'the gene score is defined as the geometric mean of the gene expression level for all positive genes minus the geometric mean of the gene expression level of all negative genes multiplied by the ratio of counts of positive to negative genes. This was calculated for each sample in a dataset separately. Genes not present in an entire dataset were excluded; genes missing for individual samples were set to one.' Literal reading: score = GM(up) - (n_up / n_down) x GM(down), with n_up = 8 and n_down = 4 when all genes are present.",
+        "verified": true
+      },
+      {
+        "name": "hla_dra",
+        "label": "HLA-DRA expression",
+        "type": "expression_marker",
+        "citation": "Pachot A, Monneret G, Brion A, Venet F, Bohe J, Bienvenu J, Mougin B, Lepape A. Messenger RNA expression of major histocompatibility complex class II genes in whole blood from septic shock patients. Crit Care Med 33(1):31-38. 2005.",
+        "doi": "10.1097/01.CCM.0000150958.20209.A3",
+        "pmid": "15644645",
+        "source": [
+          "https://europepmc.org/article/MED/15644645 (abstract: HLA-DRA mRNA significantly decreased in septic shock vs healthy volunteers on days 1-3 and 4-10; it rose in survivors and stayed low in non-survivors)"
+        ],
+        "intended_comparison": [
+          "sepsis_vs_healthy_control",
+          "mortality_in_sepsis"
+        ],
+        "direction": "higher_in_positive",
+        "genes_up": [],
+        "genes_down": [
+          "HLA-DRA"
+        ],
+        "symbol_map": [
+          {
+            "published": "HLA-DRA",
+            "hgnc_symbol": "HLA-DRA",
+            "hgnc_id": "HGNC:4947"
+          }
+        ],
+        "formula": "sum_difference",
+        "down_weight": "one",
+        "sensitivity": [],
+        "minimum_genes_per_side": 1,
+        "minimum_gene_coverage": 1.0,
+        "derivation_studies": {
+          "discovery": [],
+          "validation": [],
+          "note": ""
+        },
+        "published_formula": "score = -log2 HLA-DRA",
+        "verified": true,
+        "supporting_citations": [
+          "Monneret G, Lepape A, Voirin N, et al. 2006. Persisting low monocyte human leukocyte antigen-DR expression predicts mortality in septic shock. Intensive Care Med 32(8):1175-1183. doi:10.1007/s00134-006-0204-8",
+          "Cazalis MA, Friggeri A, Cave L, et al. 2013. Decreased HLA-DR antigen-associated invariant chain (CD74) mRNA expression predicts mortality after septic shock. Crit Care 17(6):R287. doi:10.1186/cc13150",
+          "Cajander S, Tina E, Backman A, et al. 2016. Quantitative real-time polymerase chain reaction measurement of HLA-DRA gene expression in whole blood is highly reproducible and shows changes that reflect dynamic shifts in monocyte surface HLA-DR expression during the course of sepsis. PLoS One 11(5):e0154690. doi:10.1371/journal.pone.0154690"
+        ]
+      }
+    ]
+  },
+  "values": {
+    "log_scales": [
+      "log2",
+      "log2_like",
+      "log2 counts per million"
+    ],
+    "linear_scales": [
+      "linear"
+    ],
+    "linear_offset": 1
+  },
+  "quality_control": {
+    "method": "The tolerances of the master quality control: metric_tolerance for metrics recomputed from the stored predictions and scores, refit_tolerance for the predictions of one fold of each model fitted again; signature_strata tested strata are scored again by gene symbol.",
+    "metric_tolerance": 1e-09,
+    "refit_tolerance": 1e-06,
+    "signature_strata": 8,
+    "refit": {
+      "task": "sepsis_vs_healthy_control",
+      "scheme": "leave_one_group_out"
+    }
+  },
+  "references": [
+    "https://doi.org/10.1016/j.patter.2023.100804",
+    "https://jmlr.org/papers/v12/pedregosa11a.html",
+    "https://doi.org/10.1093/bioinformatics/19.2.185",
+    "https://doi.org/10.1126/scitranslmed.aaa5993",
+    "https://doi.org/10.1371/journal.pmed.1001916",
+    "https://doi.org/10.1164/rccm.201502-0355OC",
+    "https://doi.org/10.1038/s41467-018-03078-2",
+    "https://doi.org/10.1097/01.CCM.0000150958.20209.A3"
+  ]
+}

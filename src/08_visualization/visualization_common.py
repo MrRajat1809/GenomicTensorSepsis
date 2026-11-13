@@ -25,11 +25,11 @@ from scipy.stats import gaussian_kde
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-UPSTREAM = ("data_acquisition", "expression_processing", "gene_annotation", "cohort_curation", "technical_validation", "batch_correction")
+UPSTREAM = ("data_acquisition", "expression_processing", "gene_annotation", "cohort_curation", "technical_validation", "batch_correction", "benchmark")
 STAGES = {1: "01_selection_and_cohorts.py", 2: "02_recorded_metadata.py", 3: "03_genes_and_scales.py", 4: "04_technical_validation.py",
-          5: "05_quality_flags.py", 6: "06_batch_correction.py"}
+          5: "05_quality_flags.py", 6: "06_batch_correction.py", 7: "07_benchmark.py"}
 FIGURES = {1: ["Fig1", "Fig2", "SuppFig1"], 2: ["Fig3", "SuppFig2"], 3: ["Fig4"], 4: ["Fig5", "SuppFig3", "SuppFig4"], 5: ["SuppFig5"],
-           6: ["Fig6", "SuppFig6"]}
+           6: ["Fig6", "SuppFig6"], 7: ["Fig7", "SuppFig7"]}
 INK, MUTED, GRID, MISSING, SPINE = "#222222", "#777777", "#DDDDDD", "#E0E0E0", "#333333"
 WARM = ["#FDF4D6", "#FCE082", "#F3B032", "#E97233", "#D74241"]
 # The panel letters are the only bold text: large, at the top left of their panel, as in the hand-made figures this style follows.
@@ -47,7 +47,7 @@ def validate_config(config):
             and isinstance(config["seed"], int) and 0 < layout["minimum_blank_axes_width"] <= 1 and layout["tolerance_points"] >= 0
             and display["sex_split_columns"] >= 1 and display["difference_limit"] > 0 and display["calendar_days"] >= 1 and display["ridge_bins"] >= 20,
             "Unsupported visualization configuration")
-    for section in (config, config["correction"]):
+    for section in (config, config["correction"], config["benchmark"]):
         for key, colors in section.items():
             if key.endswith("_colors"):
                 require(len(set(colors.values())) == len(colors), f"Two categories share a colour in {key}")

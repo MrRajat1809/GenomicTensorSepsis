@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software or its data package, please cite it as below, together with the source studies whose samples you use."
+type: software
+title: "GenomicTensorSepsis: a harmonized multi-cohort blood transcriptomic resource for sepsis research"
+version: 1.0.0
+date-released: 2026-11-14
+authors:
+  - family-names: Kumar
+    given-names: Priyanshu
+    affiliation: "Department of Biotechnology Engineering, Chandigarh University, Mohali, Punjab, India"
+    orcid: "https://orcid.org/0009-0004-1576-027X"
+abstract: >-
+  The pipeline that finds, reprocesses, annotates, curates, validates, corrects and benchmarks the public blood
+  transcriptome studies of sepsis in GEO and ArrayExpress, and packages the result: 96 studies, 12,037 sample records on
+  105 study platforms, with curated labels, linked repeat deposits and patients, corrected tables and patient-safe
+  benchmark splits.
+license: MIT
+repository-code: "https://github.com/MrRajat1809/GenomicTensorSepsis"
+url: "https://mrrajat1809.github.io/GenomicTensorSepsis/"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24205193
+    description: "The data package of version 1.0.0 (CC0 1.0)"
+keywords:
+  - sepsis
+  - transcriptomics
+  - gene expression
+  - GEO
+  - ArrayExpress
+  - data harmonization
+  - machine learning benchmark
+  - data leakage

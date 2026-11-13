@@ -1,4 +1,4 @@
-# Data, stage outputs and the data package are built by the pipeline; the package in data_release/ is published on GigaDB, not
+# Data, stage outputs and the data package are built by the pipeline; the package in data_release/ is published on Zenodo, not
 # stored in the repository. The export stages its files in .release-* and keeps the files it replaces in .previous-release-*.
 /data/
 /outputs/
@@ -8,14 +8,9 @@
 /_temp/
 
 # The documents are private: their sources (generated tables and values, supplement, manuscript, guide and letters) are kept
-# local and outside the pipeline, which runs only the stages 01 to 07, and so is everything they produce, in Documents/
-/src/08_documents/
+# local and outside the pipeline, which runs only the stages 01 to 08, and so is everything they produce, in Documents/
+/src/09_documents/
 /Documents/
-
-# Held back until the paper is accepted: the results page and the workflow that publishes it. The export skips the page when
-# release/ is absent.
-/release/
-/.github/
 
 # Python and notebook caches
 __pycache__/

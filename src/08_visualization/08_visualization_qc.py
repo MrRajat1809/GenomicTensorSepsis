@@ -1,5 +1,7 @@
 """Verify the figures of the resource: their provenance, the exact set of files, every image, and the plotted numbers against the stage tables."""
 import argparse
+import hashlib
+import math
 import traceback
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,9 +18,16 @@ MEANING = ("PASS means that every figure script completed with the current confi
            "outermost pixels; that figure_data.csv documents every figure; that the plotted numbers of the flow, the samples by year, the composition "
            "and its flows, the recorded variables, the genes per table, the sex check of every table and unit, the repeated deposits, the sepsis score, "
            "the cell markers, the quality flags and the batch correction and its ledger equal the stage tables row by row; that every drawn ROC curve "
-           "encloses the area the validation stage reports; and that the principal components of the stacked view and of the corrected tables agree "
-           "with their stated shares of variance and with the shares explained by technology, study and class. It does not judge whether a figure is "
-           "well designed.")
+           "encloses the area the validation stage reports; that the principal components of the stacked view and of the corrected tables agree "
+           "with their stated shares of variance and with the shares explained by technology, study and class; and that the benchmark figures count "
+           "every test record of every fold with the kind of twin that the folds rebuilt again give, in shares that add up to the leakage table and "
+           "its receipt (no twin in a patient-safe fold), draw every scored unit of the baseline models with medians and middle halves that the units "
+           "and the summary give, the two AUROCs of every inflation effect with its stored difference and the band of its interval, ROC curves of "
+           "the study-only score that the stored predictions give again and that enclose the stored AUROCs (one half within every held-out study), "
+           "shares of the own study platform predicted that the stored predictions give again and whose means are the stored balanced accuracies, "
+           "exactly the tested strata of every signature with the medians of the summary, every stratum of the signature tests, and ROC curves of "
+           "the tested strata that the stored scores give again and that enclose the AUROC of their test. It does not judge whether a figure is well "
+           "designed.")
 # Two pixels at 300 dpi: the anti-aliasing of a line cut by the edge reaches the outermost two pixels, while the layout keeps a margin of a dozen.
 EDGE = 2
 # The figure data hold the component scores rounded to four decimals on scales of tens to hundreds, which moves the centring, the correlation and the
@@ -48,6 +57,237 @@ def same_rows(plotted, table, keys, columns, tolerance=1e-4):
     right = table.set_index(keys)[columns].astype(float).sort_index()
     return len(left) == len(right) and left.index.equals(right.index) and bool(((left - right).abs().fillna(0) <= tolerance).all().all()
                                                                             and (left.isna() == right.isna()).all().all())
+
+
+def same_labels(plotted, table, keys, columns):
+    """Whether the plotted rows carry the labels and flags of the stage table, row for row; figure_data.csv writes a flag as True or False."""
+    left = plotted.set_index(keys)[columns].sort_index()
+    right = table.set_index(keys)[columns].astype(str).sort_index()
+    return len(left) == len(right) and left.index.equals(right.index) and bool((left.to_numpy() == right.to_numpy()).all())
+
+
+def twin_kinds(frame, test, train):
+    """The kind of twin of every test record among the training records, found by joining the test records with the training records on the array
+    and on the identified patient."""
+    tested = frame[test].reset_index()
+    trained = frame[train]
+    by_array = set(tested.merge(trained[["sample_id"]].drop_duplicates(), on="sample_id")["index"])
+    known = trained.loc[trained["patient_key"] != "", ["patient_key", "sample_id"]].drop_duplicates()
+    joined = tested[tested["patient_key"] != ""].merge(known, on="patient_key", suffixes=("", "_other"))
+    by_patient = set(joined.loc[joined["sample_id"] != joined["sample_id_other"], "index"])
+    array, patient = tested["index"].isin(by_array).to_numpy(), tested["index"].isin(by_patient).to_numpy()
+    return tested[["study_accession", "sample_accession"]].assign(twin=np.select([array & patient, array, patient], ["both", "array_only", "patient_only"],
+                                                                                 "none"))
+
+
+def rebuilt_records(tasks):
+    """Every test record of every repeat of the naive random split, of the naive leave-one-study-out folds and of the patient-safe folds, with the kind
+    of its twin in training, rebuilt from the populations of the benchmark stage and the split table of the cohort stage."""
+    populations = pd.read_parquet(V.ROOT / "data/processed/benchmark/split_populations.parquet")
+    splits = pd.read_parquet(V.ROOT / "data/processed/cohort/benchmark_splits.parquet")
+    settings = V.read_json(V.ROOT / "src/07_benchmark/benchmark_config.json")["splits"]
+    rows = []
+    for task in tasks:
+        naive = populations[(populations["population"] == "naive") & (populations["task"] == task)].reset_index(drop=True)
+        folds = []
+        for repeat in range(1, settings["repeats"] + 1):
+            digests = [hashlib.sha256(f"{settings['seed']}:{repeat}:{study}:{sample}".encode("utf-8")).hexdigest()
+                       for study, sample in zip(naive["study_accession"], naive["sample_accession"])]
+            chosen = sorted(range(len(naive)), key=digests.__getitem__)[:math.floor(settings["test_fraction"] * len(naive) + 0.5)]
+            test = naive.index.isin(chosen)
+            folds.append(("naive_record_split", "naive_record_split", f"repeat_{repeat:02d}", naive, test, ~test))
+        folds += [("naive_leave_one_study_out", "naive_leave_one_study_out", study, naive, (naive["study_accession"] == study).to_numpy(),
+                   (naive["study_accession"] != study).to_numpy()) for study in sorted(set(naive["study_accession"]))]
+        safe = populations[(populations["population"] == "gts") & (populations["task"] == task)].reset_index(drop=True)
+        for (scheme, fold), part in splits[splits["task"] == task].groupby(["scheme", "fold"]):
+            folds.append(("patient_safe", scheme, fold, safe, safe["patient_safe_group"].isin(part.loc[part["role"] != "train", "patient_safe_group"]).to_numpy(),
+                          safe["patient_safe_group"].isin(part.loc[part["role"] == "train", "patient_safe_group"]).to_numpy()))
+        for split, scheme, fold, frame, test, train in folds:
+            rows.append(twin_kinds(frame, test, train).assign(task=task, split=split, scheme=scheme, fold=fold))
+    return pd.concat(rows, ignore_index=True)
+
+
+def roc_points(labels, scores):
+    """The ROC curve of a score that is higher in the positive class, from the highest score down, one point for every distinct score."""
+    table = pd.DataFrame({"score": np.asarray(scores, dtype=float), "positive": np.asarray(labels) == 1, "negative": np.asarray(labels) == 0})
+    counts = table.groupby("score", sort=True)[["positive", "negative"]].sum().iloc[::-1].cumsum()
+    return np.r_[0.0, counts["negative"] / counts["negative"].iloc[-1]], np.r_[0.0, counts["positive"] / counts["positive"].iloc[-1]]
+
+
+def roc_area(fpr, tpr):
+    fpr, tpr = np.asarray(fpr, dtype=float), np.asarray(tpr, dtype=float)
+    return float(((fpr[1:] - fpr[:-1]) * (tpr[1:] + tpr[:-1]) / 2).sum())
+
+
+def curves_agree(drawn, scores, keys, stored, tolerance=1e-6):
+    """Whether every drawn ROC curve, read in the order of its points, is the curve that the stored scores give again, and encloses the stored AUROC of
+    its stratum or fold; and whether the drawn curves are exactly those of the scores."""
+    drawn = drawn.assign(point=drawn["point"].astype(float), fpr=drawn["fpr"].astype(float), tpr=drawn["tpr"].astype(float))
+    found = {key: part.sort_values("point") for key, part in drawn.groupby(keys, sort=True)}
+    expected = {key: roc_points(part["label"], part["score"]) for key, part in scores.groupby(keys, sort=True)}
+    if set(found) != set(expected) or set(found) != set(stored):
+        return False
+    for key, part in found.items():
+        fpr, tpr = expected[key]
+        if len(part) != len(fpr) or not (np.allclose(part["fpr"], fpr, rtol=0, atol=tolerance) and np.allclose(part["tpr"], tpr, rtol=0, atol=tolerance)
+                                         and abs(roc_area(part["fpr"], part["tpr"]) - stored[key]) <= 2 * tolerance
+                                         and abs(roc_area(fpr, tpr) - stored[key]) <= 1e-9):
+            return False
+    return True
+
+
+def benchmark(qc, data, config):
+    """The plotted numbers of Fig7 and SuppFig7 against the tables and receipts of the benchmark stage."""
+    policy = config["benchmark"]
+    folder = V.ROOT / "data/processed/benchmark"
+    models, tasks = policy["model_order"], policy["task_order"]
+
+    def panel(figure, name):
+        return data[(data["figure"] == figure) & (data["panel"] == name)]
+
+    # A: every test record of every fold, counted in the rings of its task by the kind of its twin in training.
+    records = panel("Fig7", "twins")
+    leakage = pd.read_parquet(folder / "split_leakage.parquet")
+    stored = leakage[leakage["population"].isin(["naive", "gts"])].set_index(["task", "scheme", "fold"]).sort_index()
+    counted = records.assign(exposed=records["twin"] != "none", exposed_same_array=records["twin"].isin(["array_only", "both"]),
+                             exposed_same_patient=records["twin"].isin(["patient_only", "both"])).groupby(["task", "scheme", "fold"]).agg(
+        test_records=("twin", "size"), exposed=("exposed", "sum"), exposed_same_array=("exposed_same_array", "sum"),
+        exposed_same_patient=("exposed_same_patient", "sum")).sort_index()
+    columns = ["test_records", "exposed", "exposed_same_array", "exposed_same_patient"]
+    qc.check("donut_records_equal_the_leakage_table", counted.index.equals(stored.index) and (counted[columns].to_numpy() == stored[columns].to_numpy()).all()
+             and set(records["twin"]) <= set(policy["twin_order"]))
+    keys = ["task", "split", "scheme", "fold", "study_accession", "sample_accession"]
+    rebuilt = rebuilt_records(tasks).set_index(keys)["twin"].sort_index()
+    plotted = records.set_index(keys)["twin"].sort_index()
+    qc.check("donut_records_equal_the_fold_rebuild", plotted.index.is_unique and plotted.index.equals(rebuilt.index) and (plotted == rebuilt).all())
+    shares = panel("Fig7", "twin_shares")
+    recount = records.groupby(["task", "split", "twin"]).size().unstack(fill_value=0).reindex(columns=policy["twin_order"], fill_value=0).stack()
+    recount = recount.rename("records").reset_index()
+    recount["total"] = recount.groupby(["task", "split"])["records"].transform("sum")
+    recount["share"] = recount["records"] / recount["total"]
+    receipt = V.read_json(V.ROOT / "outputs/benchmark/01.json")
+    exposed = recount[recount["twin"] != "none"].groupby(["task", "split"])["records"].sum()
+    totals = recount.groupby(["task", "split"])["total"].first()
+    agree = [exposed[(task, "patient_safe")] == 0 and totals[(task, "patient_safe")]
+             == sum(entry["test_records"] for key, entry in receipt["leakage"][task].items() if key.startswith("gts:"))
+             and all(totals[(task, split)] == receipt["leakage"][task][f"naive:{split}"]["test_records"]
+                     and exposed[(task, split)] == receipt["leakage"][task][f"naive:{split}"]["exposed"]
+                     and abs(exposed[(task, split)] / totals[(task, split)] - receipt["leakage"][task][f"naive:{split}"]["share_exposed"]) <= 1e-6
+                     for split in ("naive_record_split", "naive_leave_one_study_out")) for task in tasks]
+    safe = records[records["split"] == "patient_safe"]
+    qc.check("donut_shares_equal_the_records_and_the_leakage_receipt", same_rows(shares, recount, ["task", "split", "twin"], ["records", "total", "share"],
+                                                                                 tolerance=1e-6)
+             and len(agree) == len(tasks) and all(agree) and set(shares["split"]) == set(policy["split_order"])
+             and safe[["task", "scheme", "fold"]].drop_duplicates().shape[0] == receipt["patient_safe_folds"]["folds"]
+             and receipt["patient_safe_folds"]["exposed"] == 0)
+
+    # B: every scored unit of the two models, and the median and middle half of each cloud.
+    units = pd.read_parquet(folder / "model_units.parquet")
+    units = units[(units["status"] == "scored") & units["model"].isin(models)]
+    plotted = panel("Fig7", "baselines")
+    qc.check("raincloud_units_equal_the_scored_units", same_rows(plotted, units, ["task", "model", "scheme", "fold", "unit"], ["records", "auroc"],
+                                                                 tolerance=1e-6))
+    summary = pd.read_parquet(folder / "model_summary.parquet")
+    summary = summary[summary["model"].isin(models)]
+    quantiles = units.groupby(["task", "model", "scheme"])["auroc"].quantile([0.25, 0.5, 0.75]).unstack()
+    quantiles.columns = ["auroc_q1", "auroc_median", "auroc_q3"]
+    quantiles = quantiles.join(summary.set_index(["task", "model", "scheme"])[["units_scored", "auroc_median"]].rename(columns={"auroc_median": "stated"}))
+    qc.check("raincloud_medians_and_middle_halves_equal_the_units_and_the_summary",
+             same_rows(panel("Fig7", "baseline_quantiles"), quantiles.reset_index(), ["task", "model", "scheme"],
+                       ["auroc_q1", "auroc_median", "auroc_q3", "units_scored"], tolerance=1e-6)
+             and np.allclose(quantiles["auroc_median"], quantiles["stated"], rtol=0, atol=1e-6) and len(quantiles) == len(summary))
+
+    # C: the two ends of every arrow, the difference beside it and the band of its interval around the second AUROC.
+    effects = pd.read_parquet(folder / "model_inflation_effects.parquet")
+    effects = effects[effects["model"].isin(models)]
+    plotted = panel("Fig7", "inflation")
+    qc.check("arrow_ends_equal_the_first_and_second_auroc", same_rows(plotted, effects, ["task", "model", "effect"], ["first", "second", "studies"],
+                                                                      tolerance=1e-6) and sorted(set(plotted["effect"])) == sorted(policy["effect_order"]))
+    totals = plotted[plotted["effect"] == "total_inflation"]
+    banded = plotted[plotted["effect"] != "total_inflation"].astype({name: float for name in ("first", "low", "high", "band_low", "band_high")})
+    reference = summary[summary["scheme"] == "naive_record_split"].set_index(["task", "model"])["inflation_auroc"]
+    qc.check("arrow_labels_and_bands_equal_the_estimates_and_intervals", same_rows(plotted, effects, ["task", "model", "effect"], ["estimate", "low", "high"],
+                                                                                   tolerance=1e-6)
+             and np.allclose(plotted["first"].astype(float) - plotted["second"].astype(float), plotted["estimate"].astype(float), rtol=0, atol=2e-6)
+             and np.allclose(banded["band_low"], banded["first"] - banded["high"], rtol=0, atol=2e-6)
+             and np.allclose(banded["band_high"], banded["first"] - banded["low"], rtol=0, atol=2e-6)
+             and (totals[["low", "high", "band_low", "band_high"]] == "").all().all()
+             and all(abs(float(row.estimate) - reference[(row.task, row.model)]) <= 1e-6 for row in totals.itertuples(index=False)))
+
+    # D: the ROC curve of the study-only score of every repeat of the naive random split, and one half within every held-out study.
+    folds = pd.read_parquet(folder / "shortcut_folds.parquet")
+    pooled = folds[(folds["scheme"] == "naive_record_split") & (folds["scoring"] == "pooled")]
+    within = folds[(folds["scheme"] == "naive_leave_one_study_out") & (folds["scoring"] == "within_study") & (folds["status"] == "scored")]
+    predictions = pd.read_parquet(folder / "shortcut_predictions.parquet")
+    stated = V.read_json(V.ROOT / "outputs/benchmark/03.json")["study_only"]
+    curves = panel("Fig7", "shortcut_curves")
+    qc.check("shortcut_curves_recomputed_from_the_predictions_enclose_the_stored_aurocs",
+             curves_agree(curves, predictions[predictions["scheme"] == "naive_record_split"], ["task", "fold"],
+                          {(row.task, row.fold): float(row.auroc) for row in pooled.itertuples(index=False)})
+             and all(abs(pooled.loc[pooled["task"] == task, "auroc"].mean() - stated[task]["random_split"]["pooled_auroc_mean"]) <= 1e-6
+                     and (pooled["task"] == task).sum() == stated[task]["random_split"]["repeats"] for task in tasks))
+    plotted = panel("Fig7", "shortcut_scores")
+    held = plotted[plotted["scoring"] == "within_study"]
+    qc.check("study_only_scores_equal_the_benchmark_stage", same_rows(plotted, pd.concat([pooled, within]), ["task", "scheme", "scoring", "fold", "unit"],
+                                                                      ["records", "auroc"], tolerance=1e-6)
+             and len(held) == len(within) > 0 and (held["auroc"].astype(float) == 0.5).all()
+             and all((within["task"] == task).sum() == stated[task]["held_out_study"]["studies_scored"] for task in tasks))
+
+    # E: the share of every study platform's samples predicted as its own, from the aligned and from the corrected values.
+    predictions = pd.read_parquet(folder / "study_identification_predictions.parquet")
+    hits = predictions.assign(hit=predictions["unit"] == predictions["predicted"]).groupby(["unit", "table"])["hit"].agg(["mean", "size"]).unstack("table")
+    recount = pd.DataFrame({"aligned": hits[("mean", "aligned")], "corrected": hits[("mean", "corrected")], "samples": hits[("size", "aligned")],
+                            "samples_corrected": hits[("size", "corrected")]}).reset_index()
+    plotted = panel("Fig7", "identification")
+    qc.check("identification_shares_recomputed_from_the_predictions", same_rows(plotted, recount, ["unit"], ["aligned", "corrected", "samples"], tolerance=1e-6)
+             and (recount["samples"] == recount["samples_corrected"]).all())
+    identification = pd.read_parquet(folder / "study_identification.parquet")
+    stored = identification[identification["fold"] == "all"].set_index("table")
+    receipt = V.read_json(V.ROOT / "outputs/benchmark/03.json")["study_identification"]
+    # The bold line of the slopes is the mean of the drawn shares, which must be the stored balanced accuracy; its chance line one in the platforms.
+    means = panel("Fig7", "identification_means").set_index("table")
+    qc.check("identification_mean_line_is_the_stored_balanced_accuracy", sorted(stored.index) == ["aligned", "corrected"] == sorted(means.index) and all(
+        abs(plotted[table].astype(float).mean() - float(stored.loc[table, "balanced_accuracy"])) <= 1e-6
+        and abs(float(means.loc[table, "mean"]) - float(stored.loc[table, "balanced_accuracy"])) <= 1e-6
+        and abs(float(stored.loc[table, "balanced_accuracy"]) - receipt["balanced_accuracy"][table]) <= 1e-6
+        and len(plotted) == int(stored.loc[table, "units"]) == int(float(means.loc[table, "units"]))
+        and abs(float(stored.loc[table, "chance"]) - 1 / len(plotted)) <= 1e-6 and abs(float(means.loc[table, "chance"]) - 1 / len(plotted)) <= 1e-6
+        for table in stored.index))
+
+    # F and SuppFig7: exactly the tested strata with the medians of the summary, every stratum with its result or reason, and the ROC curve of every
+    # tested stratum of a primary formula.
+    tests = pd.read_parquet(folder / "signature_tests.parquet")
+    keys = ["signature", "variant", "comparison", "study_accession", "platform", "tissue"]
+    tested = tests[(tests["status"] == "tested") & (tests["variant"] == "primary")]
+    plotted = panel("Fig7", "signatures")
+    columns = {tuple(column) for column in policy["signature_columns"]}
+    qc.check("signature_strata_are_exactly_the_tested_strata", same_rows(plotted, tested, keys, ["auroc"], tolerance=1e-6)
+             and same_labels(plotted, tested, keys, ["independent", "derivation_role"])
+             and set(map(tuple, plotted[keys[:3]].drop_duplicates().to_numpy())) == {column for column in columns if column[1] == "primary"})
+    summary = pd.read_parquet(folder / "signature_summary.parquet")
+    summary = summary[(summary["scope"] == "all_tissues") & (summary["variant"] == "primary") & summary["strata_set"].isin(["all", "independent"])]
+    drawn = plotted.assign(auroc=plotted["auroc"].astype(float))
+    agree = []
+    for row in summary.itertuples(index=False):
+        own = drawn[(drawn["signature"] == row.signature) & (drawn["variant"] == row.variant) & (drawn["comparison"] == row.comparison)]
+        own = own[own["independent"] == "True"] if row.strata_set == "independent" else own
+        agree.append(len(own) == row.tested and abs(float(own["auroc"].median()) - row.auroc_median) <= 1e-6)
+    qc.check("signature_medians_equal_the_summary_and_the_strata", same_rows(panel("Fig7", "signature_medians"), summary,
+                                                                             ["signature", "variant", "comparison", "strata_set"], ["tested", "auroc_median"],
+                                                                             tolerance=1e-6) and len(agree) > 0 and all(agree))
+    plotted = panel("SuppFig7", "heatmap")
+    layout = plotted[["study_accession", "platform", "tissue", "in_scope_group", "material", "column", "label"]].drop_duplicates()
+    qc.check("every_signature_stratum_equals_the_benchmark_stage", same_rows(plotted, tests, keys, ["positives", "negatives", "auroc", "auroc_low",
+                                                                                                    "auroc_high"], tolerance=1e-6)
+             and same_labels(plotted, tests, keys, ["status", "reason", "derivation_role", "independent", "in_scope_group"])
+             and set(map(tuple, tests[keys[:3]].drop_duplicates().to_numpy())) == columns
+             and not layout.duplicated(["study_accession", "platform", "tissue"]).any() and layout["label"].is_unique
+             and ((layout["material"] == policy["material_order"][0]) == (layout["in_scope_group"] == "True")).all()
+             and not layout.duplicated(["in_scope_group", "column"]).any())
+    scores = pd.read_parquet(folder / "signature_scores.parquet")
+    qc.check("signature_curves_recomputed_from_the_scores_enclose_the_tested_aurocs",
+             curves_agree(panel("SuppFig7", "roc"), scores[scores["variant"] == "primary"], keys,
+                          {tuple(getattr(row, key) for key in keys): float(row.auroc) for row in tested.itertuples(index=False)}))
 
 
 class QC:
@@ -245,6 +485,7 @@ def verify(qc, out, config_path):
                      and components_agree(points[f"pc1_{row.stage}"], points[f"pc2_{row.stage}"], float(row.variance_1), float(row.variance_2)))
     qc.check("factor_shares_equal_the_plotted_components", set(factors["group"]) == set(config["correction"]["groups"])
              and not factors.duplicated(["group", "stage", "factor"]).any() and len(agree) > 0 and all(agree))
+    benchmark(qc, data, config)
     return manifest, dict(figures=len(figures), files=len(outputs), panels=sum(name.startswith("panels/") for name in outputs) // 2, figure_data_rows=len(data))
 
 
@@ -256,7 +497,7 @@ def main():
     out = Path(args.outdir)
     out = (out if out.is_absolute() else V.ROOT / out).resolve()
     qc, failure, summary, manifest = QC(), None, None, None
-    print("[07] Verifying the figures", flush=True)
+    print("[08] Verifying the figures", flush=True)
     try:
         manifest, summary = verify(qc, out, Path(args.config).resolve())
     except Exception:
@@ -278,7 +519,7 @@ def main():
         temporary.write_text(text, encoding="utf-8")
         temporary.replace(out / "captions.md")
     V.write_json(out / "qc.json", report)
-    print(f"\n[07 {'PASS' if passed else 'FAIL'}] {report['eligibility']}", flush=True)
+    print(f"\n[08 {'PASS' if passed else 'FAIL'}] {report['eligibility']}", flush=True)
     print(f"    Checks: {report['required_checks']}; failures: {report['failures']}; report: {(out / 'qc.json').relative_to(V.ROOT).as_posix()}", flush=True)
     if passed:
         print(f"    {summary['figures']} figures and {summary['panels']} panels as PDF and PNG; {summary['figure_data_rows']:,} rows of figure data", flush=True)

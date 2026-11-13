@@ -1,6 +1,6 @@
 # GenomicTensorSepsis: a harmonized multi-cohort blood transcriptomic resource for sepsis research
 
-GenomicTensorSepsis (GTS) brings the public blood transcriptome studies of sepsis into one resource that can be analyzed across studies. This repository holds the pipeline that finds, reprocesses, annotates, curates, validates and corrects the studies, and packages the result.
+GenomicTensorSepsis (GTS) brings the public blood transcriptome studies of sepsis into one resource that can be analyzed across studies. This repository holds the pipeline that finds, reprocesses, annotates, curates, validates, corrects and benchmarks the studies, and packages the result.
 
 ## Overview
 
@@ -14,13 +14,15 @@ GTS holds 12,037 sample records with expression values from 96 studies in GEO (8
 | Other arrays | 2 | 152 | 152 |
 | RNA-seq | 45 | 4,091 | 3,952 |
 
-The distinct samples are curated from their records as sepsis (5,975), healthy control (1,189), non-septic control (737), other condition (3,139) or not recorded (3), and every label keeps the wording it rests on. Repeat deposits of one array or library, repeated samples of one patient (4,206 identified patients) and samples with quality concerns are marked, not removed. Two corrected tables place bulk blood (7,604 samples of 59 studies) and PBMC (1,013 samples of 10 studies) on a common scale. Benchmark splits for three tasks, 64 folds in all, keep patients, repeat deposits and groups of studies apart.
+The distinct samples are curated from their records as sepsis (5,975), healthy control (1,189), non-septic control (737), other condition (3,139) or not recorded (3), and every label keeps the wording it rests on. Repeat deposits of one array or library, repeated samples of one patient (4,206 identified patients) and samples with quality concerns are marked, not removed. Two corrected tables place bulk blood (7,604 samples of 59 studies) and PBMC (1,013 samples of 10 studies) on a common scale. Benchmark splits for three tasks, 64 folds in all, keep patients, repeat deposits and groups of studies apart. Under a random split of the records, 34% of test records have a deposit of the same array or a sample of the same patient in training, and baseline classifiers of sepsis against non-septic controls reach a mean AUROC of 0.99, against 0.88 to 0.89 when whole patient-safe groups are held out.
 
 ![Selection of the studies and samples](Figures/Fig1.png)
 
+The [results page](https://mrrajat1809.github.io/GenomicTensorSepsis/) explains the resource without technical background and lets you explore every study, check, fold and benchmark result.
+
 ## Using the data
 
-The data package is deposited in GigaDB (DOI to be assigned) under CC0 1.0. It holds the tables as gzip-compressed CSV files in tar archives, a data dictionary that defines every column, and a readme. Check a download with `md5sum -c md5sum.txt`; on macOS, which has no `md5sum`, run `while read -r sum file; do [ "$(md5 -q "$file")" = "$sum" ] && echo "$file: OK" || echo "$file: FAILED"; done < md5sum.txt`.
+The data package is deposited in Zenodo under CC0 1.0: [doi:10.5281/zenodo.24205193](https://doi.org/10.5281/zenodo.24205193). It holds the tables as gzip-compressed CSV files in tar archives, a data dictionary that defines every column, and a readme. Check a download with `md5sum -c md5sum.txt`; on macOS, which has no `md5sum`, run `while read -r sum file; do [ "$(md5 -q "$file")" = "$sum" ] && echo "$file: OK" || echo "$file: FAILED"; done < md5sum.txt`.
 
 | Question | Where to look |
 | --- | --- |
@@ -31,7 +33,9 @@ The data package is deposited in GigaDB (DOI to be assigned) under CC0 1.0. It h
 | Where does a label come from? | `cohort.tar`: `cohort_label_sources.csv.gz` and `cohort_sample_metadata.csv.gz` |
 | Which gene does a probe measure? | `gene_mapping.tar` |
 | Can I compare samples of many studies on one scale? | `corrected_expression.tar`: the bulk-blood and PBMC tables |
+| Which values do the benchmark baselines read? | `corrected_expression.tar`: `corrected_expression_aligned_bulk_blood_expression.csv.gz`, every bulk-blood record on one reference distribution, made without labels |
 | How do I test a classifier without leakage? | `cohort.tar`: `cohort_benchmark_tasks.csv.gz` and `cohort_benchmark_splits.csv.gz` |
+| How do naive and patient-safe evaluations compare? | `benchmark.tar`: linked records, baseline models, study shortcuts and published signatures |
 | Which records have no expression values, and why? | `provenance.tar.gz`: `provenance_records_without_values.csv.gz` |
 | What does a column mean? | `data_dictionary.csv` |
 
@@ -62,12 +66,16 @@ GenomicTensorSepsis/
 │   ├── 04_cohort_curation/        # Sample labels, repeat deposits, patients, flags and benchmark splits
 │   ├── 05_technical_validation/   # Recorded sex, repeat deposits and known sepsis biology
 │   ├── 06_batch_correction/       # Cross-study correction of bulk blood and PBMC
-│   └── 07_visualization/          # Main and supplementary figures
+│   ├── 07_benchmark/              # Split leakage, baseline models, study shortcuts and published signatures
+│   └── 08_visualization/          # Main and supplementary figures
 ├── pipeline/
 │   ├── 01_build_dataset.sh        # Run the complete workflow in dependency order
-│   └── export_release.py          # Package the data for GigaDB
+│   └── export_release.py          # Package the data for Zenodo
+├── release/                       # The results page and the script that writes its data
+├── .github/workflows/pages.yml    # Publishes the results page to GitHub Pages
 ├── docker/                        # Dockerfile and pinned package lists
 ├── Figures/                       # Main and supplementary figures
+├── CITATION.cff
 ├── LICENSE
 └── README.md
 ```
@@ -80,8 +88,10 @@ GenomicTensorSepsis/
 2. **Expression processing:** process every study platform from the lowest level its files support: RMA for Affymetrix arrays, limma for other arrays, TMM-normalized log2 counts per million for RNA-seq. Values that the authors already normalized are kept where no raw data exist.
 3. **Gene annotation:** map every row of every table to HGNC genes and build gene-level tables. No row is dropped; rows without a gene keep their reason.
 4. **Cohort curation:** curate sample class, tissue, sex, age, time point, outcome and septic shock from the records, link repeat deposits, identify patients, flag quality concerns and define the benchmark splits.
-5. **Validation and correction:** compare recorded sex with expression, check that repeat deposits agree and test known sepsis biology in every study; then correct bulk blood and PBMC across studies and test the correction on held-out healthy controls.
-6. **Figures and package:** draw the figures and export the tables with a data dictionary, cohort flow and manifest.
+5. **Technical validation:** compare recorded sex with expression, check that repeat deposits agree and test known sepsis biology in every study.
+6. **Batch correction:** give every bulk-blood and PBMC sample one reference distribution of values, correct the studies on their healthy controls or by matched groups, and test the correction on held-out healthy controls.
+7. **Benchmark:** count the test records that naive splits leave linked to a training record, compare baseline classifiers under naive and patient-safe splits, test study shortcuts and re-test published sepsis signatures within single studies.
+8. **Figures:** draw the main and supplementary figures; `export_release.py` then packages the tables with a data dictionary, cohort flow and manifest.
 
 Each stage ends with a quality-control script that must pass before the next stage starts.
 
@@ -108,7 +118,7 @@ The build downloads the listed expression files (about 46 GB), checks each again
 | Task | Command |
 | --- | --- |
 | Resume at a stage or script | `bash pipeline/01_build_dataset.sh --from 02:04` |
-| Redraw the figures from completed stages | `bash pipeline/01_build_dataset.sh --from 07 --no-export` |
+| Redraw the figures from completed stages | `bash pipeline/01_build_dataset.sh --from 08 --no-export` |
 | Package completed stages | `bash pipeline/01_build_dataset.sh --export-only` |
 | List the steps without running anything (any bash, including the macOS terminal) | `bash pipeline/01_build_dataset.sh --dry-run` |
 | List all options | `bash pipeline/01_build_dataset.sh --help` |
@@ -119,16 +129,20 @@ The build downloads the listed expression files (about 46 GB), checks each again
 - **Repeat deposits and patients:** a sample without a patient identifier counts as its own patient, so the samples marked one per patient are an upper bound on the number of patients.
 - **Scales:** the per-study tables are on the scale of their processing; they are the reference for any result and are not comparable across studies without a correction.
 - **Corrected tables:** studies with healthy controls are corrected on them; studies without are corrected by matched groups, which line up their class means with the other studies, so their class differences are not independent evidence. Newborn studies, plasma, swabs and sorted cells are not in the corrected tables.
-- **Benchmark:** use the per-study tables as inputs, fit any scaling on the training studies alone, and score each held-out group on its own; the corrected tables used labels of every study.
+- **Benchmark:** the per-study tables remain the reference for any result. The benchmark baselines read the aligned bulk-blood table, which gives every record one reference distribution without class or control information; the corrected tables used the labels and healthy controls of every study and are not inputs for the sepsis tasks. Fit any scaling on the training studies alone and score each held-out group on its own.
 - **Validation:** the checks test processing and labeling against the data; they do not assess whether a deposited label is clinically correct.
 
 ## Data Availability
 
-The data package is available in GigaDB (DOI to be assigned). Downloaded and generated data are not stored in this repository. The source studies remain the work of their investigators: please cite them (`cohort_studies.csv.gz` lists their accessions and addresses) together with this resource.
+The data package is available in Zenodo: [doi:10.5281/zenodo.24205193](https://doi.org/10.5281/zenodo.24205193). Downloaded and generated data are not stored in this repository. The source studies remain the work of their investigators: please cite them (`cohort_studies.csv.gz` lists their accessions and addresses) together with this resource.
 
 ## How to Cite
 
-Kumar P. GenomicTensorSepsis: a harmonized multi-cohort blood transcriptomic resource for sepsis research. Manuscript submitted to *GigaScience*. The citation of the article and of the GigaDB dataset will be added on publication.
+Please cite the dataset, and the source studies whose samples you use:
+
+Kumar P. GenomicTensorSepsis 1.0.0: processed and curated public blood transcriptomes of sepsis and control samples [Data set]. Zenodo; 2026. https://doi.org/10.5281/zenodo.24205193
+
+The article describing the resource is in preparation; its citation will be added here. `CITATION.cff` gives the citation in machine-readable form.
 
 ## License
 
